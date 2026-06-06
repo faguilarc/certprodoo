@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú de Seguridad -->
+    <menuitem id="menu_security_root"
+              name="Seguridad"
+              parent="certprodoo_base.menu_certprodoo_root"
+              sequence="50"
+              groups="certprodoo_base.group_certprodoo_admin"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_security_dashboard"
+              name="Estadísticas"
+              parent="menu_security_root"
+              action="security_dashboard_action"
+              sequence="1"/>
+
+    <!-- Generales -->
+    <menuitem id="menu_security_general"
+              name="Generales"
+              parent="menu_security_root"
+              sequence="10"/>
+
+    <menuitem id="menu_security_users"
+              name="Usuarios del Sistema"
+              parent="menu_security_general"
+              action="action_system_users"
+              sequence="1"/>
+
+    <menuitem id="menu_security_client_users"
+              name="Usuarios Clientes"
+              parent="menu_security_general"
+              action="action_client_users"
+              sequence="2"/>
+
+    <menuitem id="menu_security_company"
+              name="Compañía"
+              parent="menu_security_general"
+              action="base.action_res_company_form"
+              sequence="3"/>
+
+    <menuitem id="menu_security_roles"
+              name="Roles"
+              parent="menu_security_general"
+              action="security_role_action"
+              sequence="4"/>
+
+    <menuitem id="menu_security_options"
+              name="Opciones"
+              parent="menu_security_general"
+              action="security_option_action"
+              sequence="5"/>
+
+    <menuitem id="menu_clean_registers"
+              name="Limpiar Base de Datos"
+              parent="menu_security_general"
+              action="clean_registers_action"
+              sequence="10"
+              groups="certprodoo_base.group_certprodoo_admin"/>
+
+    <!-- Permisos -->
+    <menuitem id="menu_security_permissions"
+              name="Permisos"
+              parent="menu_security_root"
+              sequence="20"/>
+
+    <menuitem id="menu_security_user_permissions"
+              name="Permisos por Opciones"
+              parent="menu_security_permissions"
+              action="security_user_permission_action"
+              sequence="1"/>
+
+    <menuitem id="menu_security_role_permissions"
+              name="Permisos por Roles"
+              parent="menu_security_permissions"
+              action="security_role_permission_action"
+              sequence="2"/>
+
+    <menuitem id="menu_security_state_permissions"
+              name="Permisos por Estado"
+              parent="menu_security_permissions"
+              action="security_state_permission_action"
+              sequence="3"/>
+</odoo>

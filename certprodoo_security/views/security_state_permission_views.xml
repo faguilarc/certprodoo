@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Búsqueda de Permisos por Estado -->
+    <record id="security_state_permission_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.security.state.permission.search</field>
+        <field name="model">certprodoo.security.state.permission</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Permisos por Estado">
+                <field name="user_id"/>
+                <field name="model_name"/>
+                <field name="transition_id"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_user" string="Usuario" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_model" string="Modelo" context="{'group_by': 'model_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vista de Formulario de Permisos por Estado -->
+    <record id="security_state_permission_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.security.state.permission.form</field>
+        <field name="model">certprodoo.security.state.permission</field>
+        <field name="arch" type="xml">
+            <form string="Permiso por Estado">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="model_name" placeholder="Dejar vacío para todos los modelos"/>
+                            <field name="transition_id"/>
+                        </group>
+                        <group>
+                            <field name="can_execute"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Permisos por Estado -->
+    <record id="security_state_permission_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.security.state.permission.tree</field>
+        <field name="model">certprodoo.security.state.permission</field>
+        <field name="arch" type="xml">
+            <tree string="Permisos por Estado">
+                <field name="user_id"/>
+                <field name="model_name"/>
+                <field name="transition_id"/>
+                <field name="can_execute"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Permisos por Estado -->
+    <record id="security_state_permission_action" model="ir.actions.act_window">
+        <field name="name">Permisos por Estado</field>
+        <field name="res_model">certprodoo.security.state.permission</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="security_state_permission_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure qué usuarios pueden ejecutar transiciones de estado
+            </p>
+        </field>
+    </record>
+</odoo>

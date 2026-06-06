@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard de limpieza de base de datos -->
+    <record id="clean_registers_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.security.clean.registers.form</field>
+        <field name="model">certprodoo.security.clean.registers</field>
+        <field name="arch" type="xml">
+            <form string="Limpiar Base de Datos">
+                <group>
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Advertencia:</strong> Esta acción eliminará datos de forma permanente.
+                        Escriba <strong>BORRAR</strong> para confirmar.
+                    </div>
+                </group>
+                <group>
+                    <field name="erase_type"/>
+                    <field name="confirm_text" placeholder="Escriba BORRAR para confirmar"/>
+                </group>
+                <footer>
+                    <button name="action_erase"
+                            type="object"
+                            string="Ejecutar Limpieza"
+                            class="oe_highlight"
+                            confirm="¿Está absolutamente seguro? Esta acción no se puede deshacer."/>
+                    <button string="Cancelar"
+                            class="btn btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="clean_registers_action" model="ir.actions.act_window">
+        <field name="name">Limpiar Base de Datos</field>
+        <field name="res_model">certprodoo.security.clean.registers</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

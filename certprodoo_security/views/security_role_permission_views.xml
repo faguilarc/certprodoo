@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Lista de Permisos por Rol -->
+    <record id="security_role_permission_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.security.role.permission.tree</field>
+        <field name="model">certprodoo.security.role.permission</field>
+        <field name="arch" type="xml">
+            <tree string="Permisos por Rol" editable="bottom">
+                <field name="role_id"/>
+                <field name="option_id"/>
+                <field name="perm_show"/>
+                <field name="field_write"/>
+                <field name="is_default"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Permisos por Rol -->
+    <record id="security_role_permission_action" model="ir.actions.act_window">
+        <field name="name">Permisos por Roles</field>
+        <field name="res_model">certprodoo.security.role.permission</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure los permisos asignados a cada rol
+            </p>
+        </field>
+    </record>
+</odoo>
