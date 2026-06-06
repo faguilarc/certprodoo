@@ -1,0 +1,30 @@
+.certprodoo-dashboard {
+    padding: 20px;
+}
+
+.certprodoo-dashboard .dashboard-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.certprodoo-dashboard .dashboard-card .stat-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #714B67;
+}
+
+.certprodoo-dashboard .dashboard-card .stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.certprodoo-dashboard .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}

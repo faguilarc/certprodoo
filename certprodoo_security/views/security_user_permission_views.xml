@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Lista de Permisos por Usuario -->
+    <record id="security_user_permission_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.security.user.permission.tree</field>
+        <field name="model">certprodoo.security.user.permission</field>
+        <field name="arch" type="xml">
+            <tree string="Permisos por Usuario" editable="bottom">
+                <field name="user_id"/>
+                <field name="option_id"/>
+                <field name="perm_show"/>
+                <field name="field_write"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Permisos por Usuario -->
+    <record id="security_user_permission_action" model="ir.actions.act_window">
+        <field name="name">Permisos por Opciones</field>
+        <field name="res_model">certprodoo.security.user.permission</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure permisos individuales por usuario
+            </p>
+        </field>
+    </record>
+</odoo>

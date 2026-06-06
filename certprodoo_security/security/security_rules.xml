@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- REGLAS DE SEGURIDAD (ir.rule)                              -->
+    <!-- Reemplazan los search_read overrides de O14                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Reglas para Roles: solo los de su compañía -->
+    <record id="rule_security_role_company" model="ir.rule">
+        <field name="name">Roles: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_security_role"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+    </record>
+
+    <!-- Reglas para Opciones: solo las de su compañía -->
+    <record id="rule_security_option_company" model="ir.rule">
+        <field name="name">Opciones: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_security_option"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+    </record>
+
+    <!-- Reglas para Permisos de Rol: solo los de su compañía -->
+    <record id="rule_security_role_permission_company" model="ir.rule">
+        <field name="name">Permisos por Rol: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_security_role_permission"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+    </record>
+
+    <!-- Reglas para Permisos de Usuario: solo los de su compañía -->
+    <record id="rule_security_user_permission_company" model="ir.rule">
+        <field name="name">Permisos por Usuario: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_security_user_permission"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+    </record>
+
+    <!-- Reglas para Permisos de Estado: solo los de su compañía -->
+    <record id="rule_security_state_permission_company" model="ir.rule">
+        <field name="name">Permisos por Estado: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_security_state_permission"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+    </record>
+</odoo>

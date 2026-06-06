@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Lista de Roles -->
+    <record id="security_role_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.security.role.tree</field>
+        <field name="model">certprodoo.security.role</field>
+        <field name="arch" type="xml">
+            <tree string="Roles de Seguridad" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="user_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista de Formulario de Rol -->
+    <record id="security_role_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.security.role.form</field>
+        <field name="model">certprodoo.security.role</field>
+        <field name="arch" type="xml">
+            <form string="Rol de Seguridad">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_users"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users">
+                            <field name="user_count" widget="statinfo" string="Usuarios"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nombre del rol"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="is_default"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Permisos del Rol">
+                        <field name="role_permission_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="option_id"/>
+                                <field name="perm_show"/>
+                                <field name="field_write"/>
+                                <field name="is_default"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción de Roles -->
+    <record id="security_role_action" model="ir.actions.act_window">
+        <field name="name">Roles</field>
+        <field name="res_model">certprodoo.security.role</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure los roles de seguridad del sistema
+            </p>
+        </field>
+    </record>
+</odoo>

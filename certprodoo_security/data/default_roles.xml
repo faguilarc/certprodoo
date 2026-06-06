@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Roles por defecto del sistema -->
+    <record id="default_role_admin" model="certprodoo.security.role">
+        <field name="name">Administrador</field>
+        <field name="description">Acceso completo a todas las funcionalidades del sistema</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="is_default">True</field>
+    </record>
+
+    <record id="default_role_editor" model="certprodoo.security.role">
+        <field name="name">Editor</field>
+        <field name="description">Puede crear y editar registros profesionales</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="is_default">True</field>
+    </record>
+
+    <record id="default_role_editor_admin" model="certprodoo.security.role">
+        <field name="name">Editor-Administrador</field>
+        <field name="description">Puede crear, editar y gestionar registros profesionales</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="is_default">True</field>
+    </record>
+
+    <record id="default_role_client" model="certprodoo.security.role">
+        <field name="name">Cliente</field>
+        <field name="description">Usuario que solicita trámites de forma presencial</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="is_default">True</field>
+    </record>
+
+    <record id="default_role_client_online" model="certprodoo.security.role">
+        <field name="name">Cliente Online</field>
+        <field name="description">Usuario que solicita trámites a través del portal web</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="is_default">True</field>
+    </record>
+</odoo>
