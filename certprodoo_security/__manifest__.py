@@ -39,8 +39,8 @@
         "views/res_users_views.xml",
         "views/res_company_views.xml",
         "views/dashboard_views.xml",
-        "views/menu.xml",
         "wizard/clean_registers_views.xml",
+        "views/menu.xml",
     ],
     "assets": {
         "web.assets_backend": [

@@ -43,6 +43,7 @@ class SecurityOption(models.Model):
         string="Modelo",
         required=True,
         tracking=True,
+        ondelete='cascade',
         help="Modelo de Odoo al que hace referencia esta opción.",
     )
     model_name = fields.Char(
