@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Profesiones por defecto -->
+    <record id="profession_civil_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Civil</field>
+        <field name="code">IC</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_architecture" model="certprodoo.profession">
+        <field name="name">Arquitectura</field>
+        <field name="code">ARQ</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_hydraulic_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Hidráulica</field>
+        <field name="code">IH</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_electric_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Eléctrica</field>
+        <field name="code">IE</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_industrial_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Industrial</field>
+        <field name="code">IIN</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_mechanic_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Mecánica</field>
+        <field name="code">IM</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_chemical_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Química</field>
+        <field name="code">IQ</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_telecom_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería en Telecomunicaciones</field>
+        <field name="code">IT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_informatics_eng" model="certprodoo.profession">
+        <field name="name">Ingeniería Informática</field>
+        <field name="code">IINF</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="profession_agronomy" model="certprodoo.profession">
+        <field name="name">Ingeniería Agrónoma</field>
+        <field name="code">IAG</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

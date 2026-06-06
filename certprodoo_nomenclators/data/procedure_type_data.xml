@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Tipos de Trámite por defecto -->
+    <record id="procedure_type_inscription" model="certprodoo.procedure.type">
+        <field name="name">Solicitud de inscripción</field>
+        <field name="code">INSCR</field>
+        <field name="model_ref">certprodoo.inscription</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="procedure_type_update" model="certprodoo.procedure.type">
+        <field name="name">Actualización</field>
+        <field name="code">UPD</field>
+        <field name="model_ref">certprodoo.update</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="procedure_type_claim" model="certprodoo.procedure.type">
+        <field name="name">Reclamación</field>
+        <field name="code">CLAIM</field>
+        <field name="model_ref">certprodoo.claim</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

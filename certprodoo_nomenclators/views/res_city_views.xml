@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="res_city_view_tree" model="ir.ui.view">
+        <field name="name">res.city.tree.certprodoo.nomenclators</field>
+        <field name="model">res.city</field>
+        <field name="arch" type="xml">
+            <tree string="Municipios">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="state_id"/>
+                <field name="country_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="res_city_view_search" model="ir.ui.view">
+        <field name="name">res.city.search.certprodoo.nomenclators</field>
+        <field name="model">res.city</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Municipios">
+                <field name="name"/>
+                <field name="state_id"/>
+                <field name="code" search="False"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="groupby_state" string="Provincia"
+                            context="{'group_by': 'state_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="res_city_view_form" model="ir.ui.view">
+        <field name="name">res.city.form.certprodoo.nomenclators</field>
+        <field name="model">res.city</field>
+        <field name="arch" type="xml">
+            <form string="Municipio">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre del municipio"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="state_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="country_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción Municipios (solo Cuba) ────────────────────── -->
+    <record id="res_city_action" model="ir.actions.act_window">
+        <field name="name">Municipios</field>
+        <field name="res_model">res.city</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('country_id.code', '=', 'CU')]</field>
+        <field name="context">{'default_country_id': %(base.cu)d}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo municipio
+            </p>
+            <p>
+                Defina los municipios de Cuba disponibles en el sistema.
+            </p>
+        </field>
+    </record>
+
+</odoo>

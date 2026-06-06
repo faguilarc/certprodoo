@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Herencia Vista Lista de País ─────────────────────── -->
+    <record id="view_country_tree_inherit" model="ir.ui.view">
+        <field name="name">res.country.tree.inherit.certprodoo.nomenclators</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base.view_country_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="country_code"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ─── Herencia Vista Formulario de País ────────────────── -->
+    <record id="view_country_form_inherit" model="ir.ui.view">
+        <field name="name">res.country.form.inherit.certprodoo.nomenclators</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base.view_country_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="country_code"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ─── Acción Países ────────────────────────────────────── -->
+    <record id="res_country_action" model="ir.actions.act_window">
+        <field name="name">Países</field>
+        <field name="res_model">res.country</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

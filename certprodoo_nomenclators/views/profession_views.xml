@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="profession_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.profession.tree</field>
+        <field name="model">certprodoo.profession</field>
+        <field name="arch" type="xml">
+            <tree string="Profesiones">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="specialty_count" string="Especialidades"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="profession_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.profession.search</field>
+        <field name="model">certprodoo.profession</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Profesiones">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description" search="False"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="groupby_company" string="Compañía"
+                            context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="profession_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.profession.form</field>
+        <field name="model">certprodoo.profession</field>
+        <field name="arch" type="xml">
+            <form string="Profesión">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre de la profesión"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="description" placeholder="Descripción de la profesión"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Especialidades" name="specialties">
+                            <field name="specialty_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="profession_action" model="ir.actions.act_window">
+        <field name="name">Profesiones</field>
+        <field name="res_model">certprodoo.profession</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear una nueva profesión
+            </p>
+            <p>
+                Defina las profesiones disponibles para los profesionales del sistema.
+            </p>
+        </field>
+    </record>
+
+</odoo>

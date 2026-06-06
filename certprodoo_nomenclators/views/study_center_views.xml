@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="study_center_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.study.center.tree</field>
+        <field name="model">certprodoo.study.center</field>
+        <field name="arch" type="xml">
+            <tree string="Centros de Estudio">
+                <field name="name"/>
+                <field name="teaching_level_id"/>
+                <field name="description"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="study_center_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.study.center.search</field>
+        <field name="model">certprodoo.study.center</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Centros de Estudio">
+                <field name="name"/>
+                <field name="teaching_level_id"/>
+                <field name="description" search="False"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="groupby_teaching_level" string="Nivel de Enseñanza"
+                            context="{'group_by': 'teaching_level_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="study_center_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.study.center.form</field>
+        <field name="model">certprodoo.study.center</field>
+        <field name="arch" type="xml">
+            <form string="Centro de Estudio">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre del centro de estudio"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="teaching_level_id" options="{'no_create': True}"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Descripción del centro"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="study_center_action" model="ir.actions.act_window">
+        <field name="name">Centros de Estudio</field>
+        <field name="res_model">certprodoo.study.center</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo centro de estudio
+            </p>
+            <p>
+                Defina los centros de estudio donde se forman los profesionales.
+            </p>
+        </field>
+    </record>
+
+</odoo>

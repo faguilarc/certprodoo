@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="labour_sector_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.labour.sector.tree</field>
+        <field name="model">certprodoo.labour.sector</field>
+        <field name="arch" type="xml">
+            <tree string="Tipos de Entidad">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="labour_sector_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.labour.sector.form</field>
+        <field name="model">certprodoo.labour.sector</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Entidad">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre del tipo de entidad"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="labour_sector_action" model="ir.actions.act_window">
+        <field name="name">Tipos de Entidad</field>
+        <field name="res_model">certprodoo.labour.sector</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo tipo de entidad
+            </p>
+            <p>
+                Defina los tipos de entidad o sectores laborales del sistema.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Niveles de Enseñanza por defecto -->
+    <record id="teaching_level_polytechnic" model="certprodoo.teaching.level">
+        <field name="name">Politécnico</field>
+        <field name="code">MED</field>
+        <field name="description">Enseñanza media y técnica</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_level_university" model="certprodoo.teaching.level">
+        <field name="name">Universidad</field>
+        <field name="code">SUP</field>
+        <field name="description">Enseñanza superior</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

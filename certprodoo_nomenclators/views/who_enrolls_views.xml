@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="who_enrolls_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.who.enrolls.tree</field>
+        <field name="model">certprodoo.who.enrolls</field>
+        <field name="arch" type="xml">
+            <tree string="Quiénes se Inscriben">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="who_enrolls_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.who.enrolls.form</field>
+        <field name="model">certprodoo.who.enrolls</field>
+        <field name="arch" type="xml">
+            <form string="Quiénes se Inscriben">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Descripción de quiénes se inscriben"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="who_enrolls_action" model="ir.actions.act_window">
+        <field name="name">Quiénes se Inscriben</field>
+        <field name="res_model">certprodoo.who.enrolls</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo registro de inscripción
+            </p>
+            <p>
+                Defina la información sobre quiénes se inscriben en el sistema para el portal web.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="detention_cause_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.detention.cause.tree</field>
+        <field name="model">certprodoo.detention.cause</field>
+        <field name="arch" type="xml">
+            <tree string="Causas por Estado" default_order="cause_type,name">
+                <field name="name"/>
+                <field name="cause_type"/>
+                <field name="description"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="detention_cause_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.detention.cause.search</field>
+        <field name="model">certprodoo.detention.cause</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Causas">
+                <field name="name"/>
+                <field name="cause_type"/>
+                <field name="description" search="False"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="groupby_cause_type" string="Tipo de Causa"
+                            context="{'group_by': 'cause_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="detention_cause_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.detention.cause.form</field>
+        <field name="model">certprodoo.detention.cause</field>
+        <field name="arch" type="xml">
+            <form string="Causa de Estado">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre de la causa"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="cause_type"/>
+                            <field name="code"/>
+                            <field name="description" placeholder="Descripción de la causa"/>
+                        </group>
+                        <group>
+                            <field name="email_template" placeholder="Plantilla de correo HTML"/>
+                            <field name="document_template" placeholder="Plantilla de documento HTML"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="detention_cause_action" model="ir.actions.act_window">
+        <field name="name">Causas por Estado</field>
+        <field name="res_model">certprodoo.detention.cause</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear una nueva causa de estado
+            </p>
+            <p>
+                Defina las causas de detención, denegación o cancelación de trámites.
+            </p>
+        </field>
+    </record>
+
+</odoo>

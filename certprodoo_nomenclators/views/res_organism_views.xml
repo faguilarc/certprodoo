@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="res_organism_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.organism.tree</field>
+        <field name="model">certprodoo.organism</field>
+        <field name="arch" type="xml">
+            <tree string="Organismos" default_order="code" decoration-muted="active == False">
+                <field name="code"/>
+                <field name="siglas"/>
+                <field name="name"/>
+                <field name="active" column_invisible="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="res_organism_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.organism.search</field>
+        <field name="model">certprodoo.organism</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Organismos">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="siglas"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="res_organism_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.organism.form</field>
+        <field name="model">certprodoo.organism</field>
+        <field name="arch" type="xml">
+            <form string="Organismo">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre del organismo"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" placeholder="Código (1-3 dígitos)"/>
+                            <field name="siglas" placeholder="Siglas del organismo"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="res_organism_action" model="ir.actions.act_window">
+        <field name="name">Organismos</field>
+        <field name="res_model">certprodoo.organism</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo organismo
+            </p>
+            <p>
+                Defina los organismos gubernamentales del sistema.
+            </p>
+        </field>
+    </record>
+
+</odoo>

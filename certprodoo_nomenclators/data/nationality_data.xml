@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Nacionalidades por defecto -->
+    <record id="nationality_cuban" model="certprodoo.nationality">
+        <field name="name">Cubano</field>
+        <field name="validate_fuc" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="nationality_foreigner_resident" model="certprodoo.nationality">
+        <field name="name">Extranjero residente</field>
+        <field name="validate_fuc" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="nationality_foreigner_permanent" model="certprodoo.nationality">
+        <field name="name">Extranjero residente permanente</field>
+        <field name="validate_fuc" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="nationality_foreigner_non_resident" model="certprodoo.nationality">
+        <field name="name">Extranjero no residente</field>
+        <field name="validate_fuc" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

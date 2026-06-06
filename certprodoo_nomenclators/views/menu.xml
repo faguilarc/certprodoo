@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Menú de Nomencladores
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ─── Menú Raíz ────────────────────────────────────────── -->
+    <menuitem id="menu_nomenclators_root"
+              name="Nomencladores"
+              parent="certprodoo_base.menu_certprodoo_root"
+              sequence="30"
+              groups="certprodoo_base.group_certprodoo_admin"/>
+
+    <!-- ─── Submenú: Profesionales ───────────────────────────── -->
+    <menuitem id="menu_nomenclators_professional"
+              name="Profesionales"
+              parent="menu_nomenclators_root"
+              sequence="1"/>
+
+    <menuitem id="menu_profession"
+              name="Profesiones"
+              parent="menu_nomenclators_professional"
+              action="profession_action"
+              sequence="1"/>
+
+    <menuitem id="menu_specialty"
+              name="Especialidades"
+              parent="menu_nomenclators_professional"
+              action="specialty_action"
+              sequence="2"/>
+
+    <menuitem id="menu_nationality"
+              name="Nacionalidades"
+              parent="menu_nomenclators_professional"
+              action="nationality_action"
+              sequence="3"/>
+
+    <menuitem id="menu_teaching_level"
+              name="Nivel de Enseñanza"
+              parent="menu_nomenclators_professional"
+              action="teaching_level_action"
+              sequence="4"/>
+
+    <menuitem id="menu_study_center"
+              name="Centros de Estudio"
+              parent="menu_nomenclators_professional"
+              action="study_center_action"
+              sequence="5"/>
+
+    <menuitem id="menu_teaching_category"
+              name="Categorías Docentes"
+              parent="menu_nomenclators_professional"
+              action="teaching_category_action"
+              sequence="6"/>
+
+    <!-- ─── Submenú: Administrativos ─────────────────────────── -->
+    <menuitem id="menu_nomenclators_administrative"
+              name="Administrativos"
+              parent="menu_nomenclators_root"
+              sequence="2"/>
+
+    <menuitem id="menu_procedure_type"
+              name="Tipos de Trámite"
+              parent="menu_nomenclators_administrative"
+              action="procedure_type_action"
+              sequence="1"/>
+
+    <menuitem id="menu_document_required"
+              name="Documentos para Trámites"
+              parent="menu_nomenclators_administrative"
+              action="document_required_action"
+              sequence="2"/>
+
+    <menuitem id="menu_detention_cause"
+              name="Causas por Estado"
+              parent="menu_nomenclators_administrative"
+              action="detention_cause_action"
+              sequence="3"/>
+
+    <menuitem id="menu_labour_sector"
+              name="Tipos de Entidad"
+              parent="menu_nomenclators_administrative"
+              action="labour_sector_action"
+              sequence="4"/>
+
+    <!-- ─── Submenú: Geográficos ─────────────────────────────── -->
+    <menuitem id="menu_nomenclators_geographic"
+              name="Geográficos"
+              parent="menu_nomenclators_root"
+              sequence="3"/>
+
+    <menuitem id="menu_res_country"
+              name="Países"
+              parent="menu_nomenclators_geographic"
+              action="res_country_action"
+              sequence="1"/>
+
+    <menuitem id="menu_res_country_state"
+              name="Provincias"
+              parent="menu_nomenclators_geographic"
+              action="res_country_state_action"
+              sequence="2"/>
+
+    <menuitem id="menu_res_city"
+              name="Municipios"
+              parent="menu_nomenclators_geographic"
+              action="res_city_action"
+              sequence="3"/>
+
+    <menuitem id="menu_res_organism"
+              name="Organismos"
+              parent="menu_nomenclators_geographic"
+              action="res_organism_action"
+              sequence="4"/>
+
+    <!-- ─── Submenú: Sitio Web ───────────────────────────────── -->
+    <menuitem id="menu_nomenclators_website"
+              name="Sitio Web"
+              parent="menu_nomenclators_root"
+              sequence="4"/>
+
+    <menuitem id="menu_structure"
+              name="Estructura"
+              parent="menu_nomenclators_website"
+              action="structure_action"
+              sequence="1"/>
+
+    <menuitem id="menu_who_enrolls"
+              name="Quiénes se Inscriben"
+              parent="menu_nomenclators_website"
+              action="who_enrolls_action"
+              sequence="2"/>
+
+    <menuitem id="menu_normative"
+              name="Normativas"
+              parent="menu_nomenclators_website"
+              action="normative_action"
+              sequence="3"/>
+
+    <menuitem id="menu_terms_conditions"
+              name="Términos y Condiciones"
+              parent="menu_nomenclators_website"
+              action="terms_conditions_action"
+              sequence="4"/>
+
+</odoo>

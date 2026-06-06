@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- REGLAS DE SEGURIDAD — Nomencladores por compañía           -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <record id="rule_nationality_company" model="ir.rule">
+        <field name="name">Nacionalidades: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_nationality"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_profession_company" model="ir.rule">
+        <field name="name">Profesiones: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_profession"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_specialty_company" model="ir.rule">
+        <field name="name">Especialidades: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_specialty"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_teaching_level_company" model="ir.rule">
+        <field name="name">Niveles de Enseñanza: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_teaching_level"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_teaching_category_company" model="ir.rule">
+        <field name="name">Categorías Docentes: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_teaching_category"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_study_center_company" model="ir.rule">
+        <field name="name">Centros de Estudio: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_study_center"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_document_required_company" model="ir.rule">
+        <field name="name">Documentos Requeridos: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_document_required"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_procedure_type_company" model="ir.rule">
+        <field name="name">Tipos de Trámite: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_procedure_type"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_detention_cause_company" model="ir.rule">
+        <field name="name">Causas de Estado: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_detention_cause"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_labour_sector_company" model="ir.rule">
+        <field name="name">Tipos de Entidad: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_labour_sector"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_normative_company" model="ir.rule">
+        <field name="name">Normativas: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_normative"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_structure_company" model="ir.rule">
+        <field name="name">Estructuras: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_structure"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_who_enrolls_company" model="ir.rule">
+        <field name="name">Quiénes se Inscriben: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_who_enrolls"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
+    <record id="rule_terms_conditions_company" model="ir.rule">
+        <field name="name">Términos y Condiciones: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_terms_conditions"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+</odoo>

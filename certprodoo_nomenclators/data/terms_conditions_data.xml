@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Términos y Condiciones por defecto -->
+    <record id="terms_introduction" model="certprodoo.terms.conditions">
+        <field name="name">Introducción</field>
+        <field name="code">INTRO</field>
+        <field name="content"><![CDATA[<h1>Introducción</h1><p>Bienvenido al sistema de Registro Profesional.</p>]]></field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="terms_privacy" model="certprodoo.terms.conditions">
+        <field name="name">Política de Confidencialidad</field>
+        <field name="code">PRIV</field>
+        <field name="content"><![CDATA[<h1>Política de Confidencialidad</h1><p>Los datos personales proporcionados serán tratados conforme a la legislación vigente.</p>]]></field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

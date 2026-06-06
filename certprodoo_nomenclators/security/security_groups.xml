@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categoría Nomencladores -->
+    <record id="module_category_certprodoo_nomenclators" model="ir.module.category">
+        <field name="name">CertProdoo Nomencladores</field>
+        <field name="description">Permisos de acceso a los nomencladores</field>
+        <field name="parent_id" ref="certprodoo_base.module_category_certprodoo"/>
+        <field name="sequence">15</field>
+    </record>
+
+    <!-- Grupo de acceso a nomencladores -->
+    <record id="group_nomenclator_user" model="res.groups">
+        <field name="name">Usuario de Nomencladores</field>
+        <field name="category_id" ref="module_category_certprodoo_nomenclators"/>
+        <field name="implied_ids" eval="[(4, ref('certprodoo_base.group_certprodoo_user'))]"/>
+        <field name="comment">Puede consultar nomencladores</field>
+    </record>
+
+    <record id="group_nomenclator_manager" model="res.groups">
+        <field name="name">Gestor de Nomencladores</field>
+        <field name="category_id" ref="module_category_certprodoo_nomenclators"/>
+        <field name="implied_ids" eval="[(4, ref('group_nomenclator_user'))]"/>
+        <field name="comment">Puede crear, editar y eliminar nomencladores</field>
+    </record>
+</odoo>

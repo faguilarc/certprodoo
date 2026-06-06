@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Categorías Docentes por defecto -->
+    <record id="teaching_category_assistant" model="certprodoo.teaching.category">
+        <field name="name">Asistente</field>
+        <field name="code">AS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_category_instructor" model="certprodoo.teaching.category">
+        <field name="name">Instructor</field>
+        <field name="code">INS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_category_auxiliary" model="certprodoo.teaching.category">
+        <field name="name">Auxiliar</field>
+        <field name="code">AUX</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_category_titular" model="certprodoo.teaching.category">
+        <field name="name">Titular</field>
+        <field name="code">TIT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_category_main_prof" model="certprodoo.teaching.category">
+        <field name="name">Profesor Principal</field>
+        <field name="code">PP</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="teaching_category_none" model="certprodoo.teaching.category">
+        <field name="name">Ninguna</field>
+        <field name="code">NA</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

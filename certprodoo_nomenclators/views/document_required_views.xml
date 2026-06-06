@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vista Lista ──────────────────────────────────────── -->
+    <record id="document_required_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.document.required.tree</field>
+        <field name="model">certprodoo.document.required</field>
+        <field name="arch" type="xml">
+            <tree string="Documentos para Trámites" default_order="procedure_type_id,sequence">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="procedure_type_id"/>
+                <field name="is_document_required"/>
+                <field name="is_personal_document"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ─── Vista Búsqueda ───────────────────────────────────── -->
+    <record id="document_required_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.document.required.search</field>
+        <field name="model">certprodoo.document.required</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Documentos">
+                <field name="name"/>
+                <field name="procedure_type_id"/>
+                <field name="description" search="False"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="groupby_procedure_type" string="Tipo de Trámite"
+                            context="{'group_by': 'procedure_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Vista Formulario ─────────────────────────────────── -->
+    <record id="document_required_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.document.required.form</field>
+        <field name="model">certprodoo.document.required</field>
+        <field name="arch" type="xml">
+            <form string="Documento Requerido">
+                <header>
+                    <button name="toggle_active" type="object"
+                            string="Archivar" class="btn-secondary"
+                            invisible="active == False"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                    <button name="toggle_active" type="object"
+                            string="Desarchivar" class="btn-secondary"
+                            invisible="active == True"
+                            groups="certprodoo_nomenclators.group_nomenclator_manager"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre del documento"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="procedure_type_id" options="{'no_create': True}"/>
+                            <field name="is_document_required"/>
+                            <field name="is_personal_document"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                            <field name="description" placeholder="Descripción del documento"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Acción ───────────────────────────────────────────── -->
+    <record id="document_required_action" model="ir.actions.act_window">
+        <field name="name">Documentos para Trámites</field>
+        <field name="res_model">certprodoo.document.required</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo documento requerido
+            </p>
+            <p>
+                Defina los documentos requeridos para cada tipo de trámite del sistema.
+            </p>
+        </field>
+    </record>
+
+</odoo>
