@@ -310,6 +310,7 @@
                     <group>
                         <field name="model_name" invisible="1"/>
                         <field name="res_id" invisible="1"/>
+                        <field name="current_state" invisible="1"/>
                         <field name="current_state_label" readonly="1"/>
                         <field name="target_state_label" readonly="1"/>
                     </group>
