@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <data>
-        <record model="ir.module.category" id="conection_test_category">
-            <field name="name">Administración KATAPULK</field>
-            <field name="sequence">1</field>
-        </record>
-    </data>
-</odoo>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-        <menuitem id="manage_notifications" name="Notificaciones" parent="security.generals_menu" sequence="6" action="gest_notif_action"/>
-    </data>
-</odoo>

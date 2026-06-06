@@ -1,8 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_fuc_config,fuc.config,model_fuc_config,base.group_user,1,0,0,0
-access_fuc_service,fuc.service,model_fuc_service,base.group_user,1,0,0,0
-access_fuc_config,fuc.config,model_fuc_config,base.group_system,1,1,1,1
-access_fuc_service,fuc.service,model_fuc_service,base.group_system,1,1,1,1
-access_fuc_test_wizard,fuc.test.wizard,model_fuc_test_wizard,base.group_user,1,0,1,0
-access_fuc_test,fuc.test,model_fuc_test,base.group_user,1,0,1,0
-access_fuc_result_wizard,fuc.result.wizard,model_fuc_result_wizard,base.group_user,1,0,1,0

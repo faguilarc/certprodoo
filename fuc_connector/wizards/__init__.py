@@ -1,1 +1,0 @@
-from . import fuc_test_wizard
