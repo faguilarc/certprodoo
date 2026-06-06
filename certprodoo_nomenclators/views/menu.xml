@@ -105,7 +105,7 @@
     <menuitem id="menu_res_city"
               name="Municipios"
               parent="menu_nomenclators_geographic"
-              action="res_city_action"
+              action="city_action"
               sequence="3"/>
 
     <menuitem id="menu_res_organism"

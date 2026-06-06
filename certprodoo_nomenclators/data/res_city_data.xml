@@ -3,67 +3,67 @@
     <!-- Municipios de Cuba -->
 
     <!-- Municipios de Pinar del Río -->
-    <record id="city_sandino" model="res.city">
+    <record id="city_sandino" model="certprodoo.city">
         <field name="name">Sandino</field>
         <field name="code">2101</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_mantua" model="res.city">
+    <record id="city_mantua" model="certprodoo.city">
         <field name="name">Mantua</field>
         <field name="code">2102</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_minas_de_matahambre" model="res.city">
+    <record id="city_minas_de_matahambre" model="certprodoo.city">
         <field name="name">Minas de Matahambre</field>
         <field name="code">2103</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_vinales" model="res.city">
+    <record id="city_vinales" model="certprodoo.city">
         <field name="name">Viñales</field>
         <field name="code">2104</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_la_palma" model="res.city">
+    <record id="city_la_palma" model="certprodoo.city">
         <field name="name">La Palma</field>
         <field name="code">2105</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_los_palacios" model="res.city">
+    <record id="city_los_palacios" model="certprodoo.city">
         <field name="name">Los Palacios</field>
         <field name="code">2106</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_consolacion_del_sur" model="res.city">
+    <record id="city_consolacion_del_sur" model="certprodoo.city">
         <field name="name">Consolación del Sur</field>
         <field name="code">2107</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_pinar_del_rio" model="res.city">
+    <record id="city_pinar_del_rio" model="certprodoo.city">
         <field name="name">Pinar del Río</field>
         <field name="code">2108</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_san_luis_21" model="res.city">
+    <record id="city_san_luis_21" model="certprodoo.city">
         <field name="name">San Luis</field>
         <field name="code">2109</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_san_juan_y_martinez" model="res.city">
+    <record id="city_san_juan_y_martinez" model="certprodoo.city">
         <field name="name">San Juan y Martínez</field>
         <field name="code">2110</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_21"/>
     </record>
-    <record id="city_guane" model="res.city">
+    <record id="city_guane" model="certprodoo.city">
         <field name="name">Guane</field>
         <field name="code">2111</field>
         <field name="country_id" ref="base.cu"/>
@@ -71,67 +71,67 @@
     </record>
 
     <!-- Municipios de Artemisa -->
-    <record id="city_bahia_honda" model="res.city">
+    <record id="city_bahia_honda" model="certprodoo.city">
         <field name="name">Bahía Honda</field>
         <field name="code">2201</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_mariel" model="res.city">
+    <record id="city_mariel" model="certprodoo.city">
         <field name="name">Mariel</field>
         <field name="code">2202</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_guanajay" model="res.city">
+    <record id="city_guanajay" model="certprodoo.city">
         <field name="name">Guanajay</field>
         <field name="code">2203</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_caimito" model="res.city">
+    <record id="city_caimito" model="certprodoo.city">
         <field name="name">Caimito</field>
         <field name="code">2204</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_bauta" model="res.city">
+    <record id="city_bauta" model="certprodoo.city">
         <field name="name">Bauta</field>
         <field name="code">2205</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_san_antonio_de_los_banos" model="res.city">
+    <record id="city_san_antonio_de_los_banos" model="certprodoo.city">
         <field name="name">San Antonio de los Baños</field>
         <field name="code">2206</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_guira_de_melena" model="res.city">
+    <record id="city_guira_de_melena" model="certprodoo.city">
         <field name="name">Güira de Melena</field>
         <field name="code">2207</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_alquizar" model="res.city">
+    <record id="city_alquizar" model="certprodoo.city">
         <field name="name">Alquízar</field>
         <field name="code">2208</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_artemisa" model="res.city">
+    <record id="city_artemisa" model="certprodoo.city">
         <field name="name">Artemisa</field>
         <field name="code">2209</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_candelaria" model="res.city">
+    <record id="city_candelaria" model="certprodoo.city">
         <field name="name">Candelaria</field>
         <field name="code">2210</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_22"/>
     </record>
-    <record id="city_san_cristobal" model="res.city">
+    <record id="city_san_cristobal" model="certprodoo.city">
         <field name="name">San Cristóbal</field>
         <field name="code">2211</field>
         <field name="country_id" ref="base.cu"/>
@@ -139,91 +139,91 @@
     </record>
 
     <!-- Municipios de La Habana -->
-    <record id="city_playa" model="res.city">
+    <record id="city_playa" model="certprodoo.city">
         <field name="name">Playa</field>
         <field name="code">2301</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_plaza_de_la_revolucion" model="res.city">
+    <record id="city_plaza_de_la_revolucion" model="certprodoo.city">
         <field name="name">Plaza de la Revolución</field>
         <field name="code">2302</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_centro_habana" model="res.city">
+    <record id="city_centro_habana" model="certprodoo.city">
         <field name="name">Centro Habana</field>
         <field name="code">2303</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_la_habana_vieja" model="res.city">
+    <record id="city_la_habana_vieja" model="certprodoo.city">
         <field name="name">La Habana Vieja</field>
         <field name="code">2304</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_regla" model="res.city">
+    <record id="city_regla" model="certprodoo.city">
         <field name="name">Regla</field>
         <field name="code">2305</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_la_habana_del_este" model="res.city">
+    <record id="city_la_habana_del_este" model="certprodoo.city">
         <field name="name">La Habana del Este</field>
         <field name="code">2306</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_guanabacoa" model="res.city">
+    <record id="city_guanabacoa" model="certprodoo.city">
         <field name="name">Guanabacoa</field>
         <field name="code">2307</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_san_miguel_del_padron" model="res.city">
+    <record id="city_san_miguel_del_padron" model="certprodoo.city">
         <field name="name">San Miguel del Padrón</field>
         <field name="code">2308</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_diez_de_octubre" model="res.city">
+    <record id="city_diez_de_octubre" model="certprodoo.city">
         <field name="name">Diez de Octubre</field>
         <field name="code">2309</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_cerro" model="res.city">
+    <record id="city_cerro" model="certprodoo.city">
         <field name="name">Cerro</field>
         <field name="code">2310</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_marianao" model="res.city">
+    <record id="city_marianao" model="certprodoo.city">
         <field name="name">Marianao</field>
         <field name="code">2311</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_la_lisa" model="res.city">
+    <record id="city_la_lisa" model="certprodoo.city">
         <field name="name">La Lisa</field>
         <field name="code">2312</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_boyeros" model="res.city">
+    <record id="city_boyeros" model="certprodoo.city">
         <field name="name">Boyeros</field>
         <field name="code">2313</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_arrojo_naranjo" model="res.city">
+    <record id="city_arrojo_naranjo" model="certprodoo.city">
         <field name="name">Arrojo Naranjo</field>
         <field name="code">2314</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_23"/>
     </record>
-    <record id="city_cotorro" model="res.city">
+    <record id="city_cotorro" model="certprodoo.city">
         <field name="name">Cotorro</field>
         <field name="code">2315</field>
         <field name="country_id" ref="base.cu"/>
@@ -231,67 +231,67 @@
     </record>
 
     <!-- Municipios de Mayabeque -->
-    <record id="city_bejucal" model="res.city">
+    <record id="city_bejucal" model="certprodoo.city">
         <field name="name">Bejucal</field>
         <field name="code">2401</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_san_jose_de_las_lajas" model="res.city">
+    <record id="city_san_jose_de_las_lajas" model="certprodoo.city">
         <field name="name">San José de las Lajas</field>
         <field name="code">2402</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_jaruco" model="res.city">
+    <record id="city_jaruco" model="certprodoo.city">
         <field name="name">Jaruco</field>
         <field name="code">2403</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_santa_cruz_del_norte" model="res.city">
+    <record id="city_santa_cruz_del_norte" model="certprodoo.city">
         <field name="name">Santa Cruz del Norte</field>
         <field name="code">2404</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_madruga" model="res.city">
+    <record id="city_madruga" model="certprodoo.city">
         <field name="name">Madruga</field>
         <field name="code">2405</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_nueva_paz" model="res.city">
+    <record id="city_nueva_paz" model="certprodoo.city">
         <field name="name">Nueva Paz</field>
         <field name="code">2406</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_san_nicolas" model="res.city">
+    <record id="city_san_nicolas" model="certprodoo.city">
         <field name="name">San Nicolás</field>
         <field name="code">2407</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_guines" model="res.city">
+    <record id="city_guines" model="certprodoo.city">
         <field name="name">Güines</field>
         <field name="code">2408</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_melena_del_sur" model="res.city">
+    <record id="city_melena_del_sur" model="certprodoo.city">
         <field name="name">Melena del Sur</field>
         <field name="code">2409</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_batabano" model="res.city">
+    <record id="city_batabano" model="certprodoo.city">
         <field name="name">Batabanó</field>
         <field name="code">2410</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_24"/>
     </record>
-    <record id="city_quivican" model="res.city">
+    <record id="city_quivican" model="certprodoo.city">
         <field name="name">Quivicán</field>
         <field name="code">2411</field>
         <field name="country_id" ref="base.cu"/>
@@ -299,79 +299,79 @@
     </record>
 
     <!-- Municipios de Matanzas -->
-    <record id="city_matanzas" model="res.city">
+    <record id="city_matanzas" model="certprodoo.city">
         <field name="name">Matanzas</field>
         <field name="code">2501</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_cardenas" model="res.city">
+    <record id="city_cardenas" model="certprodoo.city">
         <field name="name">Cárdenas</field>
         <field name="code">2502</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_marti" model="res.city">
+    <record id="city_marti" model="certprodoo.city">
         <field name="name">Martí</field>
         <field name="code">2503</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_colon" model="res.city">
+    <record id="city_colon" model="certprodoo.city">
         <field name="name">Colón</field>
         <field name="code">2504</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_perico" model="res.city">
+    <record id="city_perico" model="certprodoo.city">
         <field name="name">Perico</field>
         <field name="code">2505</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_jovellanos" model="res.city">
+    <record id="city_jovellanos" model="certprodoo.city">
         <field name="name">Jovellanos</field>
         <field name="code">2506</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_pedro_betancourt" model="res.city">
+    <record id="city_pedro_betancourt" model="certprodoo.city">
         <field name="name">Pedro Betancourt</field>
         <field name="code">2507</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_limonar" model="res.city">
+    <record id="city_limonar" model="certprodoo.city">
         <field name="name">Limonar</field>
         <field name="code">2508</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_union_de_reyes" model="res.city">
+    <record id="city_union_de_reyes" model="certprodoo.city">
         <field name="name">Unión de Reyes</field>
         <field name="code">2509</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_cienaga_de_zapata" model="res.city">
+    <record id="city_cienaga_de_zapata" model="certprodoo.city">
         <field name="name">Ciénaga de Zapata</field>
         <field name="code">2510</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_jaguey_grande" model="res.city">
+    <record id="city_jaguey_grande" model="certprodoo.city">
         <field name="name">Jagüey Grande</field>
         <field name="code">2511</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_calimete" model="res.city">
+    <record id="city_calimete" model="certprodoo.city">
         <field name="name">Calimete</field>
         <field name="code">2512</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_25"/>
     </record>
-    <record id="city_los_arabos" model="res.city">
+    <record id="city_los_arabos" model="certprodoo.city">
         <field name="name">Los Arabos</field>
         <field name="code">2513</field>
         <field name="country_id" ref="base.cu"/>
@@ -379,79 +379,79 @@
     </record>
 
     <!-- Municipios de Villa Clara -->
-    <record id="city_corralillo" model="res.city">
+    <record id="city_corralillo" model="certprodoo.city">
         <field name="name">Corralillo</field>
         <field name="code">2601</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_quemado_de_guines" model="res.city">
+    <record id="city_quemado_de_guines" model="certprodoo.city">
         <field name="name">Quemado de Güines</field>
         <field name="code">2602</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_sagua_la_grande" model="res.city">
+    <record id="city_sagua_la_grande" model="certprodoo.city">
         <field name="name">Sagua la Grande</field>
         <field name="code">2603</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_encrucijada" model="res.city">
+    <record id="city_encrucijada" model="certprodoo.city">
         <field name="name">Encrucijada</field>
         <field name="code">2604</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_camajuani" model="res.city">
+    <record id="city_camajuani" model="certprodoo.city">
         <field name="name">Camajuaní</field>
         <field name="code">2605</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_caibarien" model="res.city">
+    <record id="city_caibarien" model="certprodoo.city">
         <field name="name">Caibarién</field>
         <field name="code">2606</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_remedios" model="res.city">
+    <record id="city_remedios" model="certprodoo.city">
         <field name="name">Remedios</field>
         <field name="code">2607</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_placetas" model="res.city">
+    <record id="city_placetas" model="certprodoo.city">
         <field name="name">Placetas</field>
         <field name="code">2608</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_santa_clara" model="res.city">
+    <record id="city_santa_clara" model="certprodoo.city">
         <field name="name">Santa Clara</field>
         <field name="code">2609</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_cifuentes" model="res.city">
+    <record id="city_cifuentes" model="certprodoo.city">
         <field name="name">Cifuentes</field>
         <field name="code">2610</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_santo_domingo" model="res.city">
+    <record id="city_santo_domingo" model="certprodoo.city">
         <field name="name">Santo Domingo</field>
         <field name="code">2611</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_ranchuelo" model="res.city">
+    <record id="city_ranchuelo" model="certprodoo.city">
         <field name="name">Ranchuelo</field>
         <field name="code">2612</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_26"/>
     </record>
-    <record id="city_manicaragua" model="res.city">
+    <record id="city_manicaragua" model="certprodoo.city">
         <field name="name">Manicaragua</field>
         <field name="code">2613</field>
         <field name="country_id" ref="base.cu"/>
@@ -459,49 +459,49 @@
     </record>
 
     <!-- Municipios de Cienfuegos -->
-    <record id="city_aguada_de_pasajeros" model="res.city">
+    <record id="city_aguada_de_pasajeros" model="certprodoo.city">
         <field name="name">Aguada de Pasajeros</field>
         <field name="code">2701</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_rodas" model="res.city">
+    <record id="city_rodas" model="certprodoo.city">
         <field name="name">Rodas</field>
         <field name="code">2702</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_palmira" model="res.city">
+    <record id="city_palmira" model="certprodoo.city">
         <field name="name">Palmira</field>
         <field name="code">2703</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_lajas" model="res.city">
+    <record id="city_lajas" model="certprodoo.city">
         <field name="name">Lajas</field>
         <field name="code">2704</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_cruces" model="res.city">
+    <record id="city_cruces" model="certprodoo.city">
         <field name="name">Cruces</field>
         <field name="code">2705</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_cumanayagua" model="res.city">
+    <record id="city_cumanayagua" model="certprodoo.city">
         <field name="name">Cumanayagua</field>
         <field name="code">2706</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_cienfuegos" model="res.city">
+    <record id="city_cienfuegos" model="certprodoo.city">
         <field name="name">Cienfuegos</field>
         <field name="code">2707</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_27"/>
     </record>
-    <record id="city_abreus" model="res.city">
+    <record id="city_abreus" model="certprodoo.city">
         <field name="name">Abreus</field>
         <field name="code">2708</field>
         <field name="country_id" ref="base.cu"/>
@@ -509,49 +509,49 @@
     </record>
 
     <!-- Municipios de Santi Spíritus -->
-    <record id="city_yaguajay" model="res.city">
+    <record id="city_yaguajay" model="certprodoo.city">
         <field name="name">Yaguajay</field>
         <field name="code">2801</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_jatibonico" model="res.city">
+    <record id="city_jatibonico" model="certprodoo.city">
         <field name="name">Jatibonico</field>
         <field name="code">2802</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_taguasco" model="res.city">
+    <record id="city_taguasco" model="certprodoo.city">
         <field name="name">Taguasco</field>
         <field name="code">2803</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_cabaiguan" model="res.city">
+    <record id="city_cabaiguan" model="certprodoo.city">
         <field name="name">Cabaiguán</field>
         <field name="code">2804</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_fomento" model="res.city">
+    <record id="city_fomento" model="certprodoo.city">
         <field name="name">Fomento</field>
         <field name="code">2805</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_trinidad" model="res.city">
+    <record id="city_trinidad" model="certprodoo.city">
         <field name="name">Trinidad</field>
         <field name="code">2806</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_sancti_spiritus" model="res.city">
+    <record id="city_sancti_spiritus" model="certprodoo.city">
         <field name="name">Sancti Spíritus</field>
         <field name="code">2807</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_28"/>
     </record>
-    <record id="city_la_sierpe" model="res.city">
+    <record id="city_la_sierpe" model="certprodoo.city">
         <field name="name">La Sierpe</field>
         <field name="code">2808</field>
         <field name="country_id" ref="base.cu"/>
@@ -559,61 +559,61 @@
     </record>
 
     <!-- Municipios de Ciego de Ávila -->
-    <record id="city_chambas" model="res.city">
+    <record id="city_chambas" model="certprodoo.city">
         <field name="name">Chambas</field>
         <field name="code">2901</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_moron" model="res.city">
+    <record id="city_moron" model="certprodoo.city">
         <field name="name">Morón</field>
         <field name="code">2902</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_bolivia" model="res.city">
+    <record id="city_bolivia" model="certprodoo.city">
         <field name="name">Bolivia</field>
         <field name="code">2903</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_primero_de_enero" model="res.city">
+    <record id="city_primero_de_enero" model="certprodoo.city">
         <field name="name">Primero de Enero</field>
         <field name="code">2904</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_ciro_redondo" model="res.city">
+    <record id="city_ciro_redondo" model="certprodoo.city">
         <field name="name">Ciro Redondo</field>
         <field name="code">2905</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_florencia" model="res.city">
+    <record id="city_florencia" model="certprodoo.city">
         <field name="name">Florencia</field>
         <field name="code">2906</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_majagua" model="res.city">
+    <record id="city_majagua" model="certprodoo.city">
         <field name="name">Majagua</field>
         <field name="code">2907</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_ciego_de_avila" model="res.city">
+    <record id="city_ciego_de_avila" model="certprodoo.city">
         <field name="name">Ciego de Ávila</field>
         <field name="code">2908</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_venezuela" model="res.city">
+    <record id="city_venezuela" model="certprodoo.city">
         <field name="name">Venezuela</field>
         <field name="code">2909</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_29"/>
     </record>
-    <record id="city_baragua" model="res.city">
+    <record id="city_baragua" model="certprodoo.city">
         <field name="name">Baraguá</field>
         <field name="code">2910</field>
         <field name="country_id" ref="base.cu"/>
@@ -621,79 +621,79 @@
     </record>
 
     <!-- Municipios de Camagüey -->
-    <record id="city_carlos_manuel_de_cespedes" model="res.city">
+    <record id="city_carlos_manuel_de_cespedes" model="certprodoo.city">
         <field name="name">Carlos Manuel de Céspedes</field>
         <field name="code">3001</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_esmeralda" model="res.city">
+    <record id="city_esmeralda" model="certprodoo.city">
         <field name="name">Esmeralda</field>
         <field name="code">3002</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_sierra_de_cubitas" model="res.city">
+    <record id="city_sierra_de_cubitas" model="certprodoo.city">
         <field name="name">Sierra de Cubitas</field>
         <field name="code">3003</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_minas" model="res.city">
+    <record id="city_minas" model="certprodoo.city">
         <field name="name">Minas</field>
         <field name="code">3004</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_nuevitas" model="res.city">
+    <record id="city_nuevitas" model="certprodoo.city">
         <field name="name">Nuevitas</field>
         <field name="code">3005</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_guaimaro" model="res.city">
+    <record id="city_guaimaro" model="certprodoo.city">
         <field name="name">Guáimaro</field>
         <field name="code">3006</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_sibanicu" model="res.city">
+    <record id="city_sibanicu" model="certprodoo.city">
         <field name="name">Sibanicú</field>
         <field name="code">3007</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_camaguey" model="res.city">
+    <record id="city_camaguey" model="certprodoo.city">
         <field name="name">Camagüey</field>
         <field name="code">3008</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_florida" model="res.city">
+    <record id="city_florida" model="certprodoo.city">
         <field name="name">Florida</field>
         <field name="code">3009</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_vertientes" model="res.city">
+    <record id="city_vertientes" model="certprodoo.city">
         <field name="name">Vertientes</field>
         <field name="code">3010</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_jimaguayu" model="res.city">
+    <record id="city_jimaguayu" model="certprodoo.city">
         <field name="name">Jimaguayú</field>
         <field name="code">3011</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_najasa" model="res.city">
+    <record id="city_najasa" model="certprodoo.city">
         <field name="name">Najasa</field>
         <field name="code">3012</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_30"/>
     </record>
-    <record id="city_santa_cruz_del_sur" model="res.city">
+    <record id="city_santa_cruz_del_sur" model="certprodoo.city">
         <field name="name">Santa Cruz del Sur</field>
         <field name="code">3013</field>
         <field name="country_id" ref="base.cu"/>
@@ -701,49 +701,49 @@
     </record>
 
     <!-- Municipios de Las Tunas -->
-    <record id="city_manati" model="res.city">
+    <record id="city_manati" model="certprodoo.city">
         <field name="name">Manatí</field>
         <field name="code">3101</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_puerto_padre" model="res.city">
+    <record id="city_puerto_padre" model="certprodoo.city">
         <field name="name">Puerto Padre</field>
         <field name="code">3102</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_jesus_menendez" model="res.city">
+    <record id="city_jesus_menendez" model="certprodoo.city">
         <field name="name">Jesús Menéndez</field>
         <field name="code">3103</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_majibacoa" model="res.city">
+    <record id="city_majibacoa" model="certprodoo.city">
         <field name="name">Majibacoa</field>
         <field name="code">3104</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_las_tunas" model="res.city">
+    <record id="city_las_tunas" model="certprodoo.city">
         <field name="name">Las Tunas</field>
         <field name="code">3105</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_jobabo" model="res.city">
+    <record id="city_jobabo" model="certprodoo.city">
         <field name="name">Jobabo</field>
         <field name="code">3106</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_colombia" model="res.city">
+    <record id="city_colombia" model="certprodoo.city">
         <field name="name">Colombia</field>
         <field name="code">3107</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_31"/>
     </record>
-    <record id="city_amancio" model="res.city">
+    <record id="city_amancio" model="certprodoo.city">
         <field name="name">Amancio</field>
         <field name="code">3108</field>
         <field name="country_id" ref="base.cu"/>
@@ -751,85 +751,85 @@
     </record>
 
     <!-- Municipios de Holguín -->
-    <record id="city_gibara" model="res.city">
+    <record id="city_gibara" model="certprodoo.city">
         <field name="name">Gibara</field>
         <field name="code">3201</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_rafael_freyre" model="res.city">
+    <record id="city_rafael_freyre" model="certprodoo.city">
         <field name="name">Rafael Freyre</field>
         <field name="code">3202</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_banes" model="res.city">
+    <record id="city_banes" model="certprodoo.city">
         <field name="name">Banes</field>
         <field name="code">3203</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_antilla" model="res.city">
+    <record id="city_antilla" model="certprodoo.city">
         <field name="name">Antilla</field>
         <field name="code">3204</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_baguanos" model="res.city">
+    <record id="city_baguanos" model="certprodoo.city">
         <field name="name">Báguanos</field>
         <field name="code">3205</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_holguin" model="res.city">
+    <record id="city_holguin" model="certprodoo.city">
         <field name="name">Holguín</field>
         <field name="code">3206</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_calixto_garcia" model="res.city">
+    <record id="city_calixto_garcia" model="certprodoo.city">
         <field name="name">Calixto García</field>
         <field name="code">3207</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_cacocum" model="res.city">
+    <record id="city_cacocum" model="certprodoo.city">
         <field name="name">Cacocum</field>
         <field name="code">3208</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_urbano_noris" model="res.city">
+    <record id="city_urbano_noris" model="certprodoo.city">
         <field name="name">Urbano Noris</field>
         <field name="code">3209</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_cueto" model="res.city">
+    <record id="city_cueto" model="certprodoo.city">
         <field name="name">Cueto</field>
         <field name="code">3210</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_mayari" model="res.city">
+    <record id="city_mayari" model="certprodoo.city">
         <field name="name">Mayarí</field>
         <field name="code">3211</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_frank_pais" model="res.city">
+    <record id="city_frank_pais" model="certprodoo.city">
         <field name="name">Frank País</field>
         <field name="code">3212</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_sagua_de_tanamo" model="res.city">
+    <record id="city_sagua_de_tanamo" model="certprodoo.city">
         <field name="name">Sagua de Tánamo</field>
         <field name="code">3213</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_32"/>
     </record>
-    <record id="city_moa" model="res.city">
+    <record id="city_moa" model="certprodoo.city">
         <field name="name">Moa</field>
         <field name="code">3214</field>
         <field name="country_id" ref="base.cu"/>
@@ -837,79 +837,79 @@
     </record>
 
     <!-- Municipios de Granma -->
-    <record id="city_rio_cauto" model="res.city">
+    <record id="city_rio_cauto" model="certprodoo.city">
         <field name="name">Río Cauto</field>
         <field name="code">3301</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_cauto_cristo" model="res.city">
+    <record id="city_cauto_cristo" model="certprodoo.city">
         <field name="name">Cauto Cristo</field>
         <field name="code">3302</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_jiguani" model="res.city">
+    <record id="city_jiguani" model="certprodoo.city">
         <field name="name">Jiguaní</field>
         <field name="code">3303</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_bayamo" model="res.city">
+    <record id="city_bayamo" model="certprodoo.city">
         <field name="name">Bayamo</field>
         <field name="code">3304</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_yara" model="res.city">
+    <record id="city_yara" model="certprodoo.city">
         <field name="name">Yara</field>
         <field name="code">3305</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_manzanillo" model="res.city">
+    <record id="city_manzanillo" model="certprodoo.city">
         <field name="name">Manzanillo</field>
         <field name="code">3306</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_campechuela" model="res.city">
+    <record id="city_campechuela" model="certprodoo.city">
         <field name="name">Campechuela</field>
         <field name="code">3307</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_media_luna" model="res.city">
+    <record id="city_media_luna" model="certprodoo.city">
         <field name="name">Media Luna</field>
         <field name="code">3308</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_niquero" model="res.city">
+    <record id="city_niquero" model="certprodoo.city">
         <field name="name">Niquero</field>
         <field name="code">3309</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_pilon" model="res.city">
+    <record id="city_pilon" model="certprodoo.city">
         <field name="name">Pilón</field>
         <field name="code">3310</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_bartolome_maso" model="res.city">
+    <record id="city_bartolome_maso" model="certprodoo.city">
         <field name="name">Bartolomé Masó</field>
         <field name="code">3311</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_buey_arriba" model="res.city">
+    <record id="city_buey_arriba" model="certprodoo.city">
         <field name="name">Buey Arriba</field>
         <field name="code">3312</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_33"/>
     </record>
-    <record id="city_guisa" model="res.city">
+    <record id="city_guisa" model="certprodoo.city">
         <field name="name">Guisa</field>
         <field name="code">3313</field>
         <field name="country_id" ref="base.cu"/>
@@ -917,55 +917,55 @@
     </record>
 
     <!-- Municipios de Santiago de Cuba -->
-    <record id="city_contramaestre" model="res.city">
+    <record id="city_contramaestre" model="certprodoo.city">
         <field name="name">Contramaestre</field>
         <field name="code">3401</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_mella" model="res.city">
+    <record id="city_mella" model="certprodoo.city">
         <field name="name">Mella</field>
         <field name="code">3402</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_san_luis_34" model="res.city">
+    <record id="city_san_luis_34" model="certprodoo.city">
         <field name="name">San Luis</field>
         <field name="code">3403</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_segundo_frente" model="res.city">
+    <record id="city_segundo_frente" model="certprodoo.city">
         <field name="name">Segundo Frente</field>
         <field name="code">3404</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_songo_la_maya" model="res.city">
+    <record id="city_songo_la_maya" model="certprodoo.city">
         <field name="name">Songo La Maya</field>
         <field name="code">3405</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_santiago_de_cuba" model="res.city">
+    <record id="city_santiago_de_cuba" model="certprodoo.city">
         <field name="name">Santiago de Cuba</field>
         <field name="code">3406</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_palma_soriano" model="res.city">
+    <record id="city_palma_soriano" model="certprodoo.city">
         <field name="name">Palma Soriano</field>
         <field name="code">3407</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_tercer_frente" model="res.city">
+    <record id="city_tercer_frente" model="certprodoo.city">
         <field name="name">Tercer Frente</field>
         <field name="code">3408</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_34"/>
     </record>
-    <record id="city_guama" model="res.city">
+    <record id="city_guama" model="certprodoo.city">
         <field name="name">Guama</field>
         <field name="code">3409</field>
         <field name="country_id" ref="base.cu"/>
@@ -973,61 +973,61 @@
     </record>
 
     <!-- Municipios de Guantánamo -->
-    <record id="city_el_salvador" model="res.city">
+    <record id="city_el_salvador" model="certprodoo.city">
         <field name="name">El Salvador</field>
         <field name="code">3501</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_manuel_tames" model="res.city">
+    <record id="city_manuel_tames" model="certprodoo.city">
         <field name="name">Manuel Tames</field>
         <field name="code">3502</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_yateras" model="res.city">
+    <record id="city_yateras" model="certprodoo.city">
         <field name="name">Yateras</field>
         <field name="code">3503</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_baracoa" model="res.city">
+    <record id="city_baracoa" model="certprodoo.city">
         <field name="name">Baracoa</field>
         <field name="code">3504</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_maisi" model="res.city">
+    <record id="city_maisi" model="certprodoo.city">
         <field name="name">Maisí</field>
         <field name="code">3505</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_imias" model="res.city">
+    <record id="city_imias" model="certprodoo.city">
         <field name="name">Imías</field>
         <field name="code">3506</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_san_antonio_del_sur" model="res.city">
+    <record id="city_san_antonio_del_sur" model="certprodoo.city">
         <field name="name">San Antonio del Sur</field>
         <field name="code">3507</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_caimanera" model="res.city">
+    <record id="city_caimanera" model="certprodoo.city">
         <field name="name">Caimanera</field>
         <field name="code">3508</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_guantanamo" model="res.city">
+    <record id="city_guantanamo" model="certprodoo.city">
         <field name="name">Guantánamo</field>
         <field name="code">3509</field>
         <field name="country_id" ref="base.cu"/>
         <field name="state_id" ref="certprodoo_nomenclators.state_35"/>
     </record>
-    <record id="city_niceto_perez" model="res.city">
+    <record id="city_niceto_perez" model="certprodoo.city">
         <field name="name">Niceto Pérez</field>
         <field name="code">3510</field>
         <field name="country_id" ref="base.cu"/>
@@ -1035,7 +1035,7 @@
     </record>
 
     <!-- Municipio Especial Isla de la Juventud -->
-    <record id="city_isla_de_la_juventud" model="res.city">
+    <record id="city_isla_de_la_juventud" model="certprodoo.city">
         <field name="name">Isla de la Juventud</field>
         <field name="code">4001</field>
         <field name="country_id" ref="base.cu"/>

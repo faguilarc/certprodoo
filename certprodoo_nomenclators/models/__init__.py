@@ -14,7 +14,7 @@ from . import normative
 from . import structure
 from . import who_enrolls
 from . import terms_conditions
-from . import res_city_inherit
+from . import city
 from . import res_country_inherit
 from . import res_country_state_inherit
 from . import res_organism

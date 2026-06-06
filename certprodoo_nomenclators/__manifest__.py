@@ -26,7 +26,7 @@
     "website": "https://github.com/faguilarc/certprodoo",
     "category": "CertProdoo/Nomenclators",
     "version": "17.0.1.0.0",
-    "depends": ["base", "mail", "base_address_city", "certprodoo_base", "certprodoo_security"],
+    "depends": ["base", "mail", "certprodoo_base", "certprodoo_security"],
     "data": [
         "security/security_groups.xml",
         "security/ir.model.access.csv",

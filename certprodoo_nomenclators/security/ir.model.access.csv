@@ -29,3 +29,5 @@ access_certprodoo_terms_conditions_manager,certprodoo.terms.conditions.manager,m
 access_certprodoo_terms_conditions_user,certprodoo.terms.conditions.user,model_certprodoo_terms_conditions,group_nomenclator_user,1,0,0,0
 access_certprodoo_organism_manager,certprodoo.organism.manager,model_certprodoo_organism,group_nomenclator_manager,1,1,1,1
 access_certprodoo_organism_user,certprodoo.organism.user,model_certprodoo_organism,group_nomenclator_user,1,0,0,0
+access_certprodoo_city_manager,certprodoo.city.manager,model_certprodoo_city,group_nomenclator_manager,1,1,1,1
+access_certprodoo_city_user,certprodoo.city.user,model_certprodoo_city,group_nomenclator_user,1,0,0,0

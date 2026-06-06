@@ -95,6 +95,13 @@
         <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
     </record>
 
+    <record id="rule_city_company" model="ir.rule">
+        <field name="name">Municipios: Acceso por Compañía</field>
+        <field name="model_id" ref="model_certprodoo_city"/>
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_nomenclator_user'))]"/>
+    </record>
+
     <record id="rule_terms_conditions_company" model="ir.rule">
         <field name="name">Términos y Condiciones: Acceso por Compañía</field>
         <field name="model_id" ref="model_certprodoo_terms_conditions"/>
