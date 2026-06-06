@@ -24,8 +24,8 @@
     "version": "17.0.1.1.0",
     "depends": ["base", "mail"],
     "data": [
-        "security/ir.model.access.csv",
         "security/security_groups.xml",
+        "security/ir.model.access.csv",
         "data/default_config.xml",
         "data/sequence_data.xml",
         "views/api_config_views.xml",
