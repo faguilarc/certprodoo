@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Configuración FUC por defecto -->
+    <record id="default_fuc_config" model="certprodoo.base.api.config">
+        <field name="name">Ficha Única de Ciudadano</field>
+        <field name="api_type">fuc</field>
+        <field name="url">https://apis-fuc.minjus.gob.cu/token</field>
+        <field name="url_base">https://apis-fuc.minjus.gob.cu/pn-api-consulta/2.0.210131/api/v1/nivel10?</field>
+        <field name="auth_type">oauth2_client</field>
+        <field name="scope">nivel10</field>
+        <field name="grant_type">client_credentials</field>
+        <field name="max_retries">3</field>
+        <field name="retry_delay">3</field>
+        <field name="request_timeout">10</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Parámetros del sistema -->
+    <record id="param_system_name" model="certprodoo.base.system.config">
+        <field name="key">certprodoo.system.name</field>
+        <field name="value">Registro de Profesionales</field>
+        <field name="description">Nombre del sistema</field>
+        <field name="is_readonly">True</field>
+    </record>
+
+    <record id="param_verification_expiry_days" model="certprodoo.base.system.config">
+        <field name="key">certprodoo.verification.expiry_days</field>
+        <field name="value">7</field>
+        <field name="description">Días de validez de los enlaces de verificación por email</field>
+    </record>
+
+    <record id="param_audit_cleanup_days" model="certprodoo.base.system.config">
+        <field name="key">certprodoo.audit.cleanup_days</field>
+        <field name="value">365</field>
+        <field name="description">Días a conservar registros de auditoría</field>
+    </record>
+
+    <record id="param_timer_check_interval" model="certprodoo.base.system.config">
+        <field name="key">certprodoo.timer.check_interval_minutes</field>
+        <field name="value">60</field>
+        <field name="description">Intervalo en minutos para verificar timers de auto-transición</field>
+    </record>
+
+    <!-- NOTA: Los estados y transiciones específicas se definen en cada módulo
+         de negocio (professional_registers, digital_signature, etc.).
+         El módulo base solo proporciona la infraestructura. -->
+</odoo>

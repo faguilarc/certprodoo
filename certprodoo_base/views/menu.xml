@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú principal del módulo base -->
+    <menuitem id="menu_certprodoo_root"
+              name="CertProdoo"
+              web_icon="certprodoo_base,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Submenú de Configuración -->
+    <menuitem id="menu_certprodoo_config"
+              name="Configuración"
+              parent="menu_certprodoo_root"
+              sequence="100"/>
+
+    <!-- Menú de APIs -->
+    <menuitem id="menu_api_config"
+              name="APIs Externas"
+              parent="menu_certprodoo_config"
+              action="api_config_action"
+              sequence="10"/>
+
+    <!-- Menú de Parámetros del Sistema -->
+    <menuitem id="menu_system_config"
+              name="Parámetros del Sistema"
+              parent="menu_certprodoo_config"
+              action="system_config_action"
+              sequence="20"/>
+
+    <!-- Menú de Estados -->
+    <menuitem id="menu_state_config"
+              name="Estados del Sistema"
+              parent="menu_certprodoo_config"
+              action="state_config_action"
+              sequence="30"
+              groups="group_certprodoo_admin"/>
+
+    <!-- Menú de Transiciones -->
+    <menuitem id="menu_state_transition"
+              name="Transiciones de Estado"
+              parent="menu_certprodoo_config"
+              action="state_transition_action"
+              sequence="31"
+              groups="group_certprodoo_admin"/>
+
+    <!-- Menú de Temporizadores -->
+    <menuitem id="menu_state_timer"
+              name="Temporizadores"
+              parent="menu_certprodoo_config"
+              action="state_timer_action"
+              sequence="32"
+              groups="group_certprodoo_admin"/>
+
+    <!-- Menú de Historial -->
+    <menuitem id="menu_process_history"
+              name="Historial de Estados"
+              parent="menu_certprodoo_config"
+              action="process_history_action"
+              sequence="33"
+              groups="group_certprodoo_admin"/>
+
+    <!-- Menú de Auditoría -->
+    <menuitem id="menu_audit_log"
+              name="Auditoría"
+              parent="menu_certprodoo_root"
+              action="audit_log_action"
+              sequence="90"
+              groups="group_certprodoo_admin"/>
+</odoo>

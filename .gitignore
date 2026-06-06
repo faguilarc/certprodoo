@@ -1,2 +1,14 @@
 *.pyc
-digital_signature.zip
+__pycache__/
+*.pyo
+*.egg-info/
+dist/
+build/
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+.vscode/
+*.zip
+.env

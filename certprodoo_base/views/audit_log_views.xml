@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Formulario de Auditoría -->
+    <record id="audit_log_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.audit.log.form</field>
+        <field name="model">certprodoo.base.audit.log</field>
+        <field name="arch" type="xml">
+            <form string="Registro de Auditoría" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="model_name"/>
+                            <field name="res_id"/>
+                            <field name="record_display_name"/>
+                        </group>
+                        <group>
+                            <field name="action"/>
+                            <field name="user_id"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Auditoría -->
+    <record id="audit_log_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.base.audit.log.tree</field>
+        <field name="model">certprodoo.base.audit.log</field>
+        <field name="arch" type="xml">
+            <tree string="Registros de Auditoría" create="0" edit="0">
+                <field name="create_date" string="Fecha"/>
+                <field name="model_name"/>
+                <field name="record_display_name"/>
+                <field name="action"/>
+                <field name="user_id"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista de Búsqueda de Auditoría -->
+    <record id="audit_log_view_search" model="ir.ui.view">
+        <field name="name">certprodoo.base.audit.log.search</field>
+        <field name="model">certprodoo.base.audit.log</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Auditoría">
+                <field name="model_name"/>
+                <field name="record_display_name"/>
+                <field name="user_id"/>
+                <field name="description"/>
+                <filter name="filter_create" string="Creaciones" domain="[('action', '=', 'create')]"/>
+                <filter name="filter_write" string="Ediciones" domain="[('action', '=', 'write')]"/>
+                <filter name="filter_unlink" string="Eliminaciones" domain="[('action', '=', 'unlink')]"/>
+                <filter name="filter_state_change" string="Cambios de Estado" domain="[('action', '=', 'state_change')]"/>
+                <separator/>
+                <filter name="filter_today" string="Hoy" domain="[('create_date', '&gt;=', (context_today()).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_week" string="Esta Semana" domain="[('create_date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_model" string="Modelo" context="{'group_by': 'model_name'}"/>
+                    <filter name="group_action" string="Acción" context="{'group_by': 'action'}"/>
+                    <filter name="group_user" string="Usuario" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_date" string="Fecha" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción de Auditoría -->
+    <record id="audit_log_action" model="ir.actions.act_window">
+        <field name="name">Registro de Auditoría</field>
+        <field name="res_model">certprodoo.base.audit.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="audit_log_view_search"/>
+        <field name="context">{'search_default_filter_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay registros de auditoría para mostrar
+            </p>
+        </field>
+    </record>
+</odoo>

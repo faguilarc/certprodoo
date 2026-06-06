@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categoría del módulo -->
+    <record id="module_category_certprodoo" model="ir.module.category">
+        <field name="name">CertProdoo</field>
+        <field name="description">Gestión del Sistema de Registro Profesional</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Grupo de administrador del sistema base -->
+    <record id="group_certprodoo_admin" model="res.groups">
+        <field name="name">Administrador del Sistema</field>
+        <field name="category_id" ref="module_category_certprodoo"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+        <field name="comment">Acceso completo a la configuración del sistema certprodoo</field>
+    </record>
+
+    <!-- Grupo de usuario del sistema base -->
+    <record id="group_certprodoo_user" model="res.groups">
+        <field name="name">Usuario del Sistema</field>
+        <field name="category_id" ref="module_category_certprodoo"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Acceso básico al sistema certprodoo</field>
+    </record>
+
+    <!-- Grupo de usuario portal -->
+    <record id="group_certprodoo_portal" model="res.groups">
+        <field name="name">Usuario Portal</field>
+        <field name="category_id" ref="module_category_certprodoo"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="comment">Acceso de portal para solicitudes online y seguimiento de trámites</field>
+    </record>
+</odoo>

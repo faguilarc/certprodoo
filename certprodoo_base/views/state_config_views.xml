@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Formulario de Configuración de Estados -->
+    <record id="state_config_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.config.form</field>
+        <field name="model">certprodoo.base.state.config</field>
+        <field name="arch" type="xml">
+            <form string="Configuración de Estado">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="model_name"/>
+                        </group>
+                        <group>
+                            <field name="priority"/>
+                            <field name="fold"/>
+                            <field name="is_final"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Configuración de Estados -->
+    <record id="state_config_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.config.tree</field>
+        <field name="model">certprodoo.base.state.config</field>
+        <field name="arch" type="xml">
+            <tree string="Configuración de Estados">
+                <field name="model_name"/>
+                <field name="priority"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="is_final"/>
+                <field name="fold"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Configuración de Estados -->
+    <record id="state_config_action" model="ir.actions.act_window">
+        <field name="name">Configuración de Estados</field>
+        <field name="res_model">certprodoo.base.state.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure los estados del sistema por modelo
+            </p>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTAS DE TRANSICIONES                                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Vista de Formulario de Transición -->
+    <record id="state_transition_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.transition.form</field>
+        <field name="model">certprodoo.base.state.transition</field>
+        <field name="arch" type="xml">
+            <form string="Transición de Estado">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive">
+                            <field name="active"
+                                   widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Transición">
+                            <field name="model_name"/>
+                            <field name="from_code"/>
+                            <field name="to_code"/>
+                            <field name="label"/>
+                        </group>
+                        <group string="Restricciones">
+                            <field name="require_observation"/>
+                            <field name="group_id"/>
+                            <field name="action_method"/>
+                        </group>
+                    </group>
+                    <group string="Correo Automático">
+                        <group>
+                            <field name="auto_email"/>
+                            <field name="email_template_id"
+                                   attrs="{'invisible': [('auto_email', '=', False)], 'required': [('auto_email', '=', True)]}"/>
+                            <field name="email_recipients"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="attach_documents"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                            <field name="email_subject_prefix"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group string="Temporizadores">
+                        <field name="timer_rule_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="duration"/>
+                                <field name="duration_unit"/>
+                                <field name="to_code"/>
+                                <field name="action_type"/>
+                                <field name="auto_email"/>
+                                <field name="active"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Transiciones -->
+    <record id="state_transition_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.transition.tree</field>
+        <field name="model">certprodoo.base.state.transition</field>
+        <field name="arch" type="xml">
+            <tree string="Transiciones de Estado">
+                <field name="model_name"/>
+                <field name="from_code"/>
+                <field name="to_code"/>
+                <field name="label"/>
+                <field name="auto_email"/>
+                <field name="require_observation"/>
+                <field name="group_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Transiciones -->
+    <record id="state_transition_action" model="ir.actions.act_window">
+        <field name="name">Transiciones de Estado</field>
+        <field name="res_model">certprodoo.base.state.transition</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure las transiciones de estado por modelo
+            </p>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTAS DE TEMPORIZADORES                                   -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Vista de Formulario de Timer -->
+    <record id="state_timer_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.timer.form</field>
+        <field name="model">certprodoo.base.state.timer</field>
+        <field name="arch" type="xml">
+            <form string="Regla de Temporizador">
+                <sheet>
+                    <group>
+                        <group string="Configuración">
+                            <field name="model_name"/>
+                            <field name="from_code"/>
+                            <field name="to_code"/>
+                            <field name="transition_id"/>
+                        </group>
+                        <group string="Tiempo">
+                            <field name="duration"/>
+                            <field name="duration_unit"/>
+                            <field name="duration_timedelta"/>
+                        </group>
+                    </group>
+                    <group string="Acción al Expirar">
+                        <group>
+                            <field name="action_type"/>
+                            <field name="auto_email"/>
+                            <field name="email_template_id"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="email_recipients"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                            <field name="attach_documents"
+                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                            <field name="last_execution"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Timers -->
+    <record id="state_timer_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.timer.tree</field>
+        <field name="model">certprodoo.base.state.timer</field>
+        <field name="arch" type="xml">
+            <tree string="Reglas de Temporizador">
+                <field name="model_name"/>
+                <field name="from_code"/>
+                <field name="to_code"/>
+                <field name="duration"/>
+                <field name="duration_unit"/>
+                <field name="action_type"/>
+                <field name="auto_email"/>
+                <field name="last_execution"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Timers -->
+    <record id="state_timer_action" model="ir.actions.act_window">
+        <field name="name">Temporizadores de Estado</field>
+        <field name="res_model">certprodoo.base.state.timer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure reglas de auto-transición por tiempo
+            </p>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTAS DE HISTORIAL                                        -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Vista de Formulario de Historial -->
+    <record id="process_history_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.process.history.form</field>
+        <field name="model">certprodoo.base.process.history</field>
+        <field name="arch" type="xml">
+            <form string="Cambio de Estado" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="model_name"/>
+                            <field name="res_id"/>
+                            <field name="old_state_label"/>
+                            <field name="new_state_label"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="date"/>
+                            <field name="is_automatic"/>
+                            <field name="email_sent"/>
+                            <field name="transition_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="observation" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de Lista de Historial -->
+    <record id="process_history_view_tree" model="ir.ui.view">
+        <field name="name">certprodoo.base.process.history.tree</field>
+        <field name="model">certprodoo.base.process.history</field>
+        <field name="arch" type="xml">
+            <tree string="Historial de Cambios" create="0" edit="0">
+                <field name="date"/>
+                <field name="old_state_label"/>
+                <field name="new_state_label"/>
+                <field name="user_id"/>
+                <field name="is_automatic"/>
+                <field name="email_sent"/>
+                <field name="observation"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción de Historial -->
+    <record id="process_history_action" model="ir.actions.act_window">
+        <field name="name">Historial de Estados</field>
+        <field name="res_model">certprodoo.base.process.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aquí se registrarán los cambios de estado automáticamente
+            </p>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- WIZARD DE CAMBIO DE ESTADO                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <record id="state_change_wizard_view_form" model="ir.ui.view">
+        <field name="name">certprodoo.base.state.change.wizard.form</field>
+        <field name="model">certprodoo.base.state.change.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cambiar Estado">
+                <group>
+                    <group>
+                        <field name="model_name" invisible="1"/>
+                        <field name="res_id" invisible="1"/>
+                        <field name="current_state_label" readonly="1"/>
+                        <field name="target_state_label" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="transition_id"
+                               widget="selection"
+                               attrs="{'required': True}"/>
+                        <field name="require_observation" invisible="1"/>
+                        <field name="will_send_email" invisible="1"/>
+                        <field name="has_timer" invisible="1"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="observation"
+                           placeholder="Ingrese una observación para este cambio de estado..."
+                           attrs="{'required': [('require_observation', '=', True)]}"/>
+                </group>
+                <group attrs="{'invisible': [('will_send_email', '=', False)]}">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Se enviará un correo automático</strong> al ejecutar esta transición.
+                    </div>
+                </group>
+                <group attrs="{'invisible': [('has_timer', '=', False)]}">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Temporizador activo:</strong> Esta transición tiene reglas de auto-transición configuradas.
+                    </div>
+                </group>
+                <footer>
+                    <button name="action_execute"
+                            type="object"
+                            string="Ejecutar Transición"
+                            class="oe_highlight"/>
+                    <button string="Cancelar"
+                            class="btn btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_state_change_wizard" model="ir.actions.act_window">
+        <field name="name">Cambiar Estado</field>
+        <field name="res_model">certprodoo.base.state.change.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
