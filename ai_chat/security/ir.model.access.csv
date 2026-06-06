@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_provider_user,ai.provider,model_ai_provider,base.group_user,1,0,0,0
+access_ai_provider_system,ai.provider,model_ai_provider,base.group_system,1,1,1,1
+access_ai_chat_user,ai.chat,model_ai_chat,base.group_user,1,1,1,1
+access_ai_chat_message_user,ai.chat.message,model_ai_chat_message,base.group_user,1,1,1,1

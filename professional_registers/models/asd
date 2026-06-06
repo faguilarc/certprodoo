@@ -1,0 +1,353 @@
+   def search_data(self,record):
+
+        if record:
+            record = self.env['professional_registers.professional_request_minimal'].browse(record)
+        else:
+            raise exceptions.ValidationError('No se puede buscar los datos .')
+
+        if record.nationality_id.validate_fuc:
+
+            # Add traces
+            model = self.env['ir.model'].search([('model', '=', 'professional_registers.professional_request_minimal')])
+            user = self.env['res.users'].search([('id', '=', int(self.env.uid))])
+            msg = 'Búsqueda por CI: ' + str(record.identity) +  ' a la aplicación Registro del ciudadano para generación de solicitud.'
+            self.env['security.traces'].create({
+                'register_time': datetime.utcnow(),
+                'user': user.name,
+                'model': model.id,
+                'description': msg
+            })
+
+            #71012229259
+            identity = record.identity
+            self.clear_fields()
+
+            # aqui va tu url base y la del token
+            # url_base = 'https://apis-fuc.xutil.cu/pn-api-consulta/2.0.210111/api/v1/nivel10?'
+            url_base = self.get_url_base()
+            # url_token = 'https://apis-fuc.xutil.cu/token'
+            # url_token = self.get_token_url()
+
+            # message = "yaBXFT57XirizpO0TivSDiuIMnka:vcGhbLOKH9Vcb4BSKeOdXPYkcrUa"
+            variable = self.get_token()
+            if variable == None:
+                self.generate_token()
+
+            reintentos = 0
+            response_ok = False
+            url = f"{url_base}identidad_numero={identity}"
+            headers = {'Authorization': f"Bearer {variable}", 'Accept': 'application/json'}
+            data = []
+            while reintentos < 3 and not response_ok:
+                response = requests.get(url=url, headers=headers)
+                if response.status_code == 200 and self.validate_fuc(response.json()):
+                    response = response.json()
+                    data = response
+                    response_ok = True
+                else:
+                    reintentos += 1
+                    time.sleep(3)
+
+            # random_data = self.generate_random_data()
+            # data = [random_data]
+            for r in data:
+                record.flag_button = True
+                id = r['id']
+                identity = r['identidad_numero']
+                first_name = r['primer_nombre']
+                second_name = r['segundo_nombre']
+                first_last_name = r['primer_apellido']
+                second_last_name = r['segundo_apellido']
+                sex = r['sexo']
+                address = r['direccion']
+                city_name = r['municipio_residencia']
+                state_name = r['provincia_residencia']
+                deceased = r['fallecido']
+                deceased_volume = r['defuncion_tomo']
+                deceased_folio = r['defuncion_folio']
+                immigration_status = r['condicion_migratoria']
+
+                record.id_fuc = id
+                record.identity = identity
+                name = first_name
+                if second_name != None:
+                    name = str(name) + ' ' + str(second_name)
+                record.name = name
+                record.first_last_name = first_last_name
+                record.second_last_name = second_last_name
+                if sex == 'F':
+                    record.sex = 'female'
+                else:
+                    record.sex = 'male'
+
+                record.address = address
+
+                other_interested = ""
+
+                if deceased:
+                    other_interested = "Fallecido\n" + "Tomo: " + str(deceased_volume) + "\n Folio: " + str(deceased_folio)
+                else:
+                    other_interested = "Condición migratoria: " + str(immigration_status)
+
+                record.other_interested = other_interested
+
+                country = self.env['res.country'].search([('code', '=', 'CU')], limit=1)
+                record.country = country.id
+
+                if state_name == 'Ciudad de la Habana':
+                    state_name = 'La Habana'
+
+                state = self.env['res.country.state'].search([('name', 'ilike', str(state_name))])
+                record.country_states = state.id
+
+                city = self.env['res.city'].search([('name', 'ilike', str(city_name)),
+                                                    ('country_id', '=', int(country.id)),
+                                                    ('state_id', '=', int(state.id))])
+                record.city = city.id
+
+            if not data:
+                raise exceptions.ValidationError('Carné de identidad no registrado.')
+
+        self.generate_request(record)
+
+
+
+def generate_request(self,record=None):
+        if not record.flag_button:
+            raise exceptions.ValidationError('No se puede generar la solicitud.')
+
+        request_number = self.env['professional_registers.professional_request'].get_request_number()
+        full_name, user, password = self.get_full_name_password(record,request_number)
+        request = self.env['professional_registers.professional_request'].create({
+            'request_number': request_number,
+            'name': record.name,
+            'first_last_name': record.first_last_name,
+            'second_last_name': record.second_last_name,
+            'full_name': full_name,
+            'nationality_id': record.nationality_id.id,
+            'identity': record.identity if record.show_button else record.passport,
+            'id_fuc': record.id_fuc,
+            'sex': record.sex,
+            'address': record.address,
+            'country': record.country.id,
+            'country_states': record.country_states.id,
+            'city': record.city.id,
+            'user': user,
+            'password': password,
+            'observation': record.other_interested,
+            'register_type': 'register',
+            'states': self.get_default_state(),
+            'priority': 1,
+            'is_inscription_fuc': True if record.nationality_id.validate_fuc else False,
+            'date_request': datetime.utcnow().date().today()
+        })
+
+        # view = self.env.ref('professional_registers.professional_request_form_view')
+        msg = "Se ha generado la solicitud No: " + str(request.request_number)
+        self.env.user.notify_warning(
+            message=msg)
+
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'professional_registers.professional_request',
+            'name': 'Solicitud del profesional',
+            'view_mode': 'form',
+            'res_id': request.id,
+            'target': 'main',
+            'clear_breadcrumbs': True,
+        }
+
+ # @api.model
+    # def create(self, vals_list):
+    #
+    #     online = self.env['res.users'].has_group('security.group_professional_client_online')
+    #     register_user_id = self.env['res.users'].search([('login', '=', 'RegOnline')]).id
+    #
+    #     vals_list["user_id"] = self.env.uid if not online else register_user_id
+    #
+    #     user_id = self.env['res.users'].search([('id', '=', int(self.env.uid) if not online else register_user_id)])
+    #
+    #     vals_list['register_user'] = user_id.name
+    #
+    #     type = 'other'
+    #     if user_id.rol:
+    #         if user_id.rol.name == 'Editor':
+    #             type = 'register'
+    #     vals_list['register_type'] = type
+    #
+    #     vals_list['company_id'] = user_id.company_id.id
+    #
+    #     vals_list['year'] = datetime.utcnow().date().year
+    #
+    #     if 'date_request' not in vals_list:
+    #         vals_list['date_request'] = datetime.utcnow().date().today()
+    #     request_number = vals_list.get('request_number')
+    #     request = self.env['professional_registers.professional_request'].search(
+    #         ['|', ('request_number', '=', str(request_number)),
+    #          ('user', '=', str(vals_list.get('user')))])
+    #     if request:
+    #         requests = self.env['professional_registers.professional_request'].search([])
+    #         request_number = 0
+    #         if requests:
+    #             older = 0
+    #             for r in requests:
+    #                 value = int(r.request_number)
+    #                 if value > older:
+    #                     older = value
+    #             request_number = older + 1
+    #         else:
+    #             request_number = 1
+    #         vals_list['request_number'] = request_number
+    #         first_letter = str(vals_list.get('name'))[:1]
+    #
+    #         user = first_letter + str(vals_list.get('first_last_name')) + str(request_number) if not online else \
+    #             vals_list['user']
+    #         str_accent = unidecode(user)
+    #         str_lower = str(str_accent).lower()
+    #         vals_list['user'] = str_lower
+    #
+    #     # Add traces
+    #     model = self.env['ir.model'].search([('model', '=', 'professional_registers.professional_request')])
+    #
+    #     self.env['security.traces'].create({
+    #         'register_time': datetime.utcnow(),
+    #         'user': user_id.name,
+    #         'model': model.id,
+    #         'description': 'Creación de solicitud del profesional No: ' + str(vals_list.get('request_number'))
+    #     })
+    #
+    #     online_client_true = self.env['res.users'].has_group('security.group_professional_register_client_online')
+    #
+    #     # register user
+    #     registered_user = self.env['res.users'].search([('identification', '=', vals_list.get('identity'))])
+    #     if not registered_user:
+    #         if vals_list.get('user') and vals_list.get('password') and not online_client_true:
+    #             password = self._set_password(vals_list.get('password'))
+    #             user = self.env['res.users'].create({
+    #                 'name': vals_list.get('full_name'),
+    #                 'login': vals_list.get('user'),
+    #                 'user_type': 'client',
+    #                 'identification': vals_list.get('identity'),
+    #                 'image_1920': vals_list.get('image')
+    #
+    #             })
+    #             partner = self.env['res.partner'].search([('id', '=', int(user.partner_id.id))])
+    #             partner.write({
+    #                 'email': vals_list.get('email')
+    #             })
+    #             vals_list['id_user_register'] = user.id
+    #             group = self.env['res.groups'].search([('name', '=', 'Cliente')], limit=1)
+    #             query = """
+    #             INSERT INTO public.res_groups_users_rel(gid, uid) VALUES
+    #             (""" + str(group.id) + """,""" + str(user.id) + """)"""
+    #             cr = self.env.cr
+    #             cr.execute(query)
+    #             user._set_encrypted_password(user.id, password)
+    #
+    #         # Verify and Create Profile identity
+    #         profile = self.env['professional_registers.profile'].search([('identity', '=', self.identity)])
+    #         if not profile:
+    #             profile = self.env['professional_registers.profile'].create({
+    #                 'name': vals_list.get('name'),
+    #                 'first_last_name': vals_list.get('first_last_name'),
+    #                 'second_last_name': vals_list.get('second_last_name'),
+    #                 'full_name': vals_list.get('full_name'),
+    #                 'nationality_id': vals_list.get('nationality_id'),
+    #                 'identity': vals_list.get('identity'),
+    #                 'sex': vals_list.get('sex'),
+    #                 'address': vals_list.get('address'),
+    #                 'country': int(vals_list.get('country')) if vals_list.get('country') else False,
+    #                 'country_states': int(vals_list.get('country_states')) if vals_list.get(
+    #                     'country_states') else False,
+    #                 'city': int(vals_list.get('city')) if vals_list.get('city') else False,
+    #                 'phone': vals_list.get('phone'),
+    #                 'email': vals_list.get('email'),
+    #                 'teaching_level': int(vals_list.get('teaching_level')) if vals_list.get(
+    #                     'teaching_level') else False,
+    #                 'study_center': int(vals_list.get('study_center')) if vals_list.get('study_center') else False,
+    #                 'degree_date': vals_list.get('degree_date'),
+    #                 'volume': vals_list.get('volume'),
+    #                 'folio': vals_list.get('folio'),
+    #                 'convalidation_degree_tittle': vals_list.get('convalidation_degree_tittle'),
+    #                 'profession': int(vals_list.get('profession')) if vals_list.get('profession') else False,
+    #                 'specialties': int(vals_list.get('specialties')) if vals_list.get('specialties') else False,
+    #                 'teaching_category': int(vals_list.get('teaching_category')) if vals_list.get(
+    #                     'teaching_category') else False,
+    #                 'teaching_category_date': vals_list.get('teaching_category_date'),
+    #                 'investigations': vals_list.get('investigations'),
+    #                 'investigations_year': vals_list.get('investigations_year'),
+    #                 'degree_sciences': vals_list.get('degree_sciences'),
+    #                 'degree_sciences_year': vals_list.get('degree_sciences_year'),
+    #                 'unaicc_date': vals_list.get('unaicc_date'),
+    #                 'user': vals_list.get('user'),
+    #                 'password': vals_list.get('password'),
+    #                 'image': vals_list.get('image'),
+    #                 'date': vals_list.get('date'),
+    #                 'retired': vals_list.get('retired'),
+    #                 'company_id': int(vals_list.get('company_id')),
+    #                 'year': vals_list.get('year'),
+    #                 'user_id': int(vals_list.get('id_user_register')),
+    #                 # 'attachment_ids': vals_list.get('attachment_ids'),
+    #                 'history_work': vals_list.get('history_work') if vals_list.get('history_work') else False,
+    #                 'professional_language': vals_list.get('professional_language') if vals_list.get(
+    #                     'professional_language') else False,
+    #             })
+    #         history = vals_list.get('history_work')
+    #         if history:
+    #             for h in history:
+    #                 index = len(h) - 1
+    #                 h[index]['profile'] = profile.id
+    #
+    #     # Validar documentos
+    #     documents = vals_list.get('documents_required')
+    #     if not documents and vals_list.get('documents_required_registers'):
+    #         documents = vals_list.get('documents_required_registers')
+    #         vals_list['documents_required'] = []
+    #     else:
+    #         vals_list['documents_required_registers'] = []
+    #
+    #     validate = False
+    #     validate_all = True
+    #     if documents != None:
+    #         for d in documents:
+    #             d[2]['profile'] = profile.id
+    #             if d[2]['checked']:
+    #                 validate = True
+    #             else:
+    #                 validate_all = False
+    #     else:
+    #         validate_all = False
+    #     if validate_all:
+    #         model = self.env['ir.model'].search([('model', '=', 'professional_registers.professional_request')])
+    #         state_priority = self.env['security.state_configuration'].search(
+    #             [('priority', '=', 6), ('model', '=', int(model.id))])
+    #         vals_list['states'] = state_priority.id
+    #         vals_list['priority'] = 6
+    #         self.generate_notifications(6)
+    #         self.generate_insriptions()
+    #     elif validate:
+    #         model = self.env['ir.model'].search([('model', '=', 'professional_registers.professional_request')])
+    #         state_priority = self.env['security.state_configuration'].search(
+    #             [('priority', '=', 3), ('model', '=', int(model.id))])
+    #         vals_list['states'] = state_priority.id
+    #         vals_list['priority'] = 3
+    #         self.generate_notifications(3)
+    #
+    #     res = super(ProfessionalRequest, self).create(vals_list)
+    #
+    #     # Create Details
+    #     state = self.get_string_state(res['priority'], 'professional_registers.professional_request')
+    #     self.env['professional_registers.request_help'].create({
+    #         'full_name': res['full_name'],
+    #         'request_number': res['request_number'],
+    #         'date': datetime.utcnow().date(),
+    #         'profession': int(res['profession']),
+    #         'identity': res['identity'],
+    #         'email': res['email'],
+    #         'speciality': int(res['specialties']),
+    #         'nationality_id': int(res['nationality_id']),
+    #         'state': state,
+    #         'request_id': res.id
+    #     })
+    #     return res
+    #

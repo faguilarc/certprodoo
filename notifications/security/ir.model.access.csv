@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+sec_notif_id,Seg Notif,model_notifications_notifications,base.group_user,1,1,1,1
+sec_notifs_id,Seg Notifs,model_notifications_notifications,base.group_user,1,1,1,1

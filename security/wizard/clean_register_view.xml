@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="clear_registers_form_view" model="ir.ui.view">
+            <field name="name">security.clear_registers.form</field>
+            <field name="model">security.clear_registers</field>
+            <field name="arch" type="xml">
+                <form string="Limpiar registros" create="false" delete="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="erase_type" required="1" class="w-25"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="eraser" type="object" string="Borrar" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_clear_registers_wizard" model="ir.actions.act_window">
+            <field name="name">Borrar en BD</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">security.clear_registers</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="clear_registers_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

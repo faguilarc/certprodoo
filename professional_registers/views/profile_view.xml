@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="profile_form_view" model="ir.ui.view">
+            <field name="name">professional_registers.profile.form</field>
+            <field name="model">professional_registers.profile</field>
+            <field name="arch" type="xml">
+                <form string="Perfil Profesional" create="false" delete="false" duplicate="false">
+
+                    <!-- Botones principales (arriba del sheet) -->
+
+
+                    <sheet>
+
+                        <div class="oe_button_box" name="button_box">
+<!--                            <button name="action_manual_sync" type="object" string="Sincronizar Todo"-->
+<!--                                    class="btn-primary"/>-->
+                            <button name="create_update_request" type="object"
+                                    string="Solicitar Actualización"
+                                    icon="fa-edit"
+                                    attrs="{'invisible': [('request_count', '=', 0)]}"/>
+                            <button name="action_view_requests" type="object"
+                                    string="Ver Solicitudes"
+                                    class="btn-secondary"
+                                    icon="fa-list"
+                                    attrs="{'invisible': [('request_count', '=', 0)]}">
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- Zona de avatar y título -->
+                        <div class="o_form_sheet_bg">
+                            <div class="oe_button_box" name="button_box"/>
+                            <div class="o_right">
+                                <field name="image" widget="image"
+                                       class="oe_avatar"
+                                       options="{'preview_image': 'image'}" required="1"/>
+                            </div>
+                            <div class="oe_title">
+                                <label for="full_name" string="Nombre y apellidos"/>
+                                <h1>
+                                    <field name="full_name" readonly="1" required="1" force_save="1"/>
+                                </h1>
+                                <h3>
+                                    <field name="identity" readonly="1"/>
+                                    <span attrs="{'invisible': [('id_fuc', '=', False)]}">
+                                        |
+                                        <field name="id_fuc" readonly="1"/>
+                                    </span>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Separador -->
+                        <div class="o_horizontal_separator"></div>
+
+                        <group >
+                            <group string="Información Personal" >
+                                <field name="name" readonly="True" required="1"/>
+                                <field name="request_count" invisible="1"/>
+                                <field name="first_last_name" attrs="{'readonly': [('nationality_id', '=', 1)]}"
+                                       required="1"/>
+                                <field name="second_last_name" attrs="{'readonly': [('nationality_id', '=', 1)]}"
+                                       required="1"/>
+                                <field name="nationality_id" attrs="{'readonly': [('nationality_id', '=', 1)]}"
+                                       required="1"/>
+                                <field name="identity" readonly="True" required="1"/>
+                                <field name="sex" readonly="True"/>
+                            </group>
+
+
+                            <group string="Información de Contacto" >
+                                <field name="address" attrs="{'readonly': [('nationality_id', '=', 1)]}" required="1"/>
+                                <field name="country" attrs="{'readonly': [('nationality_id', '=', 1)]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="country_states" domain="[('country_id', '=', country)]"
+
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="city" domain="[('state_id', '=', country_states)]"
+
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="phone" required="1"/>
+                                <field name="email" required="1"/>
+                                <field name="retired"/>
+                                <field name="date"/>
+                                <field name="user" readonly="1" force_save="1"/>
+                                <field name="password" readonly="1" force_save="1"/>
+                                <field name="id_fuc" readonly="1" force_save="1"/>
+                            </group>
+
+                        </group>
+
+                        <notebook>
+                            <page string="Vínculo Laboral">
+                                <field name="history_work">
+                                    <tree class="tree_no_open" editable="bottom">
+                                        <field name="work_center" width="20%" required="1"/>
+                                        <field name="organism"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                               width="20%" required="1"/>
+                                        <field name="labour_sector"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                               width="20%" required="1"/>
+                                        <field name="activity" width="25%" required="1"/>
+                                        <field name="phone" width="10%" required="1"/>
+                                        <field name="date_from" width="10%" required="1"/>
+                                        <field name="date_to" width="15%" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Idioma">
+                                <field name="professional_language">
+                                    <tree string=" Idiomas" class="tree_no_open" editable="bottom">
+                                        <field name="language"/>
+                                        <field name="proficiency_level"/>
+
+                                    </tree>
+                                </field>
+
+                            </page>
+
+                            <page string="Observación">
+                                <field name="observation"/>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+            <record id="profile_tree_view" model="ir.ui.view">
+            <field name="name">professional_registers.profile.tree</field>
+            <field name="model">professional_registers.profile</field>
+            <field name="arch" type="xml">
+                <tree string="Perfil" create="false" delete="false">
+                    <field name="full_name" optional="show" width="20%" force_save="1" readonly="1"/>
+                    <field name="nationality_id" optional="show" width="15%" force_save="1" readonly="1"/>
+                    <field name="identity" optional="show" width="15%" force_save="1" readonly="1"/>
+                    <field name="email" optional="show" width="10%" force_save="1" readonly="1"/>
+                    <field name="correct_info" optional="hide" width="10%" force_save="1" readonly="1"/>
+
+                    <button
+                            name="func_correct_data"
+                            type="object"
+                            class="fa fa-check-square btn-success"
+                            attrs="{'invisible':[('correct_info','=', True)]}"
+                            groups="security.group_professional_client_online"
+                    />
+                    <button
+                            name="func_wrong_data"
+                            type="object"
+                            class="fa fa-window-close btn-danger"
+                            attrs="{'invisible':[('correct_info','=', True)]}"
+                            groups="security.group_professional_client_online"
+                    />
+                    <button
+                            name="action_generate_request"
+                            type="object"
+                            string="Generar solicitud"
+                            class="fa fa-id-card-o  btn-primary"
+                            groups="security.group_professional_client_online"
+                    />
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="profile_act_window" model="ir.actions.act_window">
+            <field name="name">Mi perfil</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">professional_registers.profile</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_id','=', uid)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede registrar una nuevo perfil
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

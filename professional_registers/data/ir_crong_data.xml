@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record forcecreate="True" id="ir_cron_generate_token" model="ir.cron">
+            <field name="name">Registros profesionales: Generar Token FUC</field>
+            <field name="model_id" ref="model_professional_registers_professional_request_minimal"/>
+            <field name="state">code</field>
+            <field name="code">model.generate_token()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">28</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_get_days_passed_request" model="ir.cron">
+            <field name="name">Registros profesionales: Días transcurridos</field>
+            <field name="model_id" ref="model_professional_registers_professional_request"/>
+            <field name="state">code</field>
+            <field name="code">model.get_days_passed()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+         <record forcecreate="True" id="ir_cron_desactive_users" model="ir.cron">
+            <field name="name">Registros profesionales: Desactivar Usuarios</field>
+            <field name="model_id" ref="model_professional_registers_professional_request"/>
+            <field name="state">code</field>
+            <field name="code">model.desactive_users()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+         <record forcecreate="True" id="cron_check_detained_requests" model="ir.cron">
+            <field name="name">Verificar Solicitudes Detenidas</field>
+            <field name="model_id" ref="model_professional_registers_professional_request"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_detained_requests()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+            <field name="doall">False</field>
+        </record>
+    </data>
+</odoo>

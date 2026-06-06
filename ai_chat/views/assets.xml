@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <template id="assets_backend_ai" name="custom ai page assets" inherit_id="web.assets_backend">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/ai_chat/static/src/js/ai_chat_simple.js"/>
+<!--                <script type="text/javascript" src="/ai_chat/static/src/js/ai_chat_component.js"/>-->
+<!--                <script type="text/javascript" src="/ai_chat/static/src/js/ai_chat_action.js"/>-->
+<!--                <link rel="stylesheet" href="/ai_chat/static/src/scss/ai_chat.scss"/>-->
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

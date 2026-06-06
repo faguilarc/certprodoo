@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <record id="professional_request_detail" model="ir.actions.report">
+            <field name="name">Solicitud de Inscripción</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">professional_registers.report_professional_request</field>
+            <field name="report_file">professional_registers.report_professional_request</field>
+<!--            <field name="binding_model_id" ref="model_professional_registers_professional_request"/>-->
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+       </record>
+       <record id="inscriptions_detail" model="ir.actions.report">
+            <field name="name">Certificación de Inscripción</field>
+            <field name="model">professional_registers.inscription</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">professional_registers.report_inscriptions</field>
+            <field name="report_file">professional_registers.report_inscriptions</field>
+           <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+       </record>
+        <record id="identity_detail" model="ir.actions.report">
+            <field name="name">Registro de Profesionales</field>
+            <field name="model">professional_registers.identity</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">professional_registers.report_identity</field>
+            <field name="report_file">professional_registers.report_identity</field>
+            <field name="binding_model_id" ref="model_professional_registers_identity"/>
+            <field name="binding_type">report</field>
+       </record>
+
+    </data>
+</odoo>

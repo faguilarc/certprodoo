@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="roles_tree">
+            <field name="name">Roles</field>
+            <field name="model">security.roles</field>
+            <field name="arch" type="xml">
+                <tree string="Roles" class="tree_no_open" editable="bottom">
+                    <field name="name" required="1" attrs="{'readonly': [('is_default', '=', True)]}"/>
+                    <field name="description" attrs="{'readonly': [('is_default', '=', True)]}"/>
+                    <field name="is_default" invisible="1"/>
+                    <field name="company" invisible="1"/>
+                    <field name="user" invisible="1" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="roles_action">
+            <field name="name">Roles</field>
+            <field name="res_model">security.roles</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede agregar un nuevo rol.
+                </p>
+            </field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="roles_tree"/>
+        </record>
+
+    </data>
+</odoo>

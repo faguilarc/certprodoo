@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vistas para las solicitudes -->
+        <record id="view_digital_signature_request_tree" model="ir.ui.view">
+            <field name="name">digital.signature.request.tree</field>
+            <field name="model">digital.signature.request</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitudes de Firma Digital">
+                    <field name="name" string="Referencia"/>
+                    <field name="state" widget="badge" decoration-info="state=='submitted'"
+                           decoration-warning="state=='processing'"
+                           decoration-success="state=='approved'"
+                           decoration-danger="state in ['rejected','expired']"/>
+                    <field name="snapshot_name" string="Cliente"/>
+                    <field name="snapshot_identity" string="CI"/>
+                    <field name="level" string="Nivel"/>
+                    <field name="request_type" string="Tipo"/>
+                    <field name="request_date" string="Fecha Solicitud"/>
+                    <field name="expiry_date" string="Vencimiento"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_digital_signature_request_form" model="ir.ui.view">
+            <field name="name">digital.signature.request.form</field>
+            <field name="model">digital.signature.request</field>
+            <field name="arch" type="xml">
+                <form string="Solicitud de Firma Digital">
+                    <header>
+                        <button name="action_submit" string="Enviar" type="object"
+                                class="oe_highlight" states="draft"/>
+                        <button name="action_resend_verification" string="Reenviar Verificación" type="object"
+                                class="btn-secondary" states="pending_verification"/>
+                        <button name="action_process" string="Procesar" type="object"
+                                class="btn-primary" states="submitted"/>
+                        <button name="action_approve" string="Aprobar" type="object"
+                                class="btn-success" states="processing"/>
+                        <button name="action_reject" string="Rechazar" type="object"
+                                class="btn-danger" states="submitted,processing"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+
+                        <notebook>
+                            <page string="Información General">
+                                <!-- Grupo principal para estado y configuración -->
+                                <group>
+                                    <group string="Estado">
+                                        <field name="state"/>
+                                        <field name="request_date"/>
+                                        <field name="expiry_date"/>
+                                    </group>
+                                    <group string="Configuración">
+                                        <field name="config_id"/>
+                                        <field name="level"/>
+                                        <field name="request_type"/>
+                                    </group>
+                                </group>
+
+                                <!-- Separador visual -->
+                                <div class="o_horizontal_separator">
+                                    Datos del Solicitante
+                                </div>
+
+                                <!-- Grupo para datos del solicitante -->
+                                <group>
+                                    <group string="Datos Personales">
+                                        <field name="inscription_id"/>
+                                        <field name="snapshot_name"/>
+                                        <field name="snapshot_identity"/>
+                                        <field name="snapshot_email"/>
+                                    </group>
+                                    <group string="Datos Profesionales">
+                                        <field name="snapshot_profession"/>
+                                        <field name="snapshot_specialty"/>
+                                    </group>
+                                </group>
+
+                                <!-- Grupo para datos institucionales (condicional) -->
+                                <group attrs="{'invisible': [('level', '!=', 'institution')]}"
+                                       string="Datos Institucionales">
+                                    <field name="snapshot_organism"/>
+                                    <field name="snapshot_entity"/>
+                                    <field name="snapshot_job"/>
+                                </group>
+
+                                <!-- Grupo para verificación -->
+                                <div class="o_horizontal_separator">
+                                    Verificación por Correo
+                                </div>
+
+                                <group>
+                                    <group string="Información de Verificación">
+                                        <field name="verification_date"/>
+                                        <field name="verification_expiry"/>
+                                        <field name="verification_ip"/>
+                                    </group>
+                                    <group string="Token de Verificación">
+                                        <field name="verification_token" widget="copy"
+                                               options="{'text': 'Copiar Token', 'icon': 'fa-copy'}"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Términos y Condiciones">
+                                <group>
+
+                                    <field name="terms_html" widget="html" readonly="1"/>
+                                </group>
+                                <group string="Aceptación">
+                                    <field name="terms_accepted" readonly="1"/>
+                                    <field name="terms_accepted_date" readonly="1"/>
+                                </group>
+                            </page>
+
+                            <page string="Administración" groups="base.group_system">
+                                <group string="Certificado">
+                                    <field name="certificate_number"/>
+                                    <field name="certificate_file" filename="certificate_filename"/>
+                                    <field name="certificate_filename" invisible="1"/>
+                                </group>
+                                <group string="Notas">
+                                    <field name="admin_notes" widget="textarea" placeholder="Notas internas..."/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Search View -->
+        <record id="view_digital_signature_request_search" model="ir.ui.view">
+            <field name="name">digital.signature.request.search</field>
+            <field name="model">digital.signature.request</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Solicitudes">
+                    <field name="name"/>
+                    <field name="snapshot_name"/>
+                    <field name="snapshot_identity"/>
+                    <field name="state"/>
+                    <field name="level"/>
+                    <field name="request_type"/>
+                    <filter name="state_draft" string="Borrador" domain="[('state','=','draft')]"/>
+                    <filter name="state_pending_verification" string="Pendiente Verificación" domain="[('state','=','pending_verification')]"/>
+                    <filter name="state_verified" string="Verificadas" domain="[('state','=','verified')]"/>
+                    <filter name="state_processing" string="En Proceso" domain="[('state','=','processing')]"/>
+                    <filter name="state_approved" string="Aprobadas" domain="[('state','=','approved')]"/>
+                    <filter name="state_rejected" string="Rechazadas" domain="[('state','=','rejected')]"/>
+                    <separator/>
+                    <filter name="group_by_level" string="Agrupar por Nivel" context="{'group_by': 'level'}"/>
+                    <filter name="group_by_state" string="Agrupar por Estado" context="{'group_by': 'state'}"/>
+                </search>
+            </field>
+        </record>
+
+
+
+        <!-- Action para ver solicitudes -->
+        <record id="action_digital_signature_requests" model="ir.actions.act_window">
+            <field name="name">Solicitudes de Firma Digital</field>
+            <field name="res_model">digital.signature.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_digital_signature_request_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No hay solicitudes de firma digital.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menú para solicitudes -->
+        <menuitem id="menu_ds_requests" name="Solicitudes"
+                  parent="menu_digital_signature_config"
+                  action="action_digital_signature_requests"
+                  sequence="10"/>
+    </data>
+</odoo>

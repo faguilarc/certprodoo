@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="terms_condition_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.terms_conditions.form</field>
+            <field name="model">nomenclators.terms_conditions</field>
+            <field name="arch" type="xml">
+                <form string="Términos y condiciones" duplicate="false">
+                    <sheet>
+                        <notebook>
+                            <page string="Términos y condiciones">
+                                <field name="name" required="1"/>
+                                <field name="content" required="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="terms_condition_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.terms_conditions.tree</field>
+            <field name="model">nomenclators.terms_conditions</field>
+            <field name="arch" type="xml">
+                <tree string="Términos y condiciones">
+                    <field name="name"/>
+                    <field name="content"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="terms_condition_act_window" model="ir.actions.act_window">
+            <field name="name">Términos y condiciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.terms_conditions</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Términos y condiciones
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

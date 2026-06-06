@@ -1,0 +1,33 @@
+<odoo>
+  <data>
+      <menuitem id="generals_menu" name="Nomencladores" parent="nomenclator_menu"  sequence="2"/>
+        <menuitem name="Profesiones" id="professions_menu" sequence="1" parent="generals_menu" action="professions_act_window"/>
+        <menuitem name="Especialidades" id="specialties_menu" sequence="2" parent="generals_menu" action="specialties_act_window"/>
+        <menuitem name="Nivel de enseñanza" id="teaching_level_menu" sequence="3" parent="generals_menu" action="teaching_level_act_window"/>
+        <menuitem name="Centros de estudios" id="study_centers_menu" sequence="4" parent="generals_menu" action="study_centers_act_window"/>
+        <menuitem name="Categorías docentes" id="teaching_categories_menu" sequence="5" parent="generals_menu" action="teaching_categories_act_window"/>
+        <menuitem name="Documentos para trámites" id="document_required_menu" sequence="6" parent="generals_menu" action="documents_required_act_window"/>
+        <menuitem name="Tipos de trámites" id="procedure_type_menu" sequence="7" parent="generals_menu" action="procedure_types_act_window"/>
+        <menuitem name="Términos y condiciones" id="terms_menu" sequence="8" parent="generals_menu" action="terms_condition_act_window"/>
+        <menuitem name="Nacionalidades" id="nationality_menu" sequence="9" parent="generals_menu" action="nationality_act_window"/>
+        <menuitem name="Logo" id="logo_menu" sequence="10" parent="generals_menu" action="logo_act_windows"/>
+<!--        <menuitem name="Idiomas" id="professional_language_menu" sequence="11" parent="generals_menu" action="professional_language_act_window"/>-->
+
+
+    <menuitem id="main_menu" name="Generales" parent="nomenclator_menu" sequence="3"/>
+        <menuitem id="res_country_menu" name="País" parent="main_menu" action="country_inherit_action" sequence="1"/>
+        <menuitem id="res_state_menu" name="Provincia" parent="main_menu" action="country_state_inherit_action" sequence="2"/>
+        <menuitem id="res_city_menu" name="Municipio" parent="main_menu" action="base_address_city.action_res_city_tree" sequence="3"/>
+        <menuitem id="res_organism_menu" parent="main_menu" name="Organismo" action="res_organism_act_window" sequence="4"/>
+        <menuitem id="labour_sector_menu" name="Tipo de Entidad"  sequence="5" parent="main_menu" action="labour_sector_act_window"/>
+        <menuitem id="detention_causes_menu" name="Causas por Estado"  sequence="6" parent="main_menu" action="detention_causes_act_window"/>
+
+    <menuitem id="website_menu_menu" name="Sitio Web" parent="nomenclator_menu" sequence="4"/>
+
+      <menuitem id="structure_menu" name="Estructura" parent="website_menu_menu" action="structures_act_window" sequence="1"/>
+      <menuitem id="who_enrrols_menu" name="Quiénes se inscriben" parent="website_menu_menu" action="who_enrrols_act_window" sequence="2"/>
+      <menuitem id="normative_menu" name="Normativas" parent="website_menu_menu" action="normative_act_window" sequence="3"/>
+
+    <menuitem id="report_nomenclators_menu" name="Informes" parent="nomenclator_menu" sequence="5"/>
+  </data>
+</odoo>

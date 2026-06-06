@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_organism_form_view" model="ir.ui.view">
+            <field name="name">Organismos</field>
+            <field name="model">res.organism</field>
+            <field name="arch" type="xml">
+                <form string="Organismos" duplicate="0">
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" required="True"/>
+                            <field name="code" required="True"/>
+                            <field name="siglas" required="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_organism_tree_view" model="ir.ui.view">
+            <field name="name">Organismos</field>
+            <field name="model">res.organism</field>
+            <field name="arch" type="xml">
+                <tree string="Organismos" duplicate="0">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="siglas"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_organism_search_view" model="ir.ui.view">
+            <field name="name">Organismos</field>
+            <field name="model">res.organism</field>
+            <field name="arch" type="xml">
+                <search string="Organismos">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="siglas"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="res_organism_act_window" model="ir.actions.act_window">
+            <field name="name">Organismos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.organism</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

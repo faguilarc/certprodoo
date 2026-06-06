@@ -1,0 +1,86 @@
+<template id="document_template">
+    <div class="header">
+        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;"/>
+        <div class="text-right">
+            <span t-field="doc.create_date"/>
+        </div>
+    </div>
+    <div class="article">
+        <h3>Notificación de
+            <t t-esc="doc.action_type"/>
+        </h3>
+        <div t-field="doc.preview_document"/>
+    </div>
+    <div class="footer text-center">
+        <div t-field="company.name"/>
+        <div t-field="company.phone"/>
+    </div>
+</template>
+
+<template id="report_request_update_detail">
+<t t-call="web.external_layout">
+    <div class="page">
+        <h2>Informe de Actualización</h2>
+        <div class="row">
+            <div class="col-6">
+                <strong>Número de Actualización:</strong>
+                <span t-esc="data['update_number']"/>
+            </div>
+            <div class="col-6">
+                <strong>Fecha:</strong>
+                <span t-esc="data['report_date']"/>
+            </div>
+        </div>
+
+        <h3>Datos de la Actualización</h3>
+        <div class="row">
+            <div class="col-6">
+                <strong>Tipo:</strong>
+                <span t-esc="data['update_type']"/>
+            </div>
+            <div class="col-6">
+                <strong>Registro:</strong>
+                <span t-esc="data['related_name']"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <strong>Motivo:</strong>
+                <span t-esc="data['reason']"/>
+            </div>
+        </div>
+
+        <h3>Cambios Propuestos</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Campo</th>
+                    <th>Valor Actual</th>
+                    <th>Nuevo Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="data['update_changes']" t-as="change">
+                    <td t-esc="change['field_label']"/>
+                    <td t-esc="change['old_value']"/>
+                    <td t-esc="change['new_value']"/>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Datos del Registro Original</h3>
+        <!-- Aquí puedes incluir todos los demás datos del registro -->
+        <div class="row">
+            <div class="col-6">
+                <strong>Nombre:</strong>
+                <span t-esc="data['name']"/>
+            </div>
+            <div class="col-6">
+                <strong>Identidad:</strong>
+                <span t-esc="data['identity']"/>
+            </div>
+        </div>
+        <!-- ... más campos según sea necesario ... -->
+    </div>
+</t>
+</template>

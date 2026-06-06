@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_document_required_wizard_form_view" model="ir.ui.view">
+            <field name="name">report.documents_required_wizard.form</field>
+            <field name="model">report.documents_required_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Módelo Reporte de documentación requerida">
+                    <sheet>
+                        <div class="oe_form_container">
+                            <div class="oe_form_sheet">
+                                <group>
+                                    <field name="procedure_type" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}" required="1" class="w-25"/>
+                                </group>
+                                <footer>
+                                    <button name="show_report" string="Imprimir" type="object" class="btn-primary"/>
+                                    <button string="Cancelar" class="btn-default" special="cancel"/>
+                                </footer>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="report_documents_required_wizard_act_window" model="ir.actions.act_window">
+            <field name="name">Reporte de documentación por trámite</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.documents_required_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!--        &lt;!&ndash; Menu donde va el reporte&ndash;&gt;-->
+        <menuitem id="menu_documents_required_wizard" name="Reporte de documentación por trámite" action="report_documents_required_wizard_act_window"  sequence="1" parent="nomenclators.report_nomenclators_menu"/>
+    </data>
+</odoo>

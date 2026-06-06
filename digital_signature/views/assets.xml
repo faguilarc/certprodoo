@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <template id="assets_backend_dsr" name="custom page dsr assets" inherit_id="web.assets_backend">
+            <xpath expr="//script[last()]" position="after">
+<!--                <script type="text/javascript" src="/digital_signature_request/static/src/js/signature_wizard.js"/>-->
+<!--                <link rel="stylesheet" href="/digital_signature_request/static/src/css/signature_styles.css"/>-->
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

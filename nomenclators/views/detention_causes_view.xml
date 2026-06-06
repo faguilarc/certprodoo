@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+        <record id="detention_causes_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.detention_causes.form</field>
+            <field name="model">nomenclators.detention_causes</field>
+            <field name="arch" type="xml">
+                <form string="Causas" duplicate="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Nombre" required="1"/>
+                                <field name="cause_type" required="1"/>
+                            </group>
+                            <group>
+                                <field name="description" placeholder="Descripción" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Plantillas">
+                                <group>
+                                    <field name="email_template"/>
+                                    <field name="document_template"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="detention_causes_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.detention_causes.tree</field>
+            <field name="model">nomenclators.detention_causes</field>
+            <field name="arch" type="xml">
+                <tree string="Causas">
+                    <field name="name"/>
+                    <field name="cause_type"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="detention_causes_search_view" model="ir.ui.view">
+            <field name="name">nomenclators.detention_causes.search</field>
+            <field name="model">nomenclators.detention_causes</field>
+            <field name="arch" type="xml">
+                <search string="Causas">
+                    <field name="name"/>
+                    <field name="cause_type"/>
+                    <field name="description"/>
+                    <group expand="0" string="Agrupar Por">
+                        <filter string="Tipo" name="type" context="{'group_by': 'cause_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="detention_causes_act_window" model="ir.actions.act_window">
+            <field name="name">Causas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.detention_causes</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede adicionar una nueva causa
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

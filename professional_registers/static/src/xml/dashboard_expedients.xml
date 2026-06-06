@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="DashboardExpedients" xml:space="preserve">
+    <t t-name="DashboardExpedientDetails">
+        <div class="row main-section o_dashboard" >
+            <div class="col-md-3 col-sm-6 expedients oh-payslip" >
+                <div class="oh-card">
+                    <div class="oh-card-body">
+                        <div class="stat-widget-one">
+                            <div class="stat-icon"><i class="fa fa-address-card"/></div>
+                            <div class="stat-content">
+                                <div class="stat-text"><h3>Expedientes</h3></div>
+                                <div class="stat-digit"><strong ><t t-esc="widget.users_info['expedients']"/></strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

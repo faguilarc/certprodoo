@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_professional_request">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <style>
+                        .table > thead > tr > th,
+                        .table > tbody > tr > th,
+                        .table > tfoot > tr > th,
+                        .table > thead > tr > td,
+                        .table > tbody > tr > td,
+                        .table > tfoot > tr > td {
+                        padding: 0 10px;
+                        text-align: center;
+                        font-size: 0.8em !important;
+                        }
+                        .body{
+                        font-size: 0.8em !important;
+                        }
+                        .pie{
+                        font-size: 0.8em !important;
+                        }
+                        .encabezado{font-size: 0.10em !important;}
+                        .sepdiv{margin-top: 20px;}
+                        .sepspan{margin-top: 40px;}
+                        .page {page-break-after: always;}
+                    </style>
+                    <div class="page">
+                        <center>
+                            <h4>Solicitud de inscripción</h4>
+                        </center>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Nombre:</strong>
+                                    <span t-esc="name"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Primer Apellido:</strong>
+                                    <span t-esc="first_last_name"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Segundo Apellido:</strong>
+                                    <span t-esc="second_last_name"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Nacionalidad:</strong>
+                                    <span t-esc="nationality"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>CI o Pasaporte:</strong>
+                                    <span t-esc="identity"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Sexo:</strong>
+                                    <span t-esc="sex"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Dirección:</strong>
+                                    <span t-esc="address1"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>País:</strong>
+                                    <span t-esc="country"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Provincia:</strong>
+                                    <span t-esc="country_state"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Municipio:</strong>
+                                    <span t-esc="city"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Teléfono:</strong>
+                                    <span t-esc="phone"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Correo:</strong>
+                                    <span t-esc="email"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Nivel de enseñanza:</strong>
+                                    <span t-esc="teaching_level"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Centro de estudios:</strong>
+                                    <span t-esc="study_center"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Fecha de graduación:</strong>
+                                    <span t-esc="degree_date"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Tomo:</strong>
+                                    <span t-esc="tomo"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Folio:</strong>
+                                    <span t-esc="folio"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Fecha de convalidación de título:</strong>
+                                    <span t-esc="convalidation_degree_tittle"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Profesión:</strong>
+                                    <span t-esc="profession"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Especialidad:</strong>
+                                    <span t-esc="speciality"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Categoría docente:</strong>
+                                    <span t-esc="teaching_category"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Fecha de categoría docente:</strong>
+                                    <span t-esc="teaching_category_date"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Investigaciones:</strong>
+                                    <span t-esc="investigations"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Año de la investigación:</strong>
+                                    <span t-esc="investigations_year"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Categoría científica:</strong>
+                                    <span t-esc="degree_sciences"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Año de categoría científica:</strong>
+                                    <span t-esc="degree_sciences_year"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Fecha de ingreso UNAICC:</strong>
+                                    <span t-esc="unaicc_date"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Usuario:</strong>
+                                    <span t-esc="user_name"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Jubilado:</strong>
+                                    <span t-esc="retired"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Fecha de jubilación:</strong>
+                                    <span t-esc="retired_date"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row sepdiv body">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Contraseña:</strong>
+                                    <span t-esc="password"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>Tipo de trámite:</strong>
+                                    <span t-esc="tramit_type"/>
+                                </span>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                        <span class="sepspan body">
+                            <u>Trayectoría Laboral</u>
+                        </span>
+                        <div class="row sepdiv body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Centro de trabajo</th>
+                                    <th>Organismo</th>
+                                    <th>Actividad<br/>principal que<br/>desempeña
+                                    </th>
+                                    <th>Teléfono</th>
+                                    <th>Desde</th>
+                                    <th>Hasta</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="history_work" t-as="hw">
+                                        <tr>
+                                            <td>
+                                                <span t-esc="hw['work_center']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="hw['organism']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="hw['activity']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="hw['phone']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="hw['date_from']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="hw['date_to']"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="sepdiv body">
+                            <span style="align:left">
+                                Declaro que los datos y documentos mostrados o aportados en este acto son ciertos,
+                                auténticos y con plenos efectos legales.
+                            </span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span>
+                                <center>
+                                    __________________________
+                                </center>
+                            </span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span>
+                                <center>
+                                    FIRMA
+                                </center>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+
+
+            </t>
+        </template>
+
+        <!-- 1. Acción del Reporte -->
+        <record id="action_report_professional_request_pdf" model="ir.actions.report">
+            <field name="name">Solicitud Profesional (PDF)</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">professional_registers.report_professional_request_document</field>
+            <field name="report_file">professional_registers.report_professional_request_document</field>
+            <field name="print_report_name">'Solicitud_%s' % (object.request_number or '').replace('/', '-')</field>
+            <field name="binding_model_id" ref="model_professional_registers_professional_request"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- 2. Plantilla QWeb del Reporte -->
+        <template id="report_professional_request_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <!-- Encabezado del Documento -->
+                            <div class="text-center mb-4">
+                                <h2>SOLICITUD DE REGISTRO PROFESIONAL</h2>
+                                <h4 class="text-muted">Nº de Solicitud:
+                                    <strong t-esc="doc.request_number"/>
+                                </h4>
+                            </div>
+
+                            <!-- Foto y Datos Principales -->
+                            <div class="row mb-4">
+                                <div class="col-3 text-center" t-if="doc.image">
+                                    <img t-att-src="image_data_uri(doc.image)"
+                                         style="max-height: 150px; max-width: 150px; border: 1px solid #ddd; border-radius: 5px;"/>
+                                </div>
+                                <div class="col-9">
+                                    <h3 t-esc="doc.full_name or doc.name"/>
+                                    <p>
+                                        <strong>Profesión:</strong>
+                                        <span t-esc="doc.profession.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Especialidad:</strong>
+                                        <span t-esc="doc.specialties.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Tipo de Trámite:</strong>
+                                        <span t-esc="doc.procedure_type.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Estado:</strong>
+                                        <span t-esc="doc.states.name" class="badge badge-info"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <!-- Datos Personales y de Contacto -->
+                            <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">Datos
+                                Personales y de Contacto
+                            </h5>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Carnet de Identidad:</strong>
+                                        <span t-esc="doc.identity"/>
+                                    </p>
+                                    <p>
+                                        <strong>Sexo:</strong>
+                                        <span t-field="doc.sex"/>
+                                    </p>
+                                    <p>
+                                        <strong>Nacionalidad:</strong>
+                                        <span t-esc="doc.nationality_id.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Fecha de Solicitud:</strong>
+                                        <span t-esc="doc.date_request.strftime('%d/%m/%Y') if doc.date_request else ''"/>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Teléfono:</strong>
+                                        <span t-esc="doc.phone"/>
+                                    </p>
+                                    <p>
+                                        <strong>Correo Electrónico:</strong>
+                                        <span t-esc="doc.email"/>
+                                    </p>
+                                    <p>
+                                        <strong>Dirección:</strong>
+                                        <span t-esc="doc.address"/>
+                                    </p>
+                                    <p>
+                                        <strong>Ubicación:</strong>
+                                        <span t-esc="doc.city.name"/>,<span t-esc="doc.country_states.name"/>,
+                                        <span t-esc="doc.country.name"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Datos Académicos y Profesionales -->
+                            <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">Datos
+                                Académicos y Profesionales
+                            </h5>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Nivel de Enseñanza:</strong>
+                                        <span t-esc="doc.teaching_level.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Centro de Estudios:</strong>
+                                        <span t-esc="doc.study_center.name"/>
+                                    </p>
+                                    <p>
+                                        <strong>Fecha de Grado:</strong>
+                                        <span t-esc="doc.degree_date.strftime('%d/%m/%Y') if doc.degree_date else ''"/>
+                                    </p>
+                                    <p t-if="doc.id_fuc">
+                                        <strong>FUC:</strong>
+                                        <span t-esc="doc.id_fuc"/>
+                                        (Vol:<span t-esc="doc.volume"/>, Folio:<span t-esc="doc.folio"/>, No:<span
+                                            t-esc="doc.number"/>)
+                                    </p>
+                                    <p t-if="doc.convalidation_degree_tittle">
+                                        <strong>Título Convalidado:</strong>
+                                        <span t-esc="doc.convalidation_degree_tittle"/>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <p>
+                                        <strong>Categoría Docente:</strong>
+                                        <span t-esc="doc.teaching_category.name"/>
+                                    </p>
+                                    <p t-if="doc.teaching_category_date">
+                                        <strong>Fecha Categoría:</strong>
+                                        <span t-esc="doc.teaching_category_date.strftime('%d/%m/%Y')"/>
+                                    </p>
+                                    <p>
+                                        <strong>Investigaciones:</strong>
+                                        <span t-esc="'Sí' if doc.investigations else 'No'"/>
+                                        <span t-if="doc.investigations_year">(<span t-field="doc.investigations_year"/>)
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <strong>Grado Científico:</strong>
+                                        <span t-field="doc.degree_sciences"/>
+                                    </p>
+                                    <p t-if="doc.degree_sciences_year">
+                                        <strong>Año Grado Científico:</strong>
+                                        <span t-esc="doc.degree_sciences_year"/>
+                                    </p>
+                                    <p t-if="doc.unaicc_date">
+                                        <strong>Fecha UNAICC:</strong>
+                                        <span t-esc="doc.unaicc_date.strftime('%d/%m/%Y')"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Vínculo Laboral -->
+                            <t t-if="doc.history_work">
+                                <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">Vínculo
+                                    Laboral
+                                </h5>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Centro de Trabajo</th>
+                                            <th>Organismo</th>
+                                            <th>Sector</th>
+                                            <th>Actividad</th>
+                                            <th>Teléfono</th>
+                                            <th>Desde</th>
+                                            <th>Hasta</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.history_work" t-as="work">
+                                            <td>
+                                                <span t-esc="work.work_center"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.organism.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.labour_sector.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.activity"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.phone"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.date_from.strftime('%m/%Y') if work.date_from else ''"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="work.date_to.strftime('%m/%Y') if work.date_to else 'Actualidad'"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+
+                            <!-- Documentos Requeridos -->
+                            <t t-if="doc.documents_required or doc.documents_required_registers">
+                                <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">
+                                    Documentación Requerida
+                                </h5>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Estado </th>
+                                            <th>Comentarios</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- Mostrar documentos del grupo registrador (si aplica y no están duplicados) -->
+                                        <tr t-foreach="doc.documents_required_registers" t-as="req_doc_reg">
+                                            <td>
+                                                <span t-esc="req_doc_reg.documents.name"/>
+                                                <small class="text-muted">(Registro)</small>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-if="req_doc_reg.attachment_ids" class="text-success">
+                                                    <i class="fa fa-file"/>
+                                                    Adjunto
+                                                </span>
+                                                <span t-else="" class="text-danger">Pendiente</span>
+                                            </td>
+                                            <td>
+                                                <span t-esc="req_doc_reg.commet"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <br></br>
+                            <!-- Idiomas -->
+                            <t t-if="doc.professional_language">
+                                <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">
+                                    Idiomas
+                                </h5>
+                                <table class="table table-sm table-bordered" style="width: 50%;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Idioma</th>
+                                            <th>Nivel de Dominio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.professional_language" t-as="lang">
+                                            <td>
+                                                <span t-esc="lang.language.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="lang.proficiency_level"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+
+                            <!-- Observaciones -->
+                            <t t-if="doc.observation">
+                                <h5 class="mt-4" style="border-bottom: 2px solid #007bff; padding-bottom: 5px;">
+                                    Observaciones
+                                </h5>
+                                <div style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; min-height: 60px;">
+                                    <span t-esc="doc.observation"/>
+                                </div>
+                            </t>
+
+                            <!-- Declaración Jurada -->
+                            <div class="mt-5 text-center">
+                                <p style="font-size: 14px; font-style: arial;">
+                                    <i class="fa fa-check-square"/>
+                                    Declaro que los datos y documentos aportados son ciertos, auténticos y con plenos
+                                    efectos legales.
+                                </p>
+                                <div class="row mt-4">
+                                    <div class="col-6 text-center">
+                                        <p>___________________________</p>
+                                        <p>Firma del Solicitante</p>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <p>___________________________</p>
+                                        <p>Sello / Firma de la Entidad</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

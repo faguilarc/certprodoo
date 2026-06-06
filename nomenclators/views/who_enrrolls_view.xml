@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="who_enrrols_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.who_enrrols.form</field>
+            <field name="model">nomenclators.who_enrrols</field>
+            <field name="arch" type="xml">
+                <form string="Quiénes se inscriben" duplicate="false">
+                    <sheet>
+                        <notebook>
+                            <page string="Quiénes se inscriben">
+                                <field name="name" required="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="who_enrrols_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.who_enrrols.tree</field>
+            <field name="model">nomenclators.who_enrrols</field>
+            <field name="arch" type="xml">
+                <tree string="Quiénes se inscriben">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="who_enrrols_act_window" model="ir.actions.act_window">
+            <field name="name">Quiénes se inscriben</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.who_enrrols</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Quiénes se inscriben
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

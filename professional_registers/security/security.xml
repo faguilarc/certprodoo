@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="permits_access" model="res.groups">
+            <field name="name">Permisos de Acceso</field>
+            <field name="comment">Permisos de Acceso</field>
+            <field name="category_id" ref="permits_category"/>
+        </record>
+
+        <record id="generales_access" model="res.groups">
+            <field name="name">Permisos de Acceso</field>
+            <field name="comment">Permisos de Acceso</field>
+            <field name="category_id" ref="generales_category"/>
+        </record>
+        <record id="group_professional_register_employee" model="res.groups">
+            <field name="name">Registrador</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+
+        <record id="group_professional_editor" model="res.groups">
+            <field name="name">Editor</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+        <record id="group_professional_managment" model="res.groups">
+            <field name="name">Gestor</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+        <record id="group_professional_consultant" model="res.groups">
+            <field name="name">Consultor</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <record id="group_professional_client" model="res.groups">
+            <field name="name">Cliente</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+        <record id="group_professional_client_online" model="res.groups">
+            <field name="name">Cliente Online</field>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+        <record model="res.groups" id="group_professional_reigster_managment">
+            <field name="name">Registrador/Gestor</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_professional_register_employee')), (4, ref('group_professional_managment'))]"/>
+            <field name="category_id" ref="professional_register_employee_category"/>
+            <!--            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>-->
+        </record>
+        <record model="res.groups" id="group_professional_editor_managment">
+            <field name="name">Editor/Gestor</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_professional_editor')), (4, ref('group_professional_managment'))]"/>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+        <record model="res.groups" id="group_professional_superadmin">
+            <field name="name">Superadmin</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('group_professional_editor')), (4, ref('group_professional_managment')), (4, ref('base.group_erp_manager'))]"/>
+            <field name="category_id" ref="professional_register_employee_category"/>
+        </record>
+
+        <!-- Permiso de lectura para ir.model.fields -->
+        <record id="access_ir_model_fields" model="ir.model.access">
+            <field name="name">professional_request.access_ir_model_fields</field>
+            <field name="model_id" ref="model_ir_model_fields"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+        <record id="public_field_delete" model="ir.model.access">
+            <field name="name">public_field.delete</field>
+            <field name="model_id" ref="model_professional_registers_public_field"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_unlink">1</field>
+        </record>
+    </data>
+</odoo>

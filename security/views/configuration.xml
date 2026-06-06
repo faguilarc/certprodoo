@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="configuration_state_form">
+            <field name="name">Configuración de Estados</field>
+            <field name="model">security.state_configuration</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Configuración de Estados">
+                    <sheet>
+                        <div class="oe_form_container">
+                            <div class="oe_form_sheet">
+                                <group col="4">
+                                    <field name="name" required="1"/>
+                                    <field name="priority" required="1"/>
+                                    <field name="fold" invisible="1"/>
+                                    <field name="model" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}" required="1"/>
+                                </group>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="configuration_state_tree">
+            <field name="name">Configuración de Estados</field>
+            <field name="model">security.state_configuration</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Configuración de Estados">
+                    <field name="name"/>
+                    <field name="priority"/>
+                    <field name="model"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="configuration_state_action">
+            <field name="name">Configuración de Estados</field>
+            <field name="res_model">security.state_configuration</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede agregar una nuevo estado para un modelo
+                </p>
+            </field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+ </odoo>

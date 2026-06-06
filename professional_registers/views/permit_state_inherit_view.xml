@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="permit_state_form_inherit" model="ir.ui.view">
+            <field name="name">permit_state.permit_state.form</field>
+            <field name="model">security.permits_state</field>
+            <field name="inherit_id" ref="security.permit_state_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='user_group']" position="after">
+                    <separator string="Registros profesionales"/>
+                    <fieldset class="fperms">
+                        <legend>Solicitud</legend>
+                        <group col="6">
+                            <field name="in_process"/>
+                            <field name="validation"/>
+                            <field name="stop"/>
+                            <field name="approved"/>
+                            <field name="init_process"/>
+                            <field name="cancel"/>
+                            <field name="reset"/>
+                            <field name="denied"/>
+                            <field name="send_email"/>
+                        </group>
+                    </fieldset>
+                    <fieldset class="fperms">
+                        <legend>Inscripción</legend>
+                        <group col="6">
+                            <field name="cancel_inscription"/>
+                            <field name="reset_inscription"/>
+                        </group>
+                    </fieldset>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

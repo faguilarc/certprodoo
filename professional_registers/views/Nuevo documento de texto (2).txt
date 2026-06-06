@@ -1,0 +1,90 @@
+<record id="view_professional_request_update_form" model="ir.ui.view">
+        <field name="name">professional.request.update.form</field>
+        <field name="model">professional_registers.professional_request_update</field>
+        <field name="arch" type="xml">
+            <form string="Solicitud de Actualización">
+                <header>
+                    <!-- Botones según los permisos y estado -->
+                    <button string="En proceso" type="object" name="process"
+                            attrs="{'invisible': [   ('priority','!=', 1) ]}"/>
+                    <button string="En validación" type="object" name="validation"
+                            attrs="{'invisible': [  ('priority','!=', 2) ]}"/>
+                    <button string="Generar correo" type="object" name="send_email"
+                            attrs="{'invisible': [  ('priority','not in', (2, 3)) ]}"/>
+                    <button string="Aprobar" type="object" name="approved"
+                            attrs="{'invisible': [  ('priority','not in', (2, 3, 5)) ]}"/>
+                    <button string="Iniciar" type="object" name="init_process"
+                            attrs="{'invisible': [  ('priority','!=', 4) ]}"/>
+                    <button string="Denegar" type="object" name="denied"
+                            attrs="{'invisible': [  ('priority','not in', (2, 3, 5)) ]}"/>
+                    <button string="Deshacer" type="object" name="reset_process"
+                            attrs="{'invisible': [  ('priority','!=', 7) ]}"/>
+                    <field name="priority" invisible="1"/>
+                    <field name="states" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="requested_by" readonly="1"/>
+                            <field name="requested_date" readonly="1"/>
+                            <field name="reviewed_by" readonly="1"/>
+                            <field name="reviewed_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="reason" attrs="{'readonly': [('states', '!=', '1')]}"/>
+                            <field name="rejection_reason" readonly="1"
+                                   attrs="{'invisible': [('states', '!=', '8')]}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Campos a Actualizar">
+                            <field name="update_lines">
+                                <tree editable="update_priority == 1">
+                                    <field name="field_label" readonly="1"/>
+                                    <field name="old_value" readonly="1"/>
+                                    <field name="update_priority" invisible="1"/>
+
+                                    <field name="new_value" attrs="{'readonly': [('update_priority', '!=', 1)]}"/>
+                                    <field name="value_type" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Solicitud Original">
+                            <field name="request_id" readonly="1" widget="reference">
+                                <form string="Solicitud Original">
+                                    <!-- Mostrar campos relevantes de la solicitud original -->
+                                    <group>
+                                        <field name="name" readonly="1"/>
+                                        <field name="first_last_name" readonly="1"/>
+                                        <field name="second_last_name" readonly="1"/>
+                                        <field name="full_name" readonly="1"/>
+                                        <field name="identity" readonly="1"/>
+                                        <field name="profession" readonly="1"/>
+                                        <field name="specialties" readonly="1"/>
+                                        <field name="email" readonly="1"/>
+                                        <field name="phone" readonly="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Historial de Estados">
+                            <field name="history_ids" readonly="1">
+                                <tree>
+                                    <field name="state_id"/>
+                                    <field name="user_id"/>
+                                    <field name="date"/>
+                                    <field name="observation"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>

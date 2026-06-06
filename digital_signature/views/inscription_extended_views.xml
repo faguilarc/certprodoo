@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Heredar la vista de árbol de inscripciones -->
+        <record id="view_inscription_tree_inherit" model="ir.ui.view">
+            <field name="name">professional_registers.inscription.tree.digital_signature</field>
+            <field name="model">professional_registers.inscription</field>
+            <field name="inherit_id" ref="professional_registers.inscription_tree_view"/>
+            <field name="arch" type="xml">
+                <!-- Agregar columna para ver solicitudes -->
+                <xpath expr="//tree" position="inside">
+                    <field name="digital_signature_request_count" invisible="1"/>
+                    <field name="priority" invisible="1"/>
+
+                    <button name="action_request_digital_signature"
+                            type="object"
+                            class="btn oe_stat_button btn-lg fa fa-pencil-square-o"
+                            icon=""
+                            title="Solicitar Firma Digital"
+                            attrs="{'invisible': [('priority', '==', 2)]}"/>
+                </xpath>
+
+                <!-- Agregar botón para solicitar firma -->
+
+            </field>
+        </record>
+
+        <!-- Heredar la vista de formulario de inscripciones -->
+        <record id="view_inscription_form_inherit" model="ir.ui.view">
+            <field name="name">professional_registers.inscription.form.digital_signature</field>
+            <field name="model">professional_registers.inscription</field>
+            <field name="inherit_id" ref="professional_registers.inscription_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Agregar botón en el header -->
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <field name="digital_signature_request_count" invisible="1"/>
+                    <button name="action_request_digital_signature"
+                            type="object"
+                            class="btn oe_stat_button"
+                            title="Solicitar Firma Digital"
+                            attrs="{'invisible': [('priority', '==', 2)]}">
+                        <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
+                        <span>Firma Digital</span>
+                    </button>
+                </xpath>
+
+                <!-- Agregar pestaña para solicitudes de firma digital -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Firmas Digitales"
+                          attrs="{'invisible': [('digital_signature_request_count', '=', 0)]}">
+                        <field name="digital_signature_request_ids">
+                            <tree>
+                                <field name="name" string="Referencia"/>
+                                <field name="state" widget="badge"
+                                       decoration-info="state=='submitted'"
+                                       decoration-warning="state=='processing' or state=='pending_verification'"
+                                       decoration-success="state=='approved' or state=='verified'"
+                                       decoration-danger="state in ['rejected','expired']"/>
+                                <field name="level" string="Nivel"/>
+                                <field name="request_type" string="Tipo"/>
+                                <field name="request_date" string="Fecha Solicitud"/>
+                                <field name="expiry_date" string="Vencimiento"/>
+                                <field name="verification_date" string="Fecha Verificación"/>
+                                <!--                                <button name="action_view_digital_signature_requests"-->
+                                <!--                                        type="object"-->
+                                <!--                                        class="btn-link"-->
+                                <!--                                        icon="fa-external-link"-->
+                                <!--                                        string="Abrir"/>-->
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        &lt;!&ndash; Si hay vista kanban, también heredarla &ndash;&gt;-->
+        <!--        <record id="view_inscription_kanban_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">professional_registers.inscription.kanban.digital_signature</field>-->
+        <!--            <field name="model">professional_registers.inscription</field>-->
+        <!--            <field name="inherit_id" ref="professional_registers.view_inscription_kanban"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//kanban" position="inside">-->
+        <!--                    <templates>-->
+        <!--                        <t t-inherit="professional_registers.view_inscription_kanban" t-inherit-mode="extension">-->
+        <!--                            <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">-->
+        <!--                                <div t-if="record.digital_signature_request_count.value > 0" -->
+        <!--                                     class="mt2">-->
+        <!--                                    <span class="badge badge-info">-->
+        <!--                                        <i class="fa fa-certificate mr-2"></i>-->
+        <!--                                        <t t-esc="record.digital_signature_request_count.value"/> solicitudes-->
+        <!--                                    </span>-->
+        <!--                                </div>-->
+        <!--                                <div t-if="record.has_active_signature.value" -->
+        <!--                                     class="mt2">-->
+        <!--                                    <span class="badge badge-success">-->
+        <!--                                        <i class="fa fa-check mr-2"></i>-->
+        <!--                                        Firma activa-->
+        <!--                                    </span>-->
+        <!--                                </div>-->
+        <!--                            </xpath>-->
+        <!--                        </t>-->
+        <!--                    </templates>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_professional_registers_project,professional_registers.project,model_professional_registers_project,base.group_user,1,0,0,0
+access_professional_registers_project,professional_registers.project,model_professional_registers_project,base.group_system,1,1,1,1
+access_find_professionals_by_location,find.professionals.by.location.user,model_find_professionals_by_location,base.group_user,1,0,1,0
+access_set_location_map_wizard,set.location.map.wizard.user,model_set_location_map_wizard,base.group_user,1,0,1,0

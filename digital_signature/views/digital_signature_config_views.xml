@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- VISTA DE CONFIGURACIÓN (Admin) -->
+        <record id="view_digital_signature_config_form" model="ir.ui.view">
+            <field name="name">digital.signature.config.form</field>
+            <field name="model">digital.signature.config</field>
+            <field name="arch" type="xml">
+                <form string="Configuración de Firma Digital">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Configuración General</h1>
+                        </div>
+                        <group>
+                            <group string="Datos Administrativos">
+                                <field name="admin_email"/>
+                                <field name="admin_contact"/>
+                                <field name="validity_days"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Configuración Nivel Personal">
+                                <group>
+                                    <field name="conf_show_name"/>
+                                    <field name="conf_show_identity"/>
+                                    <field name="conf_show_email"/>
+                                    <field name="conf_personal_show_profession"/>
+                                    <field name="conf_personal_show_specialty"/>
+                                </group>
+                            </page>
+                            <page string="Configuración Nivel Institución">
+                                <group>
+                                    <field name="conf_show_name"/>
+                                    <field name="conf_show_identity"/>
+                                    <field name="conf_show_email"/>
+                                    <field name="conf_inst_show_profession"/>
+                                    <field name="conf_inst_show_specialty"/>
+                                    <field name="conf_inst_show_organism"/>
+                                    <field name="conf_inst_show_entity"/>
+                                    <field name="conf_inst_show_job"/>
+                                </group>
+                            </page>
+                            <page string="Términos y Condiciones">
+                                <group>
+                                    <field name="terms_html" widget="html"/>
+                                </group>
+                            </page>
+                            <page string="Configuración Avanzada">
+                                <group>
+                                    <field name="auto_create_request"/>
+                                    <field name="notify_admin"/>
+                                    <field name="notify_user"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_digital_signature_config_tree" model="ir.ui.view">
+            <field name="name">digital.signature.config.tree</field>
+            <field name="model">digital.signature.config</field>
+            <field name="arch" type="xml">
+                <tree string="Configuraciones de Firma Digital">
+                    <!-- Mostramos el email como identificador principal -->
+                    <field name="admin_email" string="Correo Administrativo"/>
+
+                    <!-- Datos generales -->
+                    <field name="admin_contact" optional="show"/>
+                    <field name="validity_days" string="Validez (Días)"/>
+
+                    <!-- Fechas para control de versiones -->
+                    <field name="write_date" string="Última Modificación"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action de Configuración -->
+        <record id="action_digital_signature_config" model="ir.actions.act_window">
+            <field name="name">Configuración Firma Digital</field>
+            <field name="res_model">digital.signature.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Cree su primera configuración para gestionar las solicitudes de firma digital.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_digital_signature_config" name="Firma Digital"
+                  groups="security.group_professional_superadmin"
+                  sequence="1"/>
+
+        <menuitem id="menu_ds__config" name="Configurar Firma Digital"
+                  parent="menu_digital_signature_config"
+                  action="action_digital_signature_config"
+                  groups="security.group_professional_superadmin"
+                  sequence="20"/>
+    </data>
+</odoo>

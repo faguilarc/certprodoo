@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record id="teaching_level_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.teaching_level.form</field>
+            <field name="model">nomenclators.teaching_level</field>
+            <field name="arch" type="xml">
+                <form string="Nivel de enseñanza" duplicate="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Nivel de enseñanza" required="1"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Descripción">
+                                <field name="description" required="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="teaching_level_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.teaching_level.tree</field>
+            <field name="model">nomenclators.teaching_level</field>
+            <field name="arch" type="xml">
+                <tree string="Nivel de enseñanza">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="teaching_level_search_view" model="ir.ui.view">
+            <field name="name">nomenclators.teaching_level.search</field>
+            <field name="model">nomenclators.teaching_level</field>
+            <field name="arch" type="xml">
+                <search string="Nivel de enseñanza">
+                    <field name="name" string="Nivel"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="teaching_level_act_window" model="ir.actions.act_window">
+            <field name="name">Niveles de enseñanza</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.teaching_level</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede adicionar un nuevo nivel de enseñanza
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

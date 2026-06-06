@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Plantillas para las páginas web -->
+        <template id="verification_success" name="Verificación Exitosa">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h3 class="mb-0">
+                                            <i class="fa fa-check-circle mr-2"></i>
+                                            Verificación Exitosa
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fa fa-check-circle fa-5x text-success mb-3"></i>
+                                            <h4>¡Su solicitud ha sido verificada correctamente!</h4>
+                                        </div>
+
+                                        <div class="alert alert-success">
+                                            <h5>Detalles de la verificación:</h5>
+                                            <p>
+                                                <strong>Referencia:</strong>
+                                                <t t-esc="request_name"/>
+                                            </p>
+                                            <p>
+                                                <strong>Fecha:</strong>
+                                                <t t-esc="verification_date"/>
+                                            </p>
+                                            <p>
+                                                <strong>Estado:</strong>
+                                                Verificada ✓
+                                            </p>
+                                        </div>
+
+                                        <p>Su solicitud de firma digital ha sido confirmada y pasará al siguiente paso
+                                            del proceso.
+                                        </p>
+                                        <p>Recibirá una notificación cuando su firma digital esté lista.</p>
+
+                                        <div class="mt-4 text-center">
+                                            <a href="/" class="btn btn-primary">
+                                                <i class="fa fa-home mr-2"></i>
+                                                Volver al inicio
+                                            </a>
+                                            <a t-attf-href="/digital_signature/request/{{request}}/status"
+                                               class="btn btn-outline-success ml-2">
+                                                <i class="fa fa-eye mr-2"></i>
+                                                Ver estado de la solicitud
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        <small>Sistema de Registros Profesionales</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="verification_error" name="Error en Verificación">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h3 class="mb-0">
+                                            <i class="fa fa-exclamation-circle mr-2"></i>
+                                            Error en Verificación
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <i class="fa fa-times-circle fa-5x text-danger mb-3"></i>
+                                            <h4>No se pudo verificar la solicitud</h4>
+                                        </div>
+
+                                        <div class="alert alert-danger">
+                                            <h5>Error:</h5>
+                                            <p t-esc="error"/>
+                                        </div>
+
+                                        <p>Posibles causas:</p>
+                                        <ul>
+                                            <li>El enlace ha expirado (válido por 7 días)</li>
+                                            <li>La solicitud ya fue verificada anteriormente</li>
+                                            <li>El carnet de identidad no coincide</li>
+                                            <li>La inscripción no está aprobada</li>
+                                        </ul>
+
+                                        <div class="mt-4 text-center">
+                                            <a href="/" class="btn btn-primary">
+                                                <i class="fa fa-home mr-2"></i>
+                                                Volver al inicio
+                                            </a>
+                                            <a t-if="request"
+                                               t-attf-href="/digital_signature/request/{{request}}/status"
+                                               class="btn btn-outline-secondary ml-2">
+                                                <i class="fa fa-eye mr-2"></i>
+                                                Ver solicitud
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        <small>Para asistencia, contacte al administrador</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="request_status" name="Estado de la Solicitud">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h3 class="mb-0">
+                                            <i class="fa fa-certificate mr-2"></i>
+                                            Estado de Solicitud de Firma Digital
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h5>Información de la Solicitud</h5>
+                                                <table class="table table-sm">
+                                                    <tr>
+                                                        <th>Referencia:</th>
+                                                        <td t-esc="signature_request.name"/>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Solicitante:</th>
+                                                        <td t-esc="signature_request.snapshot_name"/>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Carnet:</th>
+                                                        <td t-esc="signature_request.snapshot_identity"/>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Nivel:</th>
+                                                        <td>
+                                                            <t t-if="signature_request.level == 'personal'">Personal</t>
+                                                            <t t-if="signature_request.level == 'institution'">Institución</t>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tipo:</th>
+                                                        <td>
+                                                            <t t-if="signature_request.request_type == 'affiliation'">Filiación
+                                                            </t>
+                                                            <t t-if="signature_request.request_type == 'renewal'">Renovación</t>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5>Estado del Proceso</h5>
+                                                <div class="timeline">
+                                                    <div t-att-class="'timeline-step ' + ('active' if signature_request.state in ['submitted', 'processing', 'pending_verification', 'verified', 'approved'] else '')">
+                                                        <div class="timeline-step-circle">1</div>
+                                                        <div class="timeline-step-content">
+                                                            <h6>Solicitud Enviada</h6>
+                                                            <small t-esc="signature_request.request_date"/>
+                                                        </div>
+                                                    </div>
+                                                    <div t-att-class="'timeline-step ' + ('active' if signature_request.state in ['pending_verification', 'verified', 'approved'] else '')">
+                                                        <div class="timeline-step-circle">2</div>
+                                                        <div class="timeline-step-content">
+                                                            <h6>Verificación por Correo</h6>
+                                                            <small t-if="signature_request.verification_date"
+                                                                   t-esc="signature_request.verification_date"/>
+                                                            <small t-if="not signature_request.verification_date">Pendiente
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div t-att-class="'timeline-step ' + ('active' if signature_request.state in ['verified', 'approved'] else '')">
+                                                        <div class="timeline-step-circle">3</div>
+                                                        <div class="timeline-step-content">
+                                                            <h6>En Proceso</h6>
+                                                            <small>Administración</small>
+                                                        </div>
+                                                    </div>
+                                                    <div t-att-class="'timeline-step ' + ('active' if signature_request.state == 'approved' else '')">
+                                                        <div class="timeline-step-circle">4</div>
+                                                        <div class="timeline-step-content">
+                                                            <h6>Aprobada</h6>
+                                                            <small>Firma Digital Lista</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <div t-att-class="'alert alert-' + {
+                                                'draft': 'secondary',
+                                                'submitted': 'info',
+                                                'pending_verification': 'warning',
+                                                'verified': 'success',
+                                                'processing': 'primary',
+                                                'approved': 'success',
+                                                'rejected': 'danger',
+                                                'expired': 'dark'
+                                            }[signature_request.state]">
+                                                <h5 class="alert-heading">
+                                                    Estado Actual:
+                                                    <t t-if="signature_request.state == 'draft'">Borrador</t>
+                                                    <t t-if="signature_request.state == 'submitted'">Enviada</t>
+                                                    <t t-if="signature_request.state == 'pending_verification'">Pendiente de
+                                                        Verificación
+                                                    </t>
+                                                    <t t-if="signature_request.state == 'verified'">Verificada ✓</t>
+                                                    <t t-if="signature_request.state == 'processing'">En Proceso</t>
+                                                    <t t-if="signature_request.state == 'approved'">Aprobada ✓</t>
+                                                    <t t-if="signature_request.state == 'rejected'">Rechazada</t>
+                                                    <t t-if="signature_request.state == 'expired'">Expirada</t>
+                                                </h5>
+                                                <p t-if="signature_request.state == 'pending_verification'">
+                                                    <i class="fa fa-envelope mr-2"></i>
+                                                    Se ha enviado un correo de verificación a:
+                                                    <strong t-esc="request.snapshot_email"/>
+                                                </p>
+                                                <p t-if="signature_request.state == 'verified'">
+                                                    <i class="fa fa-check mr-2"></i>
+                                                    Su solicitud ha sido verificada y está en proceso de revisión.
+                                                </p>
+                                                <p t-if="signature_request.state == 'approved'">
+                                                    <i class="fa fa-certificate mr-2"></i>
+                                                    Su firma digital ha sido aprobada. Recibirá notificaciones por
+                                                    correo.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="/" class="btn btn-outline-primary">
+                                            <i class="fa fa-home mr-2"></i>
+                                            Volver al inicio
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .timeline {
+                    position: relative;
+                    padding-left: 30px;
+                    }
+                    .timeline-step {
+                    position: relative;
+                    padding-bottom: 20px;
+                    }
+                    .timeline-step-circle {
+                    position: absolute;
+                    left: -30px;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background-color: #dee2e6;
+                    color: #6c757d;
+                    text-align: center;
+                    line-height: 24px;
+                    font-weight: bold;
+                    }
+                    .timeline-step.active .timeline-step-circle {
+                    background-color: #007bff;
+                    color: white;
+                    }
+                    .timeline-step-content {
+                    padding-left: 10px;
+                    }
+                </style>
+            </t>
+        </template>
+
+        <template id="inscription_requests" name="Solicitudes de Inscripción">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container mt-5 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h3 class="mb-0">
+                                            <i class="fa fa-certificate mr-2"></i>
+                                            Solicitudes de Firma Digital -
+                                            <t t-esc="inscription.full_name"/>
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <h5>Información de la Inscripción</h5>
+                                                <table class="table table-sm">
+                                                    <tr>
+                                                        <th>Nombre:</th>
+                                                        <td>
+                                                            <t t-esc="inscription.full_name"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Carnet:</th>
+                                                        <td>
+                                                            <t t-esc="inscription.identity"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Email:</th>
+                                                        <td>
+                                                            <t t-esc="inscription.email"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Estado Inscripción:</th>
+                                                        <td>
+                                                            <span t-att-class="'badge badge-' + {
+
+                                                        'approved': 'success',
+                                                        'rejected': 'danger'
+                                                    }[inscription.state]">
+
+                                                                <t t-if="inscription.states == 9">Aprobada</t>
+                                                                <t t-if="inscription.states == 10">Rechazada</t>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-light">
+                                                    <div class="card-body">
+                                                        <h6>Resumen de Solicitudes</h6>
+                                                        <p>
+                                                            <strong>Total:</strong>
+                                                            <t t-esc="len(requests)"/>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Pendientes:</strong>
+                                                            <t t-esc="len(requests.filtered(lambda r: r.state in ['pending_verification', 'submitted']))"/>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Aprobadas:</strong>
+                                                            <t t-esc="len(requests.filtered(lambda r: r.state == 'approved'))"/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div t-if="has_requests">
+                                            <h5>Historial de Solicitudes</h5>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Referencia</th>
+                                                            <th>Estado</th>
+                                                            <th>Tipo</th>
+                                                            <th>Nivel</th>
+                                                            <th>Fecha Solicitud</th>
+                                                            <th>Vencimiento</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <t t-foreach="requests" t-as="req">
+                                                            <tr>
+                                                                <td>
+                                                                    <t t-esc="req.name"/>
+                                                                </td>
+                                                                <td>
+                                                                    <span t-att-class="'badge badge-' + {
+                                                                'draft': 'secondary',
+                                                                'submitted': 'info',
+                                                                'pending_verification': 'warning',
+                                                                'verified': 'success',
+                                                                'processing': 'primary',
+                                                                'approved': 'success',
+                                                                'rejected': 'danger',
+                                                                'expired': 'dark'
+                                                            }[req.state]">
+                                                                        <t t-if="req.state == 'draft'">Borrador</t>
+                                                                        <t t-if="req.state == 'submitted'">Enviada</t>
+                                                                        <t t-if="req.state == 'pending_verification'">
+                                                                            Pendiente Verificación
+                                                                        </t>
+                                                                        <t t-if="req.state == 'verified'">Verificada</t>
+                                                                        <t t-if="req.state == 'processing'">En Proceso
+                                                                        </t>
+                                                                        <t t-if="req.state == 'approved'">Aprobada</t>
+                                                                        <t t-if="req.state == 'rejected'">Rechazada</t>
+                                                                        <t t-if="req.state == 'expired'">Expirada</t>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <t t-if="req.request_type == 'affiliation'">
+                                                                        Filiación
+                                                                    </t>
+                                                                    <t t-if="req.request_type == 'renewal'">Renovación
+                                                                    </t>
+                                                                </td>
+                                                                <td>
+                                                                    <t t-if="req.level == 'personal'">Personal</t>
+                                                                    <t t-if="req.level == 'institution'">Institución</t>
+                                                                </td>
+                                                                <td>
+                                                                    <t t-esc="req.request_date"/>
+                                                                </td>
+                                                                <td>
+                                                                    <t t-esc="req.expiry_date"/>
+                                                                    <t t-if="req.expiry_date and req.expiry_date &lt; current_date">
+                                                                        <span class="badge badge-danger ml-2">Expirado
+                                                                        </span>
+                                                                    </t>
+                                                                </td>
+                                                                <td>
+                                                                    <a t-attf-href="/digital_signature/request/{{req}}/status"
+                                                                       class="btn btn-sm btn-outline-primary">
+                                                                        <i class="fa fa-eye mr-1"></i>
+                                                                        Ver
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div t-else="" class="text-center py-5">
+                                            <i class="fa fa-inbox fa-4x text-muted mb-3"></i>
+                                            <h4>No hay solicitudes de firma digital</h4>
+                                            <p class="text-muted">No se han realizado solicitudes de firma digital para
+                                                esta inscripción.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="/" class="btn btn-outline-primary">
+                                            <i class="fa fa-home mr-2"></i>
+                                            Volver al inicio
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

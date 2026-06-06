@@ -1,0 +1,18 @@
+<odoo>
+    <record id="terms_conditions_1" model="nomenclators.terms_conditions">
+        <field name="name">Introduccion</field>
+        <field name="content">
+
+          Bienvenido a nuestra pagina de terminos y condiciones. Por favor lea cuidadosamente
+
+        </field>
+    </record>
+    <record id="terms_conditions_2" model="nomenclators.terms_conditions">
+        <field name="name">Politica de confidencialidad</field>
+        <field name="content">
+           Los datos y documentos que aporte el profesional, deben ser ciertos, auténticos y con plenos efectos legales.
+        </field>
+    </record>
+    <!-- Add more records as needed -->
+</odoo>
+

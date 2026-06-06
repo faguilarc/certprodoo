@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <record id="professional_language_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.professional_language.form</field>
+            <field name="model">nomenclators.professional_language</field>
+            <field name="arch" type="xml">
+                <form string=" Idiomas">
+                    <sheet>
+                        <group>
+                            <field name="language"/>
+                            <field name="proficiency_level"/>
+                        </group>
+<!--                        <group string="Habilidades">-->
+<!--                            <field name="speaking"/>-->
+<!--                            <field name="writing"/>-->
+<!--                            <field name="reading"/>-->
+<!--                        </group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="professional_language_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.professional_language.tree</field>
+            <field name="model">nomenclators.professional_language</field>
+            <field name="arch" type="xml">
+                <tree string=" Idiomas">
+                    <field name="language"/>
+                    <field name="proficiency_level"/>
+                    <field name="speaking"/>
+                    <field name="writing"/>
+                    <field name="reading"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="professional_language_act_window" model="ir.actions.act_window">
+            <field name="name">Idioma</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.professional_language</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede gestionar un nuevo idioma
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

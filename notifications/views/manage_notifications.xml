@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="gest_notif_form">
+            <field name="name">Gestionar notificaciones</field>
+            <field name="model">notifications.notifications</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notificaciones">
+                    <sheet>
+                        <div class="oe_form_container">
+                            <div class="oe_form_sheet">
+                                <group col="4" colspan="2">
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="code" invisible="1"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="notification"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <span style="font-weight:bold;">Disparador</span>
+                                                    <span style="height: 30px;width:1px;border-left:1px solid #ddd;float:right;margin:-4px 9px 0 0;"></span>
+                                                </div>
+                                                <div class="col-lg-10" style="margin-left:-32px;">
+                                                    <div class="row">
+                                                        <div class="col-lg-2">
+                                                            <field name="to_create" attrs="{'readonly':[('changest','=', True)]}"/>
+                                                            <label for="to_create" string="Al crear"/>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <field name="to_update" attrs="{'readonly':[('changest','=', True)]}"/>
+                                                            <label for="to_update" string="Al actualizar"/>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <field name="to_delete" attrs="{'readonly':[('changest','=', True)]}"/>
+                                                            <label for="to_delete" string="Al eliminar"/>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <field name="changest" attrs="{'readonly':['|', '|', ('to_create','=', True), ('to_update','=', True), ('to_delete','=', True)]}"/>
+                                                            <label for="changest" string="Cambio de estado"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </group>
+                                <group col="4" attrs="{'invisible': [('changest','=', False)]}">
+                                    <field name="model_id" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                    <field name="state" attrs="{'readonly': [('model_id', '=', False)]}" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="models" attrs="{'invisible':[('changest','=', True)]}">
+                                        <tree class="tree_no_open" editable="bottom">
+                                            <field name="model" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="persons"> <!-- attrs="{'invisible': ['|', ('tipo', '!=', 1), ('changest', '=', True)]}"-->
+                                        <tree class="tree_no_open" editable="bottom">
+                                            <field name="name"/>
+                                            <field name="login"/>
+                                            <field name="login_date"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="gest_notif_tree">
+            <field name="name">Gestionar notificaciones</field>
+            <field name="model">notifications.notifications</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Notificaciones">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="notification"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="gest_notif_action">
+            <field name="name">Gestionar notificaciones</field>
+            <field name="res_model">notifications.notifications</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+ </odoo>

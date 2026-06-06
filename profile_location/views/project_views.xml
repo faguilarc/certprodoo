@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_tree" model="ir.ui.view">
+        <field name="name">professional.registers.project.tree</field>
+        <field name="model">professional_registers.project</field>
+        <field name="arch" type="xml">
+            <tree string="Proyectos">
+                <field name="name"/>
+                <field name="state_id"/>
+                <field name="city"/>
+                <field name="professional_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_form" model="ir.ui.view">
+        <field name="name">professional.registers.project.form</field>
+        <field name="model">professional_registers.project</field>
+        <field name="arch" type="xml">
+            <form string="Proyecto">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="state_id"/>
+                        </group>
+                        <group>
+                            <field name="city"/>
+                            <field name="country_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Descripción">
+                            <field name="description"/>
+                        </page>
+
+                        <page string="Ubicación">
+                            <group>
+                                <group>
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="zip"/>
+                                </group>
+                                <group>
+                                    <field name="city"/>
+                                    <field name="state_id"/>
+                                    <field name="country_id"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                </group>
+                                <group>
+                                    <field name="has_coordinates" readonly="1"/>
+                                    <button name="action_set_location_from_map" type="object"
+                                            string="Establecer en Mapa" class="btn-primary"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Profesionales">
+                            <field name="professional_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="profession"/>
+                                    <field name="specialties"/>
+                                    <field name="state_id"/>
+                                </tree>
+                            </field>
+                            <div class="oe_clear">
+                                <button name="action_find_professionals" type="object"
+                                        string="Buscar Profesionales por Ubicación" class="oe_highlight"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_project" model="ir.actions.act_window">
+        <field name="name">Proyectos</field>
+        <field name="res_model">professional_registers.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Cree su primer proyecto
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_project"
+              name="Proyectos"
+              parent="professional_registers.menu_professional_registers_root"
+              action="action_project"
+              sequence="10"/>
+</odoo>

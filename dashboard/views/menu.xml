@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="dashboard_root_menu" name="Cuadro de Mando" sequence="16" groups="base.group_user"  web_icon="dashboard,static/description/icon.png"/>
+        <menuitem name="Dashboard" id="cd_dashboard" parent="dashboard_root_menu" sequence="2" action="action_dashboard" web_icon="dashboard,static/description/icon.png"/>
+        <menuitem name="Dashboard" id="cd_dashboard_menu" parent="dashboard_root_menu" sequence="1" action="dashboard_act_window"  web_icon="dashboard,static/description/icon.png"/>
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de formulario para FUC Config -->
+    <record id="view_fuc_config_form" model="ir.ui.view">
+        <field name="name">fuc.config.form</field>
+        <field name="model">fuc.config</field>
+        <field name="arch" type="xml">
+            <form string="Configuración de FUC">
+                <header>
+                    <button name="action_generate_token" string="Generar Token" type="object" class="btn-primary"/>
+                    <button name="action_test_connection" string="Probar Conexión" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="key_1"/>
+                            <field name="key_2"/>
+                            <field name="url_token"/>
+                            <field name="url_base"/>
+                            <field name="use_simulation"/>
+                        </group>
+                        <group>
+                            <field name="token" readonly="1"/>
+                            <field name="token_expiry" readonly="1"/>
+                            <field name="last_test" readonly="1"/>
+                            <field name="last_test_result" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de árbol para FUC Config -->
+    <record id="view_fuc_config_tree" model="ir.ui.view">
+        <field name="name">fuc.config.tree</field>
+        <field name="model">fuc.config</field>
+        <field name="arch" type="xml">
+            <tree string="Configuración de FUC">
+                <field name="key_1"/>
+                <field name="key_2"/>
+                <field name="url_token"/>
+                <field name="url_base"/>
+                <field name="use_simulation"/>
+                <field name="last_test"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Acción para FUC Config -->
+    <record id="action_fuc_config" model="ir.actions.act_window">
+        <field name="name">Configuración de FUC</field>
+        <field name="res_model">fuc.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configura las claves y URLs para la conexión a FUC
+            </p>
+        </field>
+    </record>
+
+    <!-- Menú para FUC Config -->
+    <menuitem id="menu_fuc_config_root" name="FUC Connector" sequence="65"/>
+    <menuitem id="menu_fuc_config" name="Configuración" parent="menu_fuc_config_root" action="action_fuc_config" sequence="10"/>
+</odoo>

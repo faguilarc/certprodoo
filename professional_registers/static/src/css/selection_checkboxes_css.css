@@ -1,0 +1,24 @@
+/* static/src/css/selection_checkboxes_widget.css */
+.o_field_selection_checkboxes {
+    .o_selection_checkboxes_container {
+        .form-check {
+            margin-bottom: 8px;
+            
+            .form-check-input {
+                margin-top: 0.1rem;
+            }
+            
+            .form-check-label {
+                padding-left: 0.25rem;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+    }
+    
+    /* Estilo para modo readonly */
+    .badge {
+        margin-right: 5px;
+        margin-bottom: 3px;
+    }
+}

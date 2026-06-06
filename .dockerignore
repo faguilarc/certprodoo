@@ -1,0 +1,56 @@
+# === SECRETOS Y CONFIGURACIÓN ===
+**/.env
+**/config.local.*
+**/*_credentials.*
+
+# === CONTROL DE VERSIONES ===
+.git/
+.github
+.gitignore
+.svn/
+.mercurial/
+
+# === DEPENDENCIAS Y ARTEFACTOS DE BUILD ===
+# Node.js
+node_modules/
+dist
+npm-debug.log*
+yarn-error.log*
+
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Java
+target/
+*.jar
+*.war  
+
+# Containers & Orchestration
+.dockerignore
+docker-compose*.yml
+.docker/
+Dockerfile*
+.buildscripts/
+
+# === ARCHIVOS DE SISTEMA/EDITOR ===
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.bak  
+
+# === LOGS Y TEMPORALES ===
+*.log
+logs/  
+tmp/ 
+temp/
+
+# === DOCUMENTACIÓN Y PRUEBAS ===
+docs/
+**/test/
+**/coverage/
+README*
+LICENSE

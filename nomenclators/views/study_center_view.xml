@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="study_centers_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.study_centers.form</field>
+            <field name="model">nomenclators.study_centers</field>
+            <field name="arch" type="xml">
+                <form string="Centros de estudio" duplicate="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Centro de estudio" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="teaching_level_id" class="w-25" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}" required="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Descripción">
+                                <field name="description" required="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="study_centers_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.study_centers.tree</field>
+            <field name="model">nomenclators.study_centers</field>
+            <field name="arch" type="xml">
+                <tree string="Centros de estudio">
+                    <field name="teaching_level_id"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="study_centers_search_view" model="ir.ui.view">
+            <field name="name">nomenclators.study_centers.search</field>
+            <field name="model">nomenclators.study_centers</field>
+            <field name="arch" type="xml">
+                <search string="Centros de estudio">
+                    <field name="name" string="Centro de estudio"/>
+                    <field name="teaching_level_id" string="Profesión"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="study_centers_act_window" model="ir.actions.act_window">
+            <field name="name">Centros de estudio</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.study_centers</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede adicionar una nuevo centro de estudio
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

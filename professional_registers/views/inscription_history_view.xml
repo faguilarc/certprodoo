@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vista Tree para el Histórico de Cambios de Estado -->
+    <record id="view_inscription_history_tree" model="ir.ui.view">
+        <field name="name">professional.inscription.history.tree</field>
+        <field name="model">professional_registers.inscription_history</field>
+        <field name="arch" type="xml">
+            <tree string="Histórico de Cambios de Estado">
+                <field name="state_id"/>
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="observation"/>
+<!--                &lt;!&ndash; Filtros &ndash;&gt;-->
+<!--                <filter string="Estado" name="filter_state" domain="[]" context="{'group_by': 'state_id'}"/>-->
+<!--                <filter string="Usuario" name="filter_user" domain="[]" context="{'group_by': 'user_id'}"/>-->
+<!--                <filter string="Últimos 7 días" name="filter_last_7_days" domain="[('date', '>=', (context_today() - timedelta(days=7)).strftime('%Y-%m-%d'))]"/>-->
+<!--                <filter string="Este Mes" name="filter_this_month" domain="[('date', '>=', context_today().strftime('%Y-%m-01'))]"/>-->
+<!--                &lt;!&ndash; Grupos &ndash;&gt;-->
+<!--                <groupby string="Agrupar por Estado" name="group_by_state" context="{'group_by': 'state_id'}"/>-->
+<!--                <groupby string="Agrupar por Usuario" name="group_by_user" context="{'group_by': 'user_id'}"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista de Búsqueda para el Histórico de Cambios de Estado -->
+    <record id="view_inscription_history_search" model="ir.ui.view">
+        <field name="name">professional.request.history.search</field>
+        <field name="model">professional_registers.inscription_history</field>
+        <field name="arch" type="xml">
+            <search string="Buscar en Histórico">
+                <field name="state_id"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <!-- Filtros Predefinidos -->
+<!--                <filter string="Últimos 7 días" name="filter_last_7_days" domain="[('date', '>=', (context_today() - timedelta(days=7)).strftime('%Y-%m-%d'))]"/>-->
+<!--                <filter string="Este Mes" name="filter_this_month" domain="[('date', '>=', context_today().strftime('%Y-%m-01'))]"/>-->
+<!--                &lt;!&ndash; Agrupación &ndash;&gt;-->
+<!--                <group string="Agrupar por">-->
+<!--                    <filter string="Estado" name="group_by_state" context="{'group_by': 'state_id'}"/>-->
+<!--                    <filter string="Usuario" name="group_by_user" context="{'group_by': 'user_id'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+<!--    &lt;!&ndash; Integración del Histórico en la Vista de Formulario de la Solicitud &ndash;&gt;-->
+<!--    <record id="view_professional_request_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">professional.request.form.inherit</field>-->
+<!--        <field name="model">professional_registers.professional_request</field>-->
+<!--        <field name="inherit_id" ref="professional_registers.view_professional_request_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='states']" position="after">-->
+<!--                <field name="history_ids" widget="one2many_list">-->
+<!--                    <tree>-->
+<!--                        <field name="state_id"/>-->
+<!--                        <field name="date"/>-->
+<!--                        <field name="user_id"/>-->
+<!--                        <field name="observation"/>-->
+<!--                        &lt;!&ndash; Filtros &ndash;&gt;-->
+<!--                        <filter string="Estado" name="filter_state" domain="[]" context="{'group_by': 'state_id'}"/>-->
+<!--                        <filter string="Usuario" name="filter_user" domain="[]" context="{'group_by': 'user_id'}"/>-->
+<!--                        <filter string="Últimos 7 días" name="filter_last_7_days" domain="[('date', '>=', (context_today() - timedelta(days=7)).strftime('%Y-%m-%d'))]"/>-->
+<!--                        <filter string="Este Mes" name="filter_this_month" domain="[('date', '>=', context_today().strftime('%Y-%m-01'))]"/>-->
+<!--                        &lt;!&ndash; Grupos &ndash;&gt;-->
+<!--                        <groupby string="Agrupar por Estado" name="group_by_state" context="{'group_by': 'state_id'}"/>-->
+<!--                        <groupby string="Agrupar por Usuario" name="group_by_user" context="{'group_by': 'user_id'}"/>-->
+<!--                    </tree>-->
+<!--                </field>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

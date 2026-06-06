@@ -1,0 +1,84 @@
+# Pipeline for Node backend
+stages:
+  # Lista de etapas para los jobs, por orden de ejecución.
+  - image-build-and-push-to-develop
+  - test
+  - deploy-to-develop
+
+image:
+  # Usando la imagen de Kaniko.
+  name: kaniko-project/executor:debug
+  entrypoint: [ "" ]
+
+variables:
+  # Lista de variables globales
+  KANIKO_CACHE_ARGS: "--cache=true --cache-copy-layers=true --cache-ttl=24h --cache-repo=$HARBOR_HOST/$HARBOR_PROJECT/$CI_COMMIT_REF_SLUG"
+  ARTIFACT_COMPRESSION_LEVEL: 'fast'
+  CACHE_COMPRESSION_LEVEL: 'fast'
+  DOCKER_BUILD_TIMEOUT: "3600"
+  DOCKER_BUILDKIT: "1"
+
+Build_Image_With_Kaniko_and_Push_to_Develop_Job:
+  # Usando Kaniko para construir la imagen y luego publicarla en el Registry especificado.
+  stage: image-build-and-push-to-develop
+  variables:
+    PROJECT_IMAGE_NAME: $HARBOR_HOST/$HARBOR_PROJECT/$LOCAL_DEV_IMAGE_NAME
+  script:
+    - echo "DETERMINANDO LA FECHA DE CONSTRUCCIÓN DE LA IMAGEN ..."
+    - BUILDDATE="$(date '+%Y%m%d')"
+    - echo "CONFORMANDO EL TAG DE LA IMÁGEN CON LA FECHA Y EL ÚLTIMO COMMIT ..."
+    - PROJECT_IMAGE_TAG=$BUILDDATE-$CI_COMMIT_SHORT_SHA
+    - echo "CONFORMANDO EL NOMBRE COMPLETO DE LA IMAGEN ..."
+    - PROJECT_IMAGE=$PROJECT_IMAGE_NAME:$PROJECT_IMAGE_TAG
+    - echo "CONSTRUYENDO Y PUBLICANDO LA IMAGEN [$PROJECT_IMAGE] ..."
+    - echo "{\"auths\":{\"$HARBOR_HOST\":{\"username\":\"$HARBOR_USERNAME\",\"password\":\"$HARBOR_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      $KANIKO_CACHE_ARGS
+      --registry-mirror 10.20.160.3
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --insecure
+      --skip-tls-verify
+      --skip-tls-verify-pull
+      --destination "$PROJECT_IMAGE"
+    - echo "EXPORTANDO EL NOMBRE COMPLETO DE LA IMÁGEN PARA EL DESPLIEGUE ..."
+    - PROJECT_IMAGE=${LOCAL_DEV_REGISTRY_DNS}/${LOCAL_DEV_IMAGE_NAME}:$PROJECT_IMAGE_TAG
+    - echo "PROJECT_IMAGE=$PROJECT_IMAGE" >> build.env
+  rules:
+    - exists:
+        - $CI_COMMIT_SHORT_SHA
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+  artifacts:
+    reports:
+      dotenv: build.env
+
+Test_Job:
+  # Ejecutando las pruebas necesarias, aún se encuentra en implementación
+  only:
+    - dev
+    - main
+  stage: test
+  script:
+    - echo "EJECUTANDO LAS PRUEBAS..."
+    - echo "MOSTRANDO VALORES DE LAS VARIABLES !!!"
+    - echo "[ CI_COMMIT_REF_SLUG = $CI_COMMIT_REF_SLUG ]"
+    - echo "[ CI_COMMIT_SHORT_SHA = $CI_COMMIT_SHORT_SHA ]"
+    - echo "[ PROJECT_IMAGE = $PROJECT_IMAGE ]"
+    - echo "[ PROJECT_IMAGE_NAME = ${LOCAL_DEV_REGISTRY_DNS}/${LOCAL_DEV_IMAGE_NAME} ]"
+    - echo "EJECUCIÓN DE LAS PRUEBAS TERMINADA..."
+
+Deploy_to_Develop_Job:
+  stage: deploy-to-develop
+  only:
+    # Garantizar que este pipeline solo se ejecute en la rama específica definida del Repo
+    - dev
+  dependencies:
+    - Build_Image_With_Kaniko_and_Push_to_Develop_Job
+  image:
+    name: bitnami/kubectl:1.22.1
+    entrypoint: [""]
+  script:
+    - echo "ACTUALIZANDO DESPLIEGUE EN DEVELOP..."
+    - export KUBECONFIG=$LOCAL_DEV_KUBECONFIG
+    - kubectl -n $LOCAL_DEV_NAMESPACE patch deployment $LOCAL_DEV_DEPLOYMENT_NAME -p "{\"metadata\":{\"labels\":{\"updated\":\"$(date '+%Y-%m-%d-%H%M')\"}}}"
+    - kubectl -n $LOCAL_DEV_NAMESPACE patch deployment $LOCAL_DEV_DEPLOYMENT_NAME -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"$LOCAL_DEV_DEPLOYMENT_NAME\",\"image\":\"$PROJECT_IMAGE\"}]}}}}"

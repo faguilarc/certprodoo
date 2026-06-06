@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_identity">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <style>
+                        .table > thead > tr > th,
+                        .table > tbody > tr > th,
+                        .table > tfoot > tr > th,
+                        .table > thead > tr > td,
+                        .table > tbody > tr > td,
+                        .table > tfoot > tr > td {
+                            padding: 0 10px;
+                            text-align: center;
+                            font-size: 0.8em !important;
+                        }
+                        .body{
+                            font-size: 0.8em !important;
+                        }
+                        .pie{
+                            font-size: 0.8em !important;
+                        }
+                        .encabezado{font-size: 0.10em !important;}
+                        .sepdiv{margin-top: 20px;}
+                       .page {page-break-after: always;}
+                        .cliente1{
+                        border-width: 2px;
+                        border-style: groove;
+                        border-color: #ffffff;
+                        border-image: initial;
+                        display: block;
+                        padding-block-start: 0.1em;
+                        padding-inline-start: 0.5em;
+                        padding-inline-end: 0.15em;
+                        padding-block-end: 0.325em;
+                        min-inline-size: min-content;
+                        -moz-border-radius:2px;
+                        -webkit-border-radius:2px;
+                        border-radius:2px;
+                        padding: 2px 5px;
+                    }
+                        </style>
+                    <div class="page">
+                        <div class="col-6">
+                            <fieldset class="cliente1">
+                                <h4>Registro de profesionales</h4>
+                                <div class="row sepdiv">
+                                    <div class="col-3">
+                                        <div class="stat-icon"><i class="fa fa-address-book-o fa-5x"/></div>
+                                    </div>
+                                    <div class="col-9">
+                                        <span t-esc="full_name"/><br/>
+                                        <strong><span t-esc="inscription_number"/></strong><br/>
+                                        <span>Profesión: <span t-esc="profession"/></span><br/>
+                                        <span>Válido hasta: <span t-esc="date"/></span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <footer></footer>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

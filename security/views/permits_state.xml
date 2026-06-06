@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="permit_state_form">
+            <field name="name">Permisos por Estado</field>
+            <field name="model">security.permits_state</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Permisos por Estado">
+                    <sheet>
+                        <div class="oe_form_container">
+                            <div class="oe_form_sheet">
+                                <group name="user_group">
+                                    <field name="user" class="w-50" widget="many2one"
+                                           options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                           domain="[('user_type', '=', 'system')]"
+                                           required="1"/>
+                                </group>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="permit_state_tree">
+            <field name="name">Permisos por Estado</field>
+            <field name="model">security.permits_state</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Permisos por Estado">
+                    <field name="user"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="permit_state_search" model="ir.ui.view">
+            <field name="name">Permisos por Estado</field>
+            <field name="model">security.permits_state</field>
+            <field name="arch" type="xml">
+                <search string="Permisos por Estado">
+                    <field name="user"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="permit_state_action">
+            <field name="name">Permisos por Estado</field>
+            <field name="res_model">security.permits_state</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede agregar un nuevo permiso por estado
+                </p>
+            </field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="permit_state_search"/>
+        </record>
+
+    </data>
+</odoo>

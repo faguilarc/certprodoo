@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inscriptions">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .table > thead > tr > th,
+                        .table > tbody > tr > th,
+                        .table > tfoot > tr > th,
+                        .table > thead > tr > td,
+                        .table > tbody > tr > td,
+                        .table > tfoot > tr > td {
+                            padding: 0 10px;
+                            text-align: center;
+                            font-size: 0.8em !important;
+                        }
+                        .body{
+                            font-size: 1em !important;
+                        }
+                        .pie{
+                            font-size: 0.8em !important;
+                        }
+                        .encabezado{font-size: 0.10em !important;}
+                        .sepdiv{margin-top: 20px;}
+                       .page {page-break-after: always;}
+                        </style>
+                    <div class="page">
+                        <center><img t-att-src="image_data_uri(company.image)" style="max-height:4cm; max-width:6cm;" alt="Logo"/></center>
+                        <center><h4>REPÚBLICA DE CUBA</h4></center>
+                        <center><h4>REGISTRO PROFESIONALES DEL SECTOR DE LA CONSTRUCCIÓN</h4></center>
+                        <center><h4>CERTIFICACIÓN DE INSCRIPCIÓN</h4></center>
+                        <div class="sepdiv body row">
+                            <div class="col-6">
+                                <span><strong>INSCRIPCIÓN No: </strong><U><span t-esc="request_number"/></U></span>
+                            </div>
+                            <div class="col-6">
+<!--                                <span><strong>Gravada: </strong><U><span t-esc="id_transaction"/></U></span>-->
+                            </div>
+                        </div>
+                        <div class="sepdiv body">
+                            <span><strong>Fecha de asiento: </strong><U><span t-esc="days"/></U><span>/</span><U><span t-esc="month"/></U><span>/</span><U><span t-esc="year"/></U></span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span>DATOS:</span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span><strong>Nombre y Apellidos: </strong><U><span t-esc="full_name"/></U></span>
+                        </div>
+                         <div class="sepdiv body">
+                            <span><strong>Profesión: </strong><U><span t-esc="profession_name"/></U></span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span style="align:left">
+                                El Registrador CERTIFICA que los anteriores datos concuerdan fielmente con los que
+                                aparecen consignados en la inscripción a que hace referencia
+                            </span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span>
+                                <center>
+                                __________________________
+                                </center>
+                            </span>
+                        </div>
+                        <div class="sepdiv body">
+                            <span>
+                                <center>
+                                    REGISTRADOR<br/>
+                                    FIRMA
+                                </center>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

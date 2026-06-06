@@ -1,0 +1,45 @@
+  <!--                                <button-->
+                                <!--                                        type="action"-->
+                                <!--                                        name="%(action_public_request)d"-->
+                                <!--                                        class="btn oe_stat_button"-->
+                                <!--                                        string="Campos Públicos"-->
+                                <!--                                        icon="fa-cogs"-->
+                                <!--                                        context="{'default_request_id': id}"-->
+                                <!--                                                                        groups="security.group_professional_superadmin,security.group_professional_client_online,security.group_professional_register_employee"-->
+                                <!--                                />-->
+<!--                                <button-->
+<!--                                        type="action"-->
+<!--                                        name="%(action_public_request)d"-->
+<!--                                        class="btn oe_stat_button"-->
+<!--                                        string="Campos Públicos"-->
+<!--                                        icon="fa-cogs"-->
+<!--                                        context="{'default_request_id': id}"-->
+<!--                                        groups="security.group_professional_superadmin,security.group_professional_client_online,security.group_professional_register_employee"-->
+
+<!--                                />-->
+
+
+access_professional_registers_public_request_admin,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_superadmin,1,1,1,1
+access_professional_registers_public_request_editor,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_editor,1,1,1,1
+access_professional_registers_public_request_editor_managment,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_editor_managment,1,1,1,1
+access_professional_registers_public_request_register,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_register_employee,1,1,1,1
+access_professional_registers_public_request_register_managment,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_reigster_managment,1,1,1,1
+access_professional_registers_public_request_user,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_consultant,1,0,0,0
+access_professional_registers_public_request_client,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_client,1,0,0,0
+access_professional_registers_public_request_client_online,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_client_online,1,1,1,1
+access_professional_registers_public_request_managment,professional_registers_public_request,model_professional_registers_public_request,security.group_professional_managment,1,0,0,0
+access_professional_registers_public_request_public,professional_registers_public_request,model_professional_registers_public_request,,1,0,0,0
+access_professional_registers_public_request_user,professional_registers_public_request,model_professional_registers_public_request,base.group_user,1,1,0,0
+
+
+access_generic_state_change_wizard_admin,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_superadmin,1,1,1,1
+access_generic_state_change_wizard_editor,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_editor,1,1,1,1
+access_generic_state_change_wizard_editor_managment,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_editor_managment,1,1,1,1
+access_generic_state_change_wizard_register,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_register_employee,1,1,1,1
+access_generic_state_change_wizard_register_managment,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_reigster_managment,1,1,1,1
+access_generic_state_change_wizard_user,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_consultant,1,0,0,0
+access_generic_state_change_wizard_client,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_client,1,0,0,0
+access_generic_state_change_wizard_client_online,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_client_online,1,1,1,1
+access_generic_state_change_wizard_managment,generic_state_change_wizard,model_generic_state_change_wizard,security.group_professional_managment,1,0,0,0
+access_generic_state_change_wizard_public,generic_state_change_wizard,model_generic_state_change_wizard,,1,0,0,0
+access_generic_state_change_wizard_user,generic_state_change_wizard,model_generic_state_change_wizard,base.group_user,1,1,0,0

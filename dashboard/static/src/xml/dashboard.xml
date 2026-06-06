@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="DashboardDetails">
+        <div class="container-fluid o_dashboard">
+
+            <div class="loading-spinner d-none">
+                <i class="fa fa-spinner fa-spin"></i>
+                <span>Cargando datos...</span>
+            </div>
+
+            <div class="error-message alert alert-danger d-none">
+            </div>
+
+            <!-- Selector de Reportes -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="oh-card">
+                        <div class="oh-card-header">
+                            <h2 class="h4 h-md-2">Configuración de Reportes</h2>
+                        </div>
+                        <div class="oh-card-body">
+                            <div class="report-toggles">
+                                <div class="form-check form-check-inline mb-2 mb-md-0">
+                                    <input class="form-check-input" type="checkbox" id="showSolicitudesEstado"
+                                           checked="checked"/>
+                                    <label class="form-check-label"
+                                           for="showSolicitudesEstado">Solicitudes por Estado</label>
+                                </div>
+<!--                                <div class="form-check form-check-inline mb-2 mb-md-0">-->
+<!--                                    <input class="form-check-input" type="checkbox" id="showDistribucionProfesiones"-->
+<!--                                           checked="checked"/>-->
+<!--                                    <label class="form-check-label" for="showDistribucionProfesiones">Distribución por Profesión</label>-->
+<!--                                </div>-->
+                                <div class="form-check form-check-inline mb-2 mb-md-0">
+                                    <input class="form-check-input" type="checkbox" id="showTiempoProcesamiento"
+                                           checked="checked"/>
+                                    <label class="form-check-label" for="showTiempoProcesamiento">Tiempo de Procesamiento</label>
+                                </div>
+<!--                                <div class="form-check form-check-inline">-->
+<!--                                    <input class="form-check-input" type="checkbox" id="showTasasAprobacion"-->
+<!--                                           checked="checked"/>-->
+<!--                                    <label class="form-check-label"-->
+<!--                                           for="showTasasAprobacion">Tasas de Aprobación</label>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor de Reportes -->
+            <div id="reportsContainer">
+                <!-- Reportes de Solicitudes por Estado -->
+                <div class="row mb-4" id="reportSolicitudesEstado">
+                    <div class="col-12">
+                        <div class="oh-card">
+                            <div class="oh-card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+                                <h2 class="h4 mb-2 mb-md-0">Solicitudes por Estado</h2>
+                                <div class="btn-group " role="group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm active" id="btnCardView">
+                                        <i class="fa fa-th-large" aria-hidden="true"></i>
+                                        <span class="d-none d-sm-inline">Tarjetas</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnChartView">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        <span class="d-none d-sm-inline">Gráfico</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="oh-card-body">
+                                <!-- Card View -->
+                                <div id="cardView">
+                                    <div class="row g-2">
+                                        <t t-foreach="widget.dashboard_data.conteo_por_estado" t-as="estado">
+                                            <div class="col-6 col-sm-6 col-md-3 col-lg-3 mb-2 oh-payslip">
+                                                <div class="oh-card status-card h-100" t-att-data-estado="estado.state_id"
+                                                     t-attf-style="border-left: 4px solid ">
+                                                    <div class="oh-card-body p-2 p-sm-3">
+                                                        <div class="stat-widget-one text-center">
+                                                            <div class="stat-icon mb-1">
+                                                                <i class="fa fa-archive fa-lg"/>
+                                                            </div>
+                                                            <div class="stat-content">
+                                                                <div class="stat-text small">
+                                                                    <strong><t t-esc="estado.state_name"/></strong>
+                                                                </div>
+                                                                <div class="stat-digit">
+                                                                    <h5 class="mb-0"><t t-esc="estado.cantidad"/></h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+
+                                <!-- Chart View -->
+                                <div id="chartView" style="display: none;">
+                                    <canvas id="chartSolicitudesEstado" class="w-100" style="height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--                &lt;!&ndash; Gráfico de Distribución por Profesión &ndash;&gt;-->
+<!--                <div class="row mb-4" id="reportDistribucionProfesiones">-->
+<!--                    <div class="col-12">-->
+<!--                        <div class="oh-card">-->
+<!--                            <div class="oh-card-header">-->
+<!--                                <h4 class="h5 mb-0">Distribución por Profesión</h4>-->
+<!--                            </div>-->
+<!--                            <div class="oh-card-body">-->
+<!--                                <canvas id="chartProfesiones" class="w-100" style="height: 350px;"></canvas>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- Tiempo Promedio de Procesamiento -->
+                <div class="row mb-4" id="reportTiempoProcesamiento">
+                    <div class="col-12">
+                        <div class="oh-card">
+                            <div class="oh-card-header">
+                                <h4 class="h5 mb-0">Tiempo Promedio de Procesamiento</h4>
+                            </div>
+                            <div class="oh-card-body text-center py-4">
+                                <h2 class="display-6 mb-2">
+                                    <t t-esc="widget.dashboard_data.tiempo_promedio.promedio_horas.toFixed(1)"/>
+                                    <small class="text-muted h6">horas</small>
+                                </h2>
+                                <p class="mb-0">Total solicitudes:
+                                    <span class="fw-bold">
+                                        <t t-esc="widget.dashboard_data.tiempo_promedio.total_solicitudes"/>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--                &lt;!&ndash; Tasas de Aprobación/Rechazo &ndash;&gt;-->
+<!--                <div class="row mb-4" id="reportTasasAprobacion">-->
+<!--                    <div class="col-12">-->
+<!--                        <div class="oh-card">-->
+<!--                            <div class="oh-card-header">-->
+<!--                                <h4 class="h5 mb-0">Tasa de Aprobación/Rechazo</h4>-->
+<!--                            </div>-->
+<!--                            <div class="oh-card-body">-->
+<!--                                <canvas id="chartTasas" class="w-100" style="height: 300px;"></canvas>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </t>
+</templates>

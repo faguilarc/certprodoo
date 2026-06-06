@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_professional_expedient_tree" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.tree</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <tree string="Expedientes">
+                <field name="expedient_number"/>
+                <field name="professional_id"/>
+                <field name="profile_identity"/>
+                <field name="state"/>
+                <field name="date_open"/>
+                <field name="date_close"/>
+                <field name="user_open"/>
+                <field name="request_count" widget="statinfo" string="Solicitudes"/>
+                <field name="inscription_count" widget="statinfo" string="Inscripciones"/>
+                <field name="document_count" widget="statinfo" string="Documentos"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_professional_expedient_search" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.search</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Expedientes">
+                <field name="expedient_number"/>
+                <field name="professional_id"/>
+                <field name="profile_identity"/>
+                <field name="state"/>
+                <separator/>
+                <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
+                <filter name="open" string="Abiertos" domain="[('state','=','open')]"/>
+                <filter name="pending" string="Pendientes" domain="[('state','=','pending')]"/>
+                <filter name="closed" string="Cerrados" domain="[('state','=','closed')]"/>
+                <filter name="archived" string="Archivados" domain="[('state','=','archived')]"/>
+                <separator/>
+                <filter name="my_expedients" string="Mis Expedientes" domain="[('user_open','=',uid)]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_state" string="Estado" context="{'group_by':'state'}"/>
+                    <filter name="group_professional" string="Profesional" context="{'group_by':'professional_id'}"/>
+                    <filter name="group_date_open" string="Fecha de Apertura" context="{'group_by':'date_open'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_professional_expedient_form" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.form</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <form string="Expediente del Profesional">
+                <header>
+                    <button name="action_open" string="Abrir" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_close" string="Cerrar" type="object" states="open,pending"
+                            class="btn-primary"/>
+                    <button name="action_archive" string="Archivar" type="object" states="closed" class="btn-primary"/>
+
+                    <button name="action_load_associated_records" string="Sincronizar datos" type="object"
+                            class="btn-secondary" attrs="{'invisible': [('professional_id', '=', False)]}"/>
+<!--                    <button name="action_load_by_identity" string="Cargar por Identity" type="object"-->
+<!--                            class="btn-secondary"/>-->
+<!--                    <button name="action_sync_documents" string="Sincronizar Documentos" type="object"-->
+<!--                            class="btn-secondary" attrs="{'invisible': [('state', '=', 'draft')]}"/>-->
+<!--                    <button name="action_open_dms_directory" string="Archivo" type="object"-->
+<!--                            class="btn-secondary"/>-->
+<!--                    <button name="action_view_all_dms_directories" type="object" string="Directorio"-->
+<!--                            class="btn-secondary" icon="fa-th"/>-->
+                    <button name="action_export_zip" string="Exportar" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,pending,closed"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="expedient_number" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="oe_button_box" name="button_box">
+                        <!--                        <button name="action_view_requests" type="object" icon="fa-clipboard">-->
+                        <!--                            Solicitudes-->
+                        <!--                            <field name="request_count" widget="statinfo" nolabel="1"/>-->
+                        <!--                        </button>-->
+                        <!--                        <button name="action_view_inscriptions" type="object" icon="fa-file-text">-->
+                        <!--                            Inscripciones-->
+                        <!--                            <field name="inscription_count" widget="statinfo" nolabel="1"/>-->
+                        <!--                        </button>-->
+                        <!--                        <button name="action_view_documents" type="object" icon="fa-file">-->
+                        <!--                            Documentos-->
+                        <!--                            <field name="document_count" widget="statinfo" nolabel="1"/>-->
+                        <!--                        </button>-->
+                        <button name="action_open_dms_directory" type="object"
+                                icon="fa-folder-open-o">Carpetas
+                        </button>
+<!--                        <button name="action_open_dms_directory" string="Carpetas" type="object"-->
+<!--                                class="btn-secondary"/>-->
+
+                        <!--                        <button name="action_view_all_dms_directories" type="object" string="Directorio"-->
+                        <!--                                class="btn-secondary" icon="fa-th"/>-->
+                    </div>
+
+
+                    <div class="o_form_sheet_bg"
+                         attrs="{'invisible': [('professional_id', '=', False)]}"
+                         style="display: flex; align-items: flex-start; margin: 20px 0; padding: 15px;
+            background-color: #f8f9fa;  border: 1px solid #dee2e6;">
+                        <!-- Columna Izquierda: Foto -->
+                        <div class="profile_image_section">
+                            <field name="profile_image"
+                                   widget="image"
+                                   class="oe_avatar profile_avatar"
+                                   options="{'size': [120, 120]}"/>
+                        </div>
+
+                        <!-- Columna Derecha: Información -->
+                        <div class="profile_info_section">
+                            <h2 class="profile_full_name">
+                                <field name="profile_full_name" readonly="1"/>
+                            </h2>
+                            <div class="profile_details">
+                                <p>
+                                    <strong>
+                                        <i class="fa fa-id-card"/>
+                                        CI:
+                                    </strong>
+                                    <span class="profile_identity">
+                                        <field name="profile_identity" readonly="1"/>
+                                    </span>
+                                </p>
+                                <p attrs="{'invisible': [('profile_id_fuc', '=', False)]}">
+                                    <strong>
+                                        <i class="fa fa-building"/>
+                                        ID FUC:
+                                    </strong>
+                                    <span class="profile_id_fuc">
+                                        <field name="profile_id_fuc" readonly="1"/>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Separador visual -->
+                    <div class="o_horizontal_separator"/>
+
+                    <group string="Información del expediente">
+                        <group>
+                            <field name="professional_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                            />
+                            <field name="date_open" readonly="1"/>
+                            <field name="user_open" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date_close" readonly="1"/>
+                            <field name="user_close" readonly="1"/>
+                            <field name="notes" placeholder="Notas y observaciones sobre el expediente..."/>
+                        </group>
+                    </group>
+                    <!-- Información de carga de registros -->
+                    <group string="Totales de Registros"
+                           attrs="{'invisible': [('last_load_date', '=', False)]}">
+                        <group>
+                            <field name="last_load_date" readonly="1"/>
+                            <field name="found_requests" readonly="1"/>
+                            <field name="found_inscriptions" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="found_updates" readonly="1"/>
+                            <field name="found_claims" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Solicitudes">
+                            <field name="request_ids">
+                                <tree limit="10" >
+                                    <field name="request_number"/>
+                                    <field name="procedure_type"/>
+                                    <field name="date_request"/>
+                                    <field name="states"/>
+                                    <field name="priority"/>
+                                    <button name="go_to_request" type="object" icon="fa-external-link"
+                                            title="Ver Solicitud"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Inscripciones">
+                            <field name="inscription_ids">
+                                <tree limit="10" >
+                                    <field name="inscription_number"/>
+                                    <field name="date"/>
+                                    <field name="states"/>
+                                    <field name="priority"/>
+                                    <button name="go_to_inscription" type="object" icon="fa-external-link"
+                                            title="Ver Inscripción"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Actualizaciones">
+                            <field name="update_ids">
+                                <tree limit="10" >
+                                    <field name="request_number"/>
+                                    <field name="date_request"/>
+                                    <field name="states"/>
+                                    <button name="go_to_original_request" type="object" icon="fa-external-link"
+                                            title="Ver Actualización"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Reclamaciones">
+                            <field name="claim_ids">
+                                <tree limit="10" >
+                                    <field name="request_number"/>
+                                    <field name="claim_type"/>
+                                    <field name="claim_status"/>
+                                    <field name="date_request"/>
+                                    <button name="go_to_claim" type="object" icon="fa-external-link"
+                                            title="Ver Reclamación"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Documentos" name="documents">
+                            <group string="Resumen de Documentos" col="4">
+                                <!--                                <field name="document_count"  readonly="1" widget="statinfo"/>-->
+                                <field name="docs_request_count" string="Solicitudes" readonly="1" widget="statinfo"/>
+                                <field name="docs_certificate_count" string="Certificados" readonly="1"
+                                       widget="statinfo"/>
+                                <field name="docs_identification_count" string="Identificación" readonly="1"
+                                       widget="statinfo"/>
+                                <field name="docs_academic_count" string="Académicos" readonly="1" widget="statinfo"/>
+                                <field name="docs_laboral_count" string="Laborales" readonly="1" widget="statinfo"/>
+                                <field name="docs_communication_count" string="Comunicaciones" readonly="1"
+                                       widget="statinfo"/>
+                                <field name="docs_other_count" string="Otros" readonly="1" widget="statinfo"/>
+                            </group>
+                            <field name="document_ids"
+                                   context="{'form_view_ref': 'professional_registers.view_expedient_document_form'}">
+                                <tree limit="10" string="Documentos del Expediente"
+                                      decoration-info="document_type=='request'"
+                                      decoration-success="document_type=='certificate'"
+                                      decoration-warning="document_type=='identification'"
+                                      decoration-primary="document_type=='academic'"
+                                      decoration-secondary="document_type=='laboral'">
+                                    <field name="name"/>
+                                    <field name="document_type"/>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                    <field name="source_reference" widget="reference"/>
+                                    <button name="action_download" type="object" icon="fa-download" title="Descargar"/>
+                                </tree>
+                            </field>
+                        </page>
+
+
+                        <page string="Comunicaciones">
+                            <field name="communication_ids">
+                                <tree limit="10">
+                                    <field name="date"/>
+                                    <field name="subject"/>
+                                    <field name="communication_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="state"/>
+                                    <!--                                    <button name="action_view_communication" type="object" icon="fa-eye"-->
+                                    <!--                                            title="Ver Comunicación"/>-->
+                                </tree>
+                            </field>
+                            <!--                            <div class="oe_clear">-->
+                            <!--                                <button name="action_add_communication" type="object" string="Agregar Comunicación"-->
+                            <!--                                        class="oe_highlight"/>-->
+                            <!--                            </div>-->
+                        </page>
+
+                        <page string="Historial">
+                            <field name="history_ids">
+                                <tree limit="10">
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                    <field name="title"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Resumen de Registros">
+                            <group>
+                                <group string="Totales">
+                                    <field name="request_count" readonly="1"/>
+                                    <field name="inscription_count" readonly="1"/>
+                                    <field name="update_count" readonly="1"/>
+                                    <field name="claim_count" readonly="1"/>
+                                </group>
+                                <group string="Última Carga">
+                                    <field name="last_load_date" readonly="1"/>
+                                    <field name="found_requests" readonly="1"/>
+                                    <field name="found_inscriptions" readonly="1"/>
+                                    <field name="found_updates" readonly="1"/>
+                                    <field name="found_claims" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <!--                            <div class="oe_clear">-->
+                            <!--                                <button name="action_load_associated_records" type="object"-->
+                            <!--                                        string="Recargar Registros Asociados" class="oe_highlight"/>-->
+                            <!--                            </div>-->
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_expedient_document_tree" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.document.tree</field>
+        <field name="model">professional_registers.expedient_document</field>
+        <field name="arch" type="xml">
+            <tree string="Documentos del Expediente" >
+                <field name="name"/>
+                <field name="document_type"/>
+                <field name="source_reference" widget="reference"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="expedient_id" />
+                <button name="action_download" type="object" icon="fa-download" title="Descargar"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_expedient_document_search" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.document.search</field>
+        <field name="model">professional_registers.expedient_document</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Documentos">
+                <field name="document_type"/>
+                <field name="expedient_id"/>
+                <field name="date"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter name="today" string="Hoy"
+                        domain="[('date', '>=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="this_week" string="Esta Semana"
+                        domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="this_month" string="Este Mes"
+                        domain="[('date', '>=', datetime.datetime.now().strftime('%Y-%m-01 00:00:00'))]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_type" string="Tipo" context="{'group_by': 'document_type'}"/>
+
+                    <filter name="group_date" string="Subido por" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_date" string="Expediente" context="{'group_by': 'expedient_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_expedient_document_form" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.document.form</field>
+        <field name="model">professional_registers.expedient_document</field>
+        <field name="arch" type="xml">
+            <form string="Documento del Expediente">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="expedient_id" readonly="1"/>
+                            <field name="name"/>
+                            <field name="document_type"/>
+                            <field name="date" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="source_reference" widget="reference"/>
+                        </group>
+                        <group>
+                            <field name="attachment_id" filename="attachment_filename"/>
+
+                            <field name="source_model" readonly="1"/>
+                            <field name="source_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notas">
+                            <field name="notes" placeholder="Notas adicionales sobre el documento..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_expedient_communication_tree" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.communication.tree</field>
+        <field name="model">professional_registers.expedient_communication</field>
+        <field name="arch" type="xml">
+            <tree string="Comunicaciones del Expediente"
+                  decoration-info="state=='draft'"
+                  decoration-success="state in ('sent', 'delivered')"
+                  decoration-warning="state=='read'"
+                  decoration-danger="state in ('failed', 'cancelled')"
+                  decoration-muted="direction=='incoming'">
+                <field name="date"/>
+                <field name="subject"/>
+                <field name="communication_type"/>
+                <field name="direction"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="state"/>
+                <field name="has_original" widget="boolean_toggle"/>
+                <button name="action_view_original" type="object" icon="fa-external-link"
+                        title="Ver Original" attrs="{'invisible': [('has_original', '=', False)]}"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_expedient_communication_form" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.communication.form</field>
+        <field name="model">professional_registers.expedient_communication</field>
+        <field name="arch" type="xml">
+            <form string="Comunicación del Expediente">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,delivered,read"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="expedient_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="subject"/>
+                            <field name="communication_type"/>
+                            <field name="direction" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="user_id"/>
+                            <field name="state"/>
+                            <field name="has_original" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Contenido">
+                            <field name="body" widget="html"/>
+                        </page>
+                        <page string="Adjuntos">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Origen" attrs="{'invisible': [('has_original', '=', False)]}">
+                            <group>
+                                <field name="mail_message_id" readonly="1"/>
+                                <field name="mail_mail_id" readonly="1"/>
+                            </group>
+                            <div class="oe_clear">
+                                <button name="action_view_original" type="object" string="Ver Original"
+                                        class="btn-primary"/>
+                            </div>
+                        </page>
+                        <page string="Relacionado" attrs="{'invisible': [('res_model', '=', False)]}">
+                            <group>
+                                <field name="res_model" readonly="1"/>
+                                <field name="res_id" readonly="1"/>
+                            </group>
+                            <div class="oe_clear">
+                                <button name="action_view_related_record" type="object"
+                                        string="Ver Registro Relacionado" class="btn-primary"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_expedient_communication_search" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.communication.search</field>
+        <field name="model">professional_registers.expedient_communication</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Comunicaciones">
+                <field name="subject"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter name="today" string="Hoy"
+                        domain="[('date', '>=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="this_week" string="Esta Semana"
+                        domain="[('date', '>=', (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="this_month" string="Este Mes"
+                        domain="[('date', '>=', datetime.datetime.now().strftime('%Y-%m-01 00:00:00'))]"/>
+                <separator/>
+                <filter name="email_sent" string="Emails Enviados"
+                        domain="[('communication_type', '=', 'email_sent')]"/>
+                <filter name="email_received" string="Emails Recibidos"
+                        domain="[('communication_type', '=', 'email_received')]"/>
+                <filter name="notifications" string="Notificaciones"
+                        domain="[('communication_type', '=', 'notification')]"/>
+                <filter name="with_original" string="Con Original" domain="[('has_original', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_type" string="Tipo" context="{'group_by': 'communication_type'}"/>
+                    <filter name="group_direction" string="Dirección" context="{'group_by': 'direction'}"/>
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}"/>
+                    <filter name="group_date" string="Fecha" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_expedient_history_tree" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.history.tree</field>
+        <field name="model">professional_registers.expedient_history</field>
+        <field name="arch" type="xml">
+            <tree string="Historial del Expediente">
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="title"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_expedient_history_form" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.history.form</field>
+        <field name="model">professional_registers.expedient_history</field>
+        <field name="arch" type="xml">
+            <form string="Historial del Expediente">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="expedient_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="reference_model" readonly="1"/>
+                            <field name="reference_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detalles">
+                            <group>
+                                <field name="title" readonly="1"/>
+                                <field name="description" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_professional_expedient" model="ir.actions.act_window">
+        <field name="name">Expedientes de Profesionales</field>
+        <field name="res_model">professional_registers.expedient</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer expediente
+            </p>
+            <p>
+                Los expedientes te permiten agrupar y gestionar todas las solicitudes, inscripciones y documentos
+                relacionados con un profesional.
+            </p>
+        </field>
+    </record>
+
+    <!-- Acción para documentos de expediente -->
+    <record id="action_expedient_document" model="ir.actions.act_window">
+        <field name="name">Documentos de Expedientes</field>
+        <field name="res_model">professional_registers.expedient_document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    &lt;!&ndash; Acción para comunicaciones de expediente &ndash;&gt;-->
+<!--    <record id="action_expedient_communication" model="ir.actions.act_window">-->
+<!--        <field name="name">Comunicaciones de Expedientes</field>-->
+<!--        <field name="res_model">professional_registers.expedient_communication</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--    </record>-->
+
+    <!-- Acción para historial de expediente -->
+    <record id="action_expedient_history" model="ir.actions.act_window">
+        <field name="name">Historial de Expedientes</field>
+        <field name="res_model">professional_registers.expedient_history</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_professional_expedient_root"
+              name="Expedientes"
+              web_icon="professional_registers/static/description/icon_exp.png"
+              sequence="10"/>
+
+    <menuitem id="menu_professional_expedient"
+              name="Expedientes"
+              parent="menu_professional_expedient_root"
+              action="action_professional_expedient"
+              sequence="10"/>
+
+    <!-- Submenús para elementos relacionados -->
+    <menuitem id="menu_expedient_documents"
+              name="Documentos"
+              parent="menu_professional_expedient_root"
+              action="action_expedient_document"
+              sequence="20"/>
+
+<!--    <menuitem id="menu_expedient_communications"-->
+<!--              name="Comunicaciones de Expedientes"-->
+<!--              parent="menu_professional_expedient_root"-->
+<!--              action="action_expedient_communication"-->
+<!--              sequence="30"/>-->
+
+
+    <record id="view_professional_expedient_kanban" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.kanban</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="state"/>
+                <field name="expedient_number"/>
+                <field name="professional_id"/>
+                <field name="date_open"/>
+                <field name="request_count"/>
+                <field name="inscription_count"/>
+                <field name="document_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="expedient_number"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section">
+                                        <span class="badge badge-pill badge-info">
+                                            <field name="state"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div class="o_kanban_tags_section">
+                                    <span class="badge badge-secondary">
+                                        <i class="fa fa-clipboard"/>
+                                        Solicitudes:
+                                        <field name="request_count"/>
+                                    </span>
+                                    <span class="badge badge-secondary">
+                                        <i class="fa fa-id-card"/>
+                                        Inscripciones:
+                                        <field name="inscription_count"/>
+                                    </span>
+                                    <span class="badge badge-secondary">
+                                        <i class="fa fa-file"/>
+                                        Documentos:
+                                        <field name="document_count"/>
+                                    </span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="professional_id"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="date_open"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_professional_expedient_graph" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.graph</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <graph string="Estadísticas de Expedientes">
+                <field name="state"/>
+                <field name="request_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!--    <record id="view_professional_expedient_pivot" model="ir.ui.view">-->
+    <!--        <field name="name">professional.registers.expedient.pivot</field>-->
+    <!--        <field name="model">professional_registers.expedient</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <pivot string="Estadísticas de Expedientes">-->
+    <!--                <field name="state" type="row"/>-->
+    <!--                <field name="date_open" interval="month" type="col"/>-->
+    <!--                <field name="request_count" type="measure"/>-->
+    <!--                <field name="inscription_count" type="measure"/>-->
+    <!--                <field name="document_count" type="measure"/>-->
+    <!--            </pivot>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="view_professional_expedient_calendar" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.calendar</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendario de Expedientes" date_start="date_open" date_stop="date_close" color="state">
+                <field name="expedient_number"/>
+                <field name="professional_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Secuencia para Expedientes -->
+    <record id="sequence_expedient" model="ir.sequence">
+        <field name="name">Secuencia de Expedientes</field>
+        <field name="code">professional_registers.expedient</field>
+        <field name="prefix">EXP/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">True</field>
+    </record>
+
+</odoo>

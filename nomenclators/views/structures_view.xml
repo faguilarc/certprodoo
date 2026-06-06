@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="structures_form_view" model="ir.ui.view">
+            <field name="name">nomenclators.structures.form</field>
+            <field name="model">nomenclators.structures</field>
+            <field name="arch" type="xml">
+                <form string="Estructura" duplicate="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Nombre" required="1"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page string="Descripción">
+                                <field name="description" required="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="structures_tree_view" model="ir.ui.view">
+            <field name="name">nomenclators.structures.tree</field>
+            <field name="model">nomenclators.structures</field>
+            <field name="arch" type="xml">
+                <tree string="Estructura">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="structures_act_window" model="ir.actions.act_window">
+            <field name="name">Estructura</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclators.structures</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede crear la información para el botón estructura de la página principal
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

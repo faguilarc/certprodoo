@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="DashboardClient" xml:space="preserve">
+    <t t-name="DashboardDetailsClient">
+        <div class="row main-section o_dashboard">
+            <div class="col-md-11 col-sm-6  oh-payslip">
+                <div class="oe_structure">
+                <t t-foreach="widget.users_info" t-as="doc">
+                    <h2><t t-esc="doc.name"/></h2>
+                    <div t-raw="doc.content"/>
+                    <br></br>
+
+                </t>
+            </div>
+
+                </div>
+            </div>
+        </t>
+        </templates>
+        <!--                    <t t-esc="widget.users_info['terms']"/>-->
+
+        <!--        <?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<templates id="DashboardClient" xml:space="preserve">-->
+        <!--        <t t-name="DashboardDetailsClient">-->
+        <!--            <div class="oe_structure">-->
+        <!--                <h1>Terms and Conditions</h1>-->
+        <!--                <t t-foreach="docs" t-as="doc">-->
+        <!--                    <div class="term-section">-->
+        <!--                        <h2><t t-esc="doc.name"/></h2>-->
+        <!--                        <div t-raw="doc.content"/>-->
+        <!--                    </div>-->
+        <!--                </t>-->
+        <!--            </div>-->
+        <!--        </t>-->
+        <!--    </templates>-->

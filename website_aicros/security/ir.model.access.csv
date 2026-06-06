@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_model,website_model,model_website_model,base.group_user,1,1,1,1
+access_website_model_public,website_model,model_website_model,,1,0,0,0

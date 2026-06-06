@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Plantilla para el admin (nueva solicitud) -->
+        <record id="email_template_digital_signature_admin" model="mail.template">
+            <field name="name">Solicitud de Firma Digital - Para Administrador</field>
+            <field name="model_id" ref="model_digital_signature_request"/>
+            <field name="subject">Nueva Solicitud de Firma Digital - ${object.name}</field>
+            <field name="email_to">${object.config_id.admin_email}</field>
+            <field name="lang">${object.env.user.lang}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
+                    <p>Estimado Administrador,</p>
+                    <p>Se ha recibido una nueva solicitud de firma digital:</p>
+
+                    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                        <h3 style="margin-top:0; color: #333;">Detalles de la Solicitud</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Referencia:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">${object.name}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Cliente:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">${object.snapshot_name}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>CI:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">${object.snapshot_identity}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Nivel:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">
+                                    ${object.get_selection_label('level')}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Tipo:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">
+                                    ${object.get_selection_label('request_type')}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;"><strong>Fecha:</strong></td>
+                                <td style="padding: 5px; border-bottom: 1px solid #ddd;">
+                                    ${format_datetime(object.create_date, tz=object.env.user.tz, dt_format='dd/MM/yyyy HH:mm')}
+                                </td>
+                            </tr>
+                        </table>
+
+                        % if object.level == 'institution':
+                        <h4 style="margin-top: 15px;">Información Institucional</h4>
+                        <p>
+                            Organismo: ${object.snapshot_organism or 'N/A'}<br/>
+                            Entidad: ${object.snapshot_entity or 'N/A'}<br/>
+                            Cargo: ${object.snapshot_job or 'N/A'}
+                        </p>
+                        % endif
+                    </div>
+
+                    <p>Puede gestionar esta solicitud desde:
+                    <a href="${object.get_base_url()}/web#id=${object.id}&amp;amp;model=digital.signature.request&amp;view_type=form">
+                        Ver solicitud en el sistema
+                    </a></p>
+
+                    <hr/>
+                    <p style="font-size: 12px; color: #666;">
+                        Este es un mensaje automático del Sistema de Registros Profesionales.
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Plantilla para el usuario (verificación) -->
+        <record id="email_template_digital_signature_verification" model="mail.template">
+            <field name="name">Solicitud de Firma Digital - Verificación</field>
+            <field name="model_id" ref="model_digital_signature_request"/>
+            <field name="subject">Verifique su solicitud de firma digital - ${object.name}</field>
+            <field name="email_to">${object.snapshot_email}</field>
+            <field name="lang">${object.env.user.lang}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
+                    <p>Estimado/a ${object.snapshot_name},</p>
+
+                    <p>Hemos recibido su solicitud de firma digital con referencia <strong>${object.name}</strong>.</p>
+
+                    <p>Para continuar con el proceso, por favor verifique su solicitud haciendo clic en el siguiente botón:</p>
+
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="${object.get_verification_url()}"
+                           style="background-color: #007bff; color: white; padding: 12px 24px;
+                                  text-decoration: none; border-radius: 4px; font-weight: bold;">
+                            VERIFICAR SOLICITUD
+                        </a>
+                    </div>
+
+                    <p>O copie y pegue este enlace en su navegador:</p>
+                    <p style="word-break: break-all; background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
+                        ${object.get_verification_url()}
+                    </p>
+
+                    <div style="background-color: #e9ecef; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="margin-top: 0;">Detalles de su solicitud:</h4>
+                        <ul>
+                            <li><strong>Referencia:</strong> ${object.name}</li>
+                            <li><strong>Carnet:</strong> ${object.snapshot_identity}</li>
+                            <li><strong>Nivel:</strong> ${object.get_selection_label('level')}</li>
+                    <li><strong>Tipo:</strong> ${object.get_selection_label('request_type')}</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>Importante:</strong> Este enlace expirará en 7 días.</p>
+                    <p>Si no ha solicitado una firma digital, ignore este mensaje.</p>
+
+                    <hr/>
+                    <p style="font-size: 12px; color: #666;">
+                        Este es un mensaje automático del Sistema de Registros Profesionales.<br/>
+                        Para consultas, contacte a: ${object.config_id.admin_contact or 'el administrador'}
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Plantilla para notificar al admin que fue verificada -->
+        <record id="email_template_digital_signature_verified" model="mail.template">
+            <field name="name">Firma Digital - Solicitud Verificada por Usuario</field>
+            <field name="model_id" ref="model_digital_signature_request"/>
+            <field name="subject">Solicitud verificada - ${object.name}</field>
+            <field name="email_to">${object.config_id.admin_email}</field>
+            <field name="lang">${object.env.user.lang}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
+                    <p>Estimado Administrador,</p>
+
+                    <p>El usuario ha verificado su solicitud de firma digital:</p>
+
+                    <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: #155724;">Solicitud Verificada</h4>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px;"><strong>Referencia:</strong></td>
+                                <td style="padding: 5px;">${object.name}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>Cliente:</strong></td>
+                                <td style="padding: 5px;">${object.snapshot_name}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>Carnet:</strong></td>
+                                <td style="padding: 5px;">${object.snapshot_identity}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>Fecha verificación:</strong></td>
+                                <td style="padding: 5px;">
+                                    ${format_datetime(object.verification_date, tz=object.env.user.tz, dt_format='dd/MM/yyyy HH:mm')}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><strong>IP:</strong></td>
+                                <td style="padding: 5px;">${object.verification_ip or 'No disponible'}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p>La solicitud ahora está en estado <strong>"Verificada"</strong> y lista para ser procesada.</p>
+
+                    <p>
+                        <a href="${object.get_base_url()}/web#id=${object.id}&amp;model=digital.signature.request&amp;view_type=form"
+                           style="background-color: #007bff; color: white; padding: 8px 16px;
+                                  text-decoration: none; border-radius: 4px;">
+                            Ver solicitud en el sistema
+                        </a>
+                    </p>
+
+                    <hr/>
+                    <p style="font-size: 12px; color: #666;">
+                        Sistema de Registros Profesionales - Notificación automática
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

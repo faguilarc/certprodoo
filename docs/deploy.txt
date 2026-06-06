@@ -1,0 +1,136 @@
+1- ejecutar este script:
+
+-- Agregar columna 'full_name' a res_users si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'res_users'
+          AND column_name = 'full_name'
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD COLUMN full_name varchar COLLATE pg_catalog."default";
+
+        COMMENT ON COLUMN public.res_users.full_name IS 'Nombre y apellidos';
+
+        RAISE NOTICE 'Columna full_name agregada exitosamente.';
+    ELSE
+        RAISE NOTICE 'La columna full_name ya existe.';
+    END IF;
+END $$;
+
+-- Agregar columna 'first_last_name' a res_users si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'res_users'
+          AND column_name = 'first_last_name'
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD COLUMN first_last_name varchar COLLATE pg_catalog."default";
+
+        COMMENT ON COLUMN "public"."res_users"."first_last_name" IS 'Primer Apellido';
+
+        RAISE NOTICE 'Columna first_last_name agregada exitosamente.';
+    ELSE
+        RAISE NOTICE 'La columna first_last_name ya existe.';
+    END IF;
+END $$;
+
+-- Agregar columna 'second_last_name' a res_users si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'res_users'
+          AND column_name = 'second_last_name'
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD COLUMN second_last_name varchar COLLATE pg_catalog."default";
+
+        COMMENT ON COLUMN "public"."res_users"."second_last_name" IS 'Segundo Apellido';
+
+        RAISE NOTICE 'Columna second_last_name agregada exitosamente.';
+    ELSE
+        RAISE NOTICE 'La columna second_last_name ya existe.';
+    END IF;
+END $$;
+
+
+-- Agregar columna 'identification' a res_users si no existe
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'res_users'
+          AND column_name = 'identification'
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD COLUMN identification varchar COLLATE pg_catalog."default";
+
+
+		COMMENT ON COLUMN "public"."res_users"."identification" IS 'CI o Pasaporte';
+
+        RAISE NOTICE 'Columna identification agregada exitosamente.';
+    ELSE
+        RAISE NOTICE 'La columna identification ya existe.';
+    END IF;
+END $$;
+
+
+-- Agregar columna 'nationality_id' a res_users si no existe
+DO $$
+BEGIN
+    -- 1. Columna
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'res_users'
+          AND column_name = 'nationality_id'
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD COLUMN nationality_id int4;
+
+        COMMENT ON COLUMN public.res_users.nationality_id IS 'Nacionalidad';
+
+        RAISE NOTICE 'Columna nationality_id agregada.';
+    ELSE
+        RAISE NOTICE 'La columna nationality_id ya existe.';
+    END IF;
+
+    -- 2. Clave foránea
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints tc
+        JOIN information_schema.key_column_usage kcu
+            ON tc.constraint_name = kcu.constraint_name
+            AND tc.table_schema = kcu.table_schema
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_schema = 'public'
+          AND tc.table_name = 'res_users'
+          AND kcu.column_name = 'nationality_id'
+          AND tc.constraint_name = 'res_users_nationality_id_fkey'  -- nombre explícito
+    ) THEN
+        ALTER TABLE public.res_users
+            ADD CONSTRAINT res_users_nationality_id_fkey
+            FOREIGN KEY (nationality_id)
+            REFERENCES public.nomenclators_nationality (id)
+            ON DELETE SET NULL
+            ON UPDATE NO ACTION;
+
+        RAISE NOTICE 'FK res_users_nationality_id_fkey agregada.';
+    ELSE
+        RAISE NOTICE 'La FK sobre nationality_id ya existe.';
+    END IF;
+END $$;
+

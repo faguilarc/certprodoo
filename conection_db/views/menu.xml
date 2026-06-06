@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="res_conection_test_menu" name="Conexión" web_icon="conection_db/static/description/icon.png" groups="base.group_erp_manager"/>
+            <menuitem id="conection_menu" name="Probar Conexión" parent="res_conection_test_menu" sequence="1" action="conection_test_action_windows"/>
+    </data>
+</odoo>

@@ -1,0 +1,757 @@
+<odoo>
+    <data>
+
+        <record id="professional_request_form_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request.form</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="arch" type="xml">
+                <form string="Solicitud del profesional" duplicate="false" create="false"
+                >
+                    <header>
+                        <field name="states" widget="statusbar"/>
+
+                        <button string="En proceso" type="object" name="process"
+                                attrs="{'invisible': [ '|',('priority','!=', 1), ('is_view_datails', '=', True)]}"/>
+                        <button string="En validación" type="object" name="validation"
+                                attrs="{'invisible': [('priority','!=', 2)]}"/>
+                        <button string="Generar correo" type="object" name="send_email"
+                                attrs="{'invisible': ['|',('priority','not in', (2, 3)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Detener" type="object" name="stop"
+                                attrs="{'invisible': ['|',('priority','not in', ( 3)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Aprobar" type="object" name="approved"
+                                attrs="{'invisible': ['|',('priority','not in', ( 3, 5)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Iniciar" type="object" name="init_process"
+                                attrs="{'invisible': ['|',('priority','!=', 4), ('is_view_datails', '=', True)]}"/>
+                        <button string="Cancelar" type="object" name="cancel"
+                                attrs="{'invisible': ['|',('priority','not in', ( 3, 4, 5)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Denegar" type="object" name="denied"
+                                attrs="{'invisible': ['|',('priority','not in', ( 3, 5)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Deshacer" type="object" name="reset_process"
+                                attrs="{'invisible': ['|',('priority','!=', 7), ('is_view_datails', '=', True)]}"/>
+                    </header>
+                    <div attrs="{'invisible': [('has_denied_request', '=', False)]}"
+                         style="margin: 10px 0; padding: 15px; background-color: #fdedec; border-left: 4px solid #e74c3c; color: #a94442;">
+                        <i class="fa fa-exclamation-triangle"/>
+                        <strong>Solicitud previa:</strong>
+                        Existe una solicitud denegada para esta misma profesión.
+
+                    </div>
+
+                    <div attrs="{'invisible': [('has_public_fields', '=', True)]}"
+                         groups="security.group_professional_superadmin,security.group_professional_client_online,security.group_professional_register_employee,security.group_professional_editor_managment,security.group_professional_editor"
+                         class="oe_warning"
+                         style="margin-top: 20px; padding: 10px; background-color: #fef5e7; border-left: 4px solid #e67e22;">
+
+                        <strong>Advertencia:</strong>
+                        Esta solicitud no tiene campos públicos configurados. La información no será visible en el
+                        portal. Presione el botón de campos públicos para configurarlos si así lo desea.
+                    </div>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <field name="has_denied_request" invisible="1"/>
+                        <field name="has_public_fields" invisible="1"/>
+                        <field name="date_request" invisible="1"/>
+                        <div>
+
+                            <div class="oe_button_box" name="button_box">
+<!--                                <button name="action_sync_with_profile" type="object" string="Sincronizar Datos"-->
+<!--                                        class="btn-primary"-->
+<!--                                        attrs="{'invisible': [('profile_id', '=', False), ('can_sync', '=', False)]}"/>-->
+                                <button
+                                        name="create_update_request"
+                                        type="object"
+
+                                        string="Solicitar Actualización"
+                                        attrs="{'invisible':[('states','not in', [3,6])]}"
+
+                                         icon="fa-edit"
+                                        >
+                                </button>
+
+                                <!--                                <button name="go_to_updates" type="object"-->
+                                <!--                                        class="oe_stat_button" icon="fa-refresh"-->
+                                <!--                                        attrs="{'invisible': [('states', 'not in', [3,6])]}">-->
+                                <!--                                    Actualizaciones-->
+                                <!--                                </button>-->
+
+                                <button name="create_claim" type="object"
+                                        attrs="{'invisible': [('states', 'not in', [7, 8])]}"
+                                        class="oe_stat_button" icon="fa-exclamation-triangle">
+                                    Reclamar
+                                </button>
+
+                                <button type="object" name="report_request" class="btn oe_stat_button">
+                                    <i class="fa fa-fw o_button_icon fa-print"></i>
+                                    <span>Imprimir</span>
+                                </button>
+
+                                <button type="object"
+                                        name="action_open_public_fields"
+                                        class="btn oe_stat_button"
+                                        string="Campos Públicos"
+                                        icon="fa-cogs"
+                                        context="{'default_request_id': id, 'default_request_image': image}"
+                                        groups="security.group_professional_superadmin,security.group_professional_client_online,security.group_professional_register_employee,security.group_professional_editor_managment,security.group_professional_editor"/>
+                            </div>
+                        </div>
+                        <field name="priority" invisible="1"/>
+                        <field name="is_view_datails" invisible="1"/>
+
+                        <field name="force_erase" invisible="1"/>
+                        <field name="is_inscription_fuc" invisible="1"/>
+                        <field name="image" required="1" widget="image" class="oe_avatar"
+                               options="{'preview_image': 'image'}"
+                               attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                        <div class="oe_title">
+                            <label for="full_name" string="Nombre y apellidos"/>
+                            <h1>
+                                <field name="full_name" placeholder="Nombre y apellidos" required="1" readonly="1"
+                                       force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="id_fuc" readonly="1" force_save="1"/>
+                            <field name="request_number" readonly="1"/>
+                            <field name="is_register_online" invisible="1"/>
+                            <field name="is_teaching_category_none" invisible="1"/>
+                            <field name="is_degree_sciences_none" invisible="1"/>
+                            <field name="degree_sciences_year_required" invisible="1"/>
+                            <group string="Datos Personales">
+                                <field name="name" widget="custom-char-field" required="1"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 4))]}"/>
+                                <field name="first_last_name" required="1"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="second_last_name"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'required': [('nationality_id','=',1)]}"/>
+                                <field name="nationality_id" required="1" readonly="1" force_save="1"/>
+                                <field name="identity" required="1"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="sex" required="1"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                            </group>
+
+                            <group string="Datos de Contacto">
+                                <field name="phone" mask="999999999999999" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="email" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="address" required="1"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="country"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                       attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True) ,('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="country_states"
+                                       attrs="{'readonly': ['|', '|','|', ('is_inscription_fuc', '=', True),('country', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="city"
+                                       attrs="{'readonly': ['|', '|','|', ('is_inscription_fuc', '=', True),('country_states', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group string="Datos Académicos">
+                                <field name="teaching_level" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="study_center" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'invisible': [('teaching_level', '=', False)]}"
+                                       domain="[('teaching_level_id', '=', teaching_level)]"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="degree_date" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="volume" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'required': [('id_fuc', '!=', False)]}"/>
+                                <field name="folio" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'required': [('id_fuc', '!=', False)]}"/>
+                                <field name="number"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="convalidation_degree_tittle"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                            </group>
+                            <group string="Datos Profesionales">
+                                <field name="profession" required="1"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="specialties" required="1"
+                                       attrs="{'readonly': ['|', '|',('profession', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       domain="[('profession_id', '=', profession)]"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="teaching_category"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="teaching_category_date"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'invisible': ['|',('teaching_category', '=', False), ('is_teaching_category_none', '=', True)]}"/>
+                                <field name="investigations"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="investigations_year"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'invisible': [('investigations', '=', False)],
+                                                'required': [('investigations', '=', True)]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                       force_save="1"
+                                       widget="selection"/>
+                                <field name="degree_sciences"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                <field name="degree_sciences_year"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))], 'invisible': ['|', ('degree_sciences', '=', False), ('is_degree_sciences_none', '=', True)],
+                                              'required': [('degree_sciences_year_required', '=', True)]}"/>
+                                <field name="unaicc_date"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                                <field name="procedure_type"
+                                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                       required="1"
+                                       readonly="1"/>
+
+                            </group>
+                            <group string="Datos de Inicio de Sesión">
+                                <field name="user"
+                                       attrs="{'required': [('is_register_online', '=', False)],'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       force_save="1" readonly="1"/>
+                                <field name="password"
+                                       attrs="{'required': [('is_register_online', '=', False)],'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                       force_save="1" readonly="1"/>
+
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="profile_id"/>
+<!--                                <field name="last_sync_date"/>-->
+<!--                                <field name="can_sync"/>-->
+                            </group>
+                        </group>
+                        <row>
+                            <field name="is_validate" width="20%" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                            <label for="is_validate"
+                                   string="Declaro que los datos y documentos aportados son ciertos, auténticos y con plenos efectos legales"/>
+                        </row>
+                        <notebook>
+                            <page string="Vínculo Laboral">
+                                <field name="history_work"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}">
+                                    <tree class="tree_no_open" editable="bottom">
+                                        <field name="work_center" width="20%" required="1"/>
+                                        <field name="organism"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                               width="20%" required="1"/>
+                                        <field name="labour_sector"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                               width="20%" required="1"/>
+                                        <field name="activity" width="25%" required="1"/>
+                                        <field name="phone" width="10%" required="1"/>
+                                        <field name="date_from" width="10%" required="1"/>
+                                        <field name="date_to" width="15%" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Documentos*"
+                                  attrs="{'invisible': ['|',('procedure_type', '=', False), ('id', '=', False)], 'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+
+                                  groups="security.group_professional_editor,security.group_professional_superadmin, security.group_professional_client_online">
+                                <field name="documents_required"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}">
+                                    <tree class="tree_no_open" editable="bottom" delete="false">
+                                        <field name="documents"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="checked"/>
+                                        <field name="attachment_ids" widget="many2many_binary" string="Ficheros"/>
+                                        <field name="commet"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Documentos*"
+                                  attrs="{'invisible': ['|',('procedure_type', '=', False), ('id', '=', False)], 'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"
+                                  groups="security.group_professional_register_employee">
+                                <field name="documents_required_registers"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}">
+                                    <tree class="tree_no_open" editable="bottom" delete="false">
+                                        <field name="documents"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="attachment_ids" widget="many2many_binary" string="Ficheros"/>
+                                        <field name="commet"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Idioma*">
+                                <field name="professional_language"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}">
+                                    <tree string=" Idiomas" class="tree_no_open" editable="bottom">
+                                        <field name="language" required="1"/>
+                                        <field name="proficiency_level" required="1"/>
+                                        <!--                                        <field name="speaking"/>-->
+                                        <!--                                        <field name="writing"/>-->
+                                        <!--                                        <field name="reading"/>-->
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <page string="Observaciones">
+                                <field name="observation"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2,  4))]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="professional_request_tree_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request.tree</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitudes" create="false">
+                    <header>
+                        <button name="check_detained_requests" string="Verificar Solicitudes Detenidas"
+                                type="object"
+                                class="btn-primary" groups="security.group_professional_superadmin"/>
+                    </header>
+                    <field name="request_number" optional="show"/>
+                    <field name="profile_id" optional="hide"/>
+                    <field name="last_sync_date" optional="hide"/>
+                    <field name="full_name" optional="show"/>
+                    <field name="nationality_id" optional="show"/>
+                    <field name="profession" optional="show"/>
+                    <field name="date_request" optional="show"/>
+                    <field name="states" optional="show"/>
+                    <field name="user_id" optional="show"/>
+                    <field name="day_passed_count" optional="show"/>
+                    <button
+                            name="go_to_request"
+                            type="object"
+                            title="Detalles"
+                            icon="/professional_registers/static/img/show.png"
+                    />
+                    <button
+                            name="create_update_request"
+                            type="object"
+
+
+                            attrs="{'invisible':[('states','not in', [3,6])]}"
+
+                            icon="fa-refresh"
+                            title="Actualiza la información desde el sistema externo"/>
+
+
+                    <button
+                            name="create_claim"
+                            type="object"
+
+                            attrs="{'invisible':[('states','not in', [7,8])]}"
+                            icon="fa-exclamation-triangle"
+                            title="Inicia un proceso de reclamo para este registro"/>
+
+                </tree>
+            </field>
+        </record>
+        <record id="professional_request_only_tree_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request.tree</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitud del profesional" create="false" delete="false" multi_edit="1">
+                    <field name="request_number" optional="show" readonly="1" force_save="1"/>
+                    <!--                    <field name="procedure_type" optional="show" readonly="1" force_save="1"/>-->
+                    <field name="profession" optional="show"/>
+                    <field name="specialties" optional="show"/>
+                    <field name="date_request" optional="show" readonly="1" force_save="1"/>
+                    <field name="states" optional="show" string="Estado de solicitud" readonly="1" force_save="1"/>
+                    <!--                    <field name="day_passed_count" optional="show"/>-->
+                    <field name="inscription_id" optional="show" string="Nro. de Inscripción" readonly="1"
+                           force_save="1"/>
+                    <field name="procedure_states" optional="show" string="Estado de la Inscripción" readonly="1"
+                           force_save="1"/>
+                    <field name="payment_type" optional="show" string="Pago"
+                           attrs="{'invisible': [('inscription_id', '=', False)]}"/>
+                    <field name="certification" optional="show" readonly="1" force_save="1"/>
+                    <!--                    <button-->
+                    <!--                        name="go_to_request"-->
+                    <!--                        type="object"-->
+                    <!--                        string=""-->
+                    <!--                        icon="/professional_registers/static/img/show.png"-->
+                    <!--                    />-->
+                    <!--                     <button-->
+                    <!--                        name="go_to_identity"-->
+                    <!--                        type="object"-->
+                    <!--                        string=""-->
+                    <!--                        icon="/professional_registers/static/img/ci.png"-->
+                    <!--                    />-->
+
+                </tree>
+            </field>
+        </record>
+        <record id="professional_request_search_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request.search</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="arch" type="xml">
+                <search string="Solicitud del profesional">
+                    <field name="full_name" string="Nombre y apellidos"/>
+                    <field name="nationality_id" string="Nacionalidad"/>
+                    <field name="profession" string="Profesión"/>
+                    <field name="date" string="Fecha"/>
+                    <field name="states" string="Estado"/>
+                    <field name="year"/>
+                </search>
+            </field>
+        </record>
+        <record id="professional_request_minimal_form_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request_minimal.form</field>
+            <field name="model">professional_registers.professional_request_minimal</field>
+            <field name="arch" type="xml">
+                <form string="Validación FUC del profesional" create="false">
+                    <!--                    <header>-->
+                    <!--                        <button string="Generar solicitud" name="generate_request" type="object"/>-->
+                    <!--                    </header>-->
+                    <sheet>
+                        <field name="show_button" invisible="1"/>
+                        <field name="flag_button" invisible="1"/>
+                        <group>
+                            <field name="nationality_id" required="1"
+                                   class="w-25"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   widget="selection"
+                            />
+
+                        </group>
+                        <group>
+                            <field name="identity"
+                                   attrs="{'invisible': ['|',('nationality_id', '=', False), ('show_button', '=', False)], 'required': [('show_button', '=', True)]}"
+                                   class="w-25"/>
+                        </group>
+                        <group>
+                            <field name="passport"
+                                   attrs="{'invisible': ['|',('nationality_id', '=', False), ('show_button', '=', True)], 'required': [('show_button', '=', False)]}"
+                                   class="w-25"/>
+                        </group>
+                        <group>
+                            <field name="id_fuc" attrs="{'invisible': [('show_button', '=', False)]}" class="w-25"
+                                   readonly="1"
+                                   force_save="1"/>
+                        </group>
+                        <group col="6">
+                            <field name="name"
+                                   attrs="{'readonly': ['|',('show_button', '=', True), ('nationality_id', '=', False)], 'required': [('show_button', '=', False)]}"/>
+                            <field name="first_last_name"
+                                   attrs="{'readonly': ['|',('show_button', '=', True), ('nationality_id', '=', False)], 'required': [('show_button', '=', False)]}"/>
+                            <field name="second_last_name"
+                                   attrs="{'readonly': ['|',('show_button', '=', True), ('nationality_id', '=', False)]}"/>
+                            <field name="sex"
+                                   attrs="{'readonly': ['|',('show_button', '=', True), ('nationality_id', '=', False)], 'required': [('show_button', '=', False)]}"/>
+                            <field name="country" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   attrs="{'readonly': ['|',('show_button', '=', True),('nationality_id', '=', False)], 'required': [('show_button', '=', False)]}"/>
+                            <field name="country_states"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   attrs="{'readonly': ['|', '|',('show_button', '=', True), ('country', '=', False), ('nationality_id', '=', False)]}"
+                                   domain="[('country_id', '=', country)]"/>
+                            <field name="city" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   attrs="{'readonly': ['|', '|',('show_button', '=', True), ('country_states', '=', False), ('nationality_id', '=', False)]}"
+                                   domain="[('state_id', '=', country_states)]"/>
+                        </group>
+                        <notebook>
+                            <page string="Dirección*">
+                                <field name="address"
+                                       attrs="{'readonly': [('show_button', '=', True)], 'required': [('show_button', '=', False)]}"/>
+                            </page>
+                            <page string="Otros datos de interés">
+                                <field name="other_interested" attrs="{'readonly': [('show_button', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                        <footer>
+<!--                            <button string="Generar token" name="generate_token"-->
+<!--                                    type="object"/>-->
+                            <button string="Buscar y Generar solicitud" name="validate_request_generation"
+                                    type="object"/>
+                            <button string="Cancelar" class="btn btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="open_create_professional_request_minimal" model="ir.actions.act_window">
+            <field name="name">Validación FUC del profesional</field>
+            <field name="res_model">professional_registers.professional_request_minimal</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="professional_request_minimal_form_view"/>
+            <field name="target">new</field>
+        </record>
+        <record id="professional_request_act_window" model="ir.actions.act_window">
+            <field name="name">Listado de solicitudes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">professional_registers.professional_request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede registrar una nueva solicitud
+                </p>
+            </field>
+            <field name="context">{'search_default_year': (context_today()).strftime('%Y')}</field>
+        </record>
+        <record id="professional_request_readonly_form_view" model="ir.ui.view">
+            <field name="name">professional_registers.professional_request.form</field>
+            <field name="model">professional_registers.professional_request</field>
+            <field name="arch" type="xml">
+                <form string="Solicitud del profesional" create="false" edit="false" delete="false">
+                    <header>
+                        <field name="states" widget="statusbar"/>
+                        <button string="En proceso" type="object" name="process"
+                                attrs="{'invisible': [ '|',('priority','!=', 1), ('is_view_datails', '=', True)]}"/>
+                        <button string="En validación" type="object" name="validation"
+                                attrs="{'invisible': ['|',('priority','!=', 2), ('is_view_datails', '=', True)]}"/>
+                        <button string="Generar correo" type="object" name="send_email"
+                                attrs="{'invisible': ['|',('priority','not in', (2, 3)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Detener" type="object" name="stop"
+                                attrs="{'invisible': ['|',('priority','not in', (2, 3)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Aprobar" type="object" name="approved"
+                                attrs="{'invisible': ['|',('priority','not in', (2, 3, 5)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Iniciar" type="object" name="init_process"
+                                attrs="{'invisible': ['|',('priority','!=', 4), ('is_view_datails', '=', True)]}"/>
+                        <button string="Cancelar" type="object" name="cancel"
+                                attrs="{'invisible': ['|',('priority','not in', (2, 3, 4, 5)), ('is_view_datails', '=', True)]}"/>
+                        <button string="Deshacer" type="object" name="reset_process"
+                                attrs="{'invisible': ['|',('priority','!=', 7), ('is_view_datails', '=', True)]}"/>
+                    </header>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <field name="date_request" invisible="1"/>
+                        <field name="inscription_id" invisible="1"/>
+                        <div>
+                            <div class="oe_button_box" name="button_box">
+                                <button type="object" name="report_request" class="btn oe_stat_button">
+                                    <i class="fa fa-fw o_button_icon fa-print"></i>
+                                    <span>Imprimir</span>
+                                </button>
+
+                            </div>
+
+                        </div>
+                        <field name="priority" invisible="1"/>
+                        <field name="is_view_datails" invisible="1"/>
+                        <field name="is_inscription_fuc" invisible="1"/>
+                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"
+                               attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                        <div class="oe_title">
+                            <label for="full_name" string="Nombre y apellidos"/>
+                            <h1>
+                                <field name="full_name" placeholder="Nombre y apellidos" required="1" readonly="1"
+                                       force_save="1"/>
+                            </h1>
+                        </div>
+                        <group col="6">
+                            <field name="name" widget="custom-char-field" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="first_last_name" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="second_last_name" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="nationality_id" required="1" readonly="1" force_save="1"/>
+                            <field name="identity" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="sex" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="address" required="1"
+                                   attrs="{'readonly': ['|', '|', ('is_inscription_fuc', '=', True), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="country" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   attrs="{'readonly': ['|','|', ('is_inscription_fuc', '=', True),('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="country_states"
+                                   attrs="{'readonly': ['|', '|','|', ('is_inscription_fuc', '=', True),('country', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="city"
+                                   attrs="{'readonly': ['|', '|','|', ('is_inscription_fuc', '=', True),('country_states', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="phone" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="email"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="teaching_level" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="study_center" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))], 'invisible': [('teaching_level', '=', False)]}"
+                                   domain="[('teaching_level_id', '=', teaching_level)]"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="degree_date" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="volume"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))], 'required': [('id_fuc', '!=', False)]}"/>
+                            <field name="folio"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))], 'required': [('id_fuc', '!=', False)]}"/>
+                            <field name="convalidation_degree_tittle"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="profession" required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="specialties" required="1"
+                                   attrs="{'readonly': ['|', '|',('profession', '=', False), ('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"
+                                   doamin="[('profession_id', '=', profession)]"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="teaching_category"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                            <field name="teaching_category_date"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="investigations"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="investigations_year" id="investigations_year"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="degree_sciences"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="degree_sciences_year"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="unaicc_date"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="user"
+                                   attrs="{'readonly': ['|', '|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4)), ('id', '!=', False)]}"
+                                   force_save="1"/>
+                            <field name="retired"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))], 'required': [('retired', '=', True)], 'invisible': [('retired', '=', False)]}"/>
+                            <field name="date"
+                                   attrs="{'readonly': ['|', '|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4)), ('retired', '=', False)]}"/>
+                            <field name="password" password="True"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="procedure_type"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   required="1"
+                                   attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            <field name="id_fuc" readonly="1" force_save="1"/>
+                            <field name="payment_type" attrs="{'invisible': [('inscription_id', '=', False)]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Trayectoria Laboral">
+                                <field name="history_work"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}">
+                                    <tree class="tree_no_open" editable="bottom">
+                                        <field name="work_center" width="20%" required="1"/>
+                                        <field name="organism"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                               width="20%" required="1"/>
+                                        <field name="activity" width="25%" required="1"/>
+                                        <field name="phone" width="10%" required="1"/>
+                                        <field name="date_from" width="10%" required="1"/>
+                                        <field name="date_to" width="15%" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Documentos"
+                                  attrs="{'invisible': ['|',('procedure_type', '=', False), ('id', '=', False)]}"
+                                  groups="security.group_professional_editor,security.group_professional_superadmin,security.group_professional_editor_managment">
+                                <field name="documents_required">
+                                    <tree class="tree_no_open" editable="bottom" delete="false">
+                                        <field name="documents"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="checked"/>
+                                        <field name="commet"/>
+                                        <field name="attachment_ids" widget="many2many_binary" string="Ficheros"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Documentos"
+                                  attrs="{'invisible': ['|',('procedure_type', '=', False), ('id', '=', False)]}"
+                                  groups="security.group_professional_client">
+                                <field name="documents_required_registers">
+                                    <tree class="tree_no_open" editable="bottom" delete="false">
+                                        <field name="documents"
+                                               options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="attachment_ids" widget="many2many_binary" string="Ficheros"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Observaciones">
+                                <field name="observation"
+                                       attrs="{'readonly': ['|',('is_view_datails', '=', True), ('priority', 'not in', (1, 2, 3, 4))]}"/>
+                            </page>
+                            <page string="Certificación">
+                                <div>
+                                    <separator string="Archivos Adjuntos"/>
+                                    <group>
+                                        <div>
+                                            <field name="certificate_attachment" widget="many2many_binary" readonly="1"
+                                                   force_save="1"/>
+                                        </div>
+                                    </group>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="professional_request_profile1_act_window" model="ir.actions.act_window">
+            <field name="name">Procesos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">professional_registers.professional_request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5,0,0), (0,0,{'view_mode': 'tree', 'view_id': ref('professional_request_only_tree_view')}),(0,0,{'view_mode': 'form', 'view_id': ref('professional_request_readonly_form_view')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede registrar una nueva solicitud
+                </p>
+            </field>
+            <field name="search_view_id" ref="professional_request_search_view"/>
+        </record>
+
+
+        <!-- Vista del wizard -->
+        <record id="view_stop_process_wizard_form" model="ir.ui.view">
+            <field name="name">stop.process.wizard.form</field>
+            <field name="model">stop.process.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Detener Proceso">
+                    <sheet>
+                        <group>
+                            <field name="procedure_type_id"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"
+                                   required="1">
+
+                            </field>
+                        </group>
+                        <group>
+                            <field name="action_type" required="1"/>
+                            <field name="reason_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   attrs="{'required': [('action_type','=','suspend')]}"/>
+
+                        </group>
+                        <group>
+                            <label for="state_message" string="Estado actual:" style="font-weight: bold;"/>
+                            <field name="state_message" widget="html" readonly="1" nolabel="1"/>
+
+                        </group>
+                        <notebook>
+                            <page string="Procesos Detenidos" name="suspended_processes">
+                                <field name="suspended_procedures_ids" readonly="1">
+                                    <tree>
+                                        <field name="procedure_type_id"/>
+                                        <field name="state"/>
+                                        <field name="stop_date"/>
+                                        <field name="stopped_by"/>
+                                        <field name="stop_reasons" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button
+                                name="action_confirm"
+                                type="object"
+                                class="btn-primary dynamic_action_button"
+                                string="Confirmar"
+                        />
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción para abrir el wizard -->
+        <record id="action_stop_process" model="ir.actions.act_window">
+            <field name="name">Detener/Reanudar Proceso</field>
+            <field name="res_model">stop.process.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="groups_id" eval="[(4, ref('security.group_professional_superadmin'))]"/>
+        </record>
+
+    </data>
+</odoo>

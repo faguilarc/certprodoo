@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="configure_keys_form_view" model="ir.ui.view">
+            <field name="name">security.configure_keys.form</field>
+            <field name="model">security.configure_keys</field>
+            <field name="arch" type="xml">
+                <form string="Documentos requeridos por trámite" duplicate="false">
+                    <sheet>
+                        <group col="4">
+                            <field name="key_1" required="1" password="True"/>
+                            <field name="key_2" required="1" password="True"/>
+                            <field name="url" required="1"/>
+                            <field name="url_base" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="configure_keys_tree_view" model="ir.ui.view">
+            <field name="name">security.configure_keys.tree</field>
+            <field name="model">security.configure_keys</field>
+            <field name="arch" type="xml">
+                <tree string="Configuración FUC">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="configure_keys_search_view" model="ir.ui.view">
+            <field name="name">security.configure_keys.search</field>
+            <field name="model">security.configure_keys</field>
+            <field name="arch" type="xml">
+                <search string="Configuración FUC">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="configure_keys_act_window" model="ir.actions.act_window">
+            <field name="name">Configuración FUC</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">security.configure_keys</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Aquí puede adicionar las llaves de acceso a FUC
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
