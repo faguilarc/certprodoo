@@ -94,15 +94,16 @@
                         <group>
                             <field name="auto_email"/>
                             <field name="email_template_id"
-                                   attrs="{'invisible': [('auto_email', '=', False)], 'required': [('auto_email', '=', True)]}"/>
+                                   invisible="auto_email == False"
+                                   required="auto_email == True"/>
                             <field name="email_recipients"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                         </group>
                         <group>
                             <field name="attach_documents"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                             <field name="email_subject_prefix"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                         </group>
                     </group>
                     <group string="Temporizadores">
@@ -186,13 +187,13 @@
                             <field name="action_type"/>
                             <field name="auto_email"/>
                             <field name="email_template_id"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                         </group>
                         <group>
                             <field name="email_recipients"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                             <field name="attach_documents"
-                                   attrs="{'invisible': [('auto_email', '=', False)]}"/>
+                                   invisible="auto_email == False"/>
                             <field name="last_execution"/>
                             <field name="active"/>
                         </group>
@@ -315,7 +316,7 @@
                     <group>
                         <field name="transition_id"
                                widget="selection"
-                               attrs="{'required': True}"/>
+                               required="1"/>
                         <field name="require_observation" invisible="1"/>
                         <field name="will_send_email" invisible="1"/>
                         <field name="has_timer" invisible="1"/>
@@ -324,14 +325,14 @@
                 <group>
                     <field name="observation"
                            placeholder="Ingrese una observación para este cambio de estado..."
-                           attrs="{'required': [('require_observation', '=', True)]}"/>
+                           required="require_observation == True"/>
                 </group>
-                <group attrs="{'invisible': [('will_send_email', '=', False)]}">
+                <group invisible="will_send_email == False">
                     <div class="alert alert-info" role="alert">
                         <strong>Se enviará un correo automático</strong> al ejecutar esta transición.
                     </div>
                 </group>
-                <group attrs="{'invisible': [('has_timer', '=', False)]}">
+                <group invisible="has_timer == False">
                     <div class="alert alert-warning" role="alert">
                         <strong>Temporizador activo:</strong> Esta transición tiene reglas de auto-transición configuradas.
                     </div>
