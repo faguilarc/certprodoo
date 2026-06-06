@@ -1,35 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Herencia de vista de formulario de usuario -->
+    <!-- Herencia de vista de formulario de usuario (O17) -->
     <record id="res_users_view_form_inherit" model="ir.ui.view">
         <field name="name">res.users.form.inherit.certprodoo.security</field>
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='preferences']" position="after">
-                <page name="certprodoo_security" string="CertProdoo">
-                    <group>
-                        <group string="Rol y Tipo">
-                            <field name="certprodoo_role_id"/>
-                            <field name="user_type"/>
-                        </group>
-                    </group>
-                </page>
-            </xpath>
-        </field>
-    </record>
-
-    <!-- Vista de formulario de preferencias de usuario (mi cuenta) -->
-    <record id="res_users_preferences_form_inherit" model="ir.ui.view">
-        <field name="name">res.users.preferences.form.inherit.certprodoo.security</field>
-        <field name="model">res.users</field>
-        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
-        <field name="arch" type="xml">
-            <xpath expr="//group[@name='preferences']" position="after">
-                <group string="CertProdoo">
-                    <field name="certprodoo_role_id" readonly="1"/>
-                    <field name="user_type" readonly="1"/>
-                </group>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="certprodoo_role_id"/>
+                <field name="user_type"/>
             </xpath>
         </field>
     </record>

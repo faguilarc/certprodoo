@@ -34,14 +34,13 @@
         "views/state_config_views.xml",
         "views/menu.xml",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "certprodoo_base/static/src/js/*.js",
-        ],
-        "web.assets_backend_css": [
-            "certprodoo_base/static/src/css/*.css",
-        ],
-    },
+    # Assets se agregarán cuando existan archivos JS/CSS reales
+    # "assets": {
+    #     "web.assets_backend": [
+    #         "certprodoo_base/static/src/js/*.js",
+    #         "certprodoo_base/static/src/css/*.css",
+    #     ],
+    # },
     "installable": True,
     "application": True,
     "auto_install": False,

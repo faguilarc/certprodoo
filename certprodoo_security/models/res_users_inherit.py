@@ -6,7 +6,10 @@ Agrega campos:
 - certprodoo_role_id: Rol de seguridad asignado
 - user_type: Tipo de usuario (cliente, cliente_online, sistema)
 
-En O14 era security.models.res_user.
+En O14 era security.models.res_user. En O17:
+- Se agregan SELF_WRITEABLE_FIELDS / SELF_READABLE_FIELDS
+  para que el usuario pueda ver/escribir sus propios campos.
+- Se elimina la vista de preferencias heredada que ya no aplica.
 """
 
 from odoo import models, fields, api, _
@@ -39,6 +42,19 @@ class ResUsers(models.Model):
              "- Cliente Online: Usuario que solicita trámites por el portal web\n"
              "- Sistema: Usuario interno que procesa trámites",
     )
+
+    # ─── O17: Permisos de auto-lectura/escritura ─────────────
+    # En Odoo 17, res.users restringe qué campos puede leer/escribir
+    # el usuario sobre sí mismo. Debemos registrar los campos custom.
+
+    SELF_WRITEABLE_FIELDS = [
+        "certprodoo_role_id",
+        "user_type",
+    ]
+    SELF_READABLE_FIELDS = [
+        "certprodoo_role_id",
+        "user_type",
+    ]
 
     # ─── Métodos de Permisos ──────────────────────────────────
 
@@ -130,7 +146,7 @@ class ResUsers(models.Model):
             model_name: Nombre técnico del modelo.
 
         Returns:
-            list: Domain para filtrar registros visibles.
+            list: Domain para search().
         """
         self.ensure_one()
 

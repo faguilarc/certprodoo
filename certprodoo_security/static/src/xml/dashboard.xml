@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="certprodoo_security.Dashboard" owl="1">
+        <div class="certprodoo-dashboard">
+            <t t-if="state.loading">
+                <div class="dashboard-loading">
+                    Cargando estadísticas...
+                </div>
+            </t>
+            <t t-else="">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.total_users"/></div>
+                        <div class="stat-label">Usuarios Totales</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.active_users"/></div>
+                        <div class="stat-label">Usuarios Activos</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.companies"/></div>
+                        <div class="stat-label">Compañías</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.roles"/></div>
+                        <div class="stat-label">Roles</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.options"/></div>
+                        <div class="stat-label">Opciones</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.permissions.role_permissions or 0"/></div>
+                        <div class="stat-label">Permisos por Rol</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="stat-value"><t t-esc="state.permissions.user_permissions or 0"/></div>
+                        <div class="stat-label">Permisos por Usuario</div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

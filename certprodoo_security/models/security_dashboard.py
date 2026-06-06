@@ -41,14 +41,22 @@ class SecurityDashboard(models.Model):
 
     @api.model
     def get_count_users_by_type(self):
-        """Retorna conteo de usuarios por tipo."""
+        """Retorna conteo de usuarios por tipo.
+
+        Usa el campo user_type añadido por certprodoo_security.
+        Si el campo no existe (módulo no instalado correctamente),
+        retorna conteos vacíos.
+        """
         result = {}
-        for utype in ["client", "client_online", "system"]:
-            result[utype] = self.env["res.users"].search_count([
-                ("user_type", "=", utype),
-                ("active", "=", True),
-                ("company_ids", "in", self.env.user.company_ids.ids),
-            ])
+        try:
+            for utype in ["client", "client_online", "system"]:
+                result[utype] = self.env["res.users"].search_count([
+                    ("user_type", "=", utype),
+                    ("active", "=", True),
+                    ("company_ids", "in", self.env.user.company_ids.ids),
+                ])
+        except Exception:
+            result = {"client": 0, "client_online": 0, "system": 0}
         return result
 
     @api.model

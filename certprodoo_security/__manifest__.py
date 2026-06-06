@@ -44,9 +44,8 @@
     ],
     "assets": {
         "web.assets_backend": [
+            "certprodoo_security/static/src/xml/dashboard.xml",
             "certprodoo_security/static/src/js/security_dashboard.js",
-        ],
-        "web.assets_backend_css": [
             "certprodoo_security/static/src/css/dashboard.css",
         ],
     },

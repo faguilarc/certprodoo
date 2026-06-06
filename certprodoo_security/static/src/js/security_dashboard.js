@@ -1,42 +1,63 @@
-odoo.define('certprodoo_security.dashboard', function (require) {
-    "use strict";
+/** @odoo-module **/
+/*
+ * Dashboard de Seguridad - CertProdoo (OWL Component for Odoo 17+)
+ *
+ * Componente OWL que muestra estadísticas del módulo de seguridad.
+ * Reemplaza el AbstractAction legacy de O14.
+ *
+ * Se registra como client action con tag 'certprodoo_security_dashboard'.
+ */
+import { Component } from "@odoo/owl";
+import { registry } from "@web/core/registry";
+import { useService } from "@web/core/utils/hooks";
+import { Layout } from "@web/search/layout";
+import { usePager } from "@web/search/kanban_model";
 
-    /**
-     * Dashboard de Seguridad - CertProdoo
-     * 
-     * Placeholder para el componente OWL del dashboard.
-     * Muestra estadísticas básicas del módulo de seguridad.
-     * 
-     * TODO: Migrar completamente a OWL framework cuando
-     * se implemente el dashboard completo con gráficos.
-     */
+const actionRegistry = registry.category("actions");
 
-    var AbstractAction = require('web.AbstractAction');
-    var core = require('web.core');
+class SecurityDashboard extends Component {
+    static template = "certprodoo_security.Dashboard";
+    static props = {
+        action: Object,
+        actionId: { type: Number, optional: true },
+        className: { type: String, optional: true },
+    };
 
-    var SecurityDashboard = AbstractAction.extend({
-        template: 'certprodoo_security.Dashboard',
-        jsLibs: [],
+    setup() {
+        this.orm = useService("orm");
+        this.actionService = useService("action");
+        this.user = useService("user");
 
-        start: function () {
-            var self = this;
-            this._rpc({
-                model: 'certprodoo.security.dashboard',
-                method: 'get_full_data',
-                args: [],
-            }).then(function (data) {
-                self.data = data;
-                self.$('.total-users').text(data.total_users || 0);
-                self.$('.active-users').text(data.active_users || 0);
-                self.$('.companies').text(data.companies || 0);
-                self.$('.roles').text(data.roles || 0);
-                self.$('.options').text(data.options || 0);
-            });
-            return this._super.apply(this, arguments);
-        },
-    });
+        this.state = {
+            total_users: 0,
+            active_users: 0,
+            users_by_type: {},
+            companies: 0,
+            roles: 0,
+            options: 0,
+            permissions: {},
+            loading: true,
+        };
+        this._loadData();
+    }
 
-    core.action_registry.add('certprodoo_security_dashboard', SecurityDashboard);
+    async _loadData() {
+        try {
+            const data = await this.orm.call(
+                "certprodoo.security.dashboard",
+                "get_full_data",
+                []
+            );
+            Object.assign(this.state, data, { loading: false });
+            this.render(true);
+        } catch (error) {
+            console.error("Error loading security dashboard data:", error);
+            this.state.loading = false;
+            this.render(true);
+        }
+    }
+}
 
-    return SecurityDashboard;
-});
+actionRegistry.add("certprodoo_security_dashboard", SecurityDashboard);
+
+export default SecurityDashboard;

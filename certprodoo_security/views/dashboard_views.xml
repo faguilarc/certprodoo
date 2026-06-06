@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Dashboard como client action (placeholder para OWL) -->
+    <!-- Dashboard como client action (OWL component) -->
     <record id="security_dashboard_action" model="ir.actions.client">
         <field name="name">Estadísticas de Seguridad</field>
         <field name="tag">certprodoo_security_dashboard</field>
