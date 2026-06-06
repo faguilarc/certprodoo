@@ -10,8 +10,7 @@
 import { Component } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { Layout } from "@web/search/layout";
-import { usePager } from "@web/search/kanban_model";
+
 
 const actionRegistry = registry.category("actions");
 
