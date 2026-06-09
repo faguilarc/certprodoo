@@ -12,3 +12,4 @@ from . import dashboard_security
 from . import traces
 from . import configure_parameters_fuc
 from . import ir_model_inherit
+from . import ir_attachment
