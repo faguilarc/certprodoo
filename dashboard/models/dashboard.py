@@ -35,9 +35,24 @@ class Dashboard(models.Model):
         - Superadmin / Editor+Gestor / Consultor: ven datos de su empresa
         - Registrador: solo sus propios registros (user_id = self)
         - Cliente / Cliente Online: solo sus registros (id_user_register = self)
+
+        NOTA: No todos los modelos tienen company_id. Los que no lo tienen
+        se filtran a traves de sus relaciones con modelos que si lo tienen.
+        Modelos CON company_id: professional_request, inscription, profile
+        Modelos SIN company_id: expedient, claim_request, professional_request_update
         """
         user = self.env.user
-        domain = [('company_id', 'in', user.company_ids.ids)]
+        # Modelos que NO tienen company_id - filtrar via relacion
+        no_company_models = [
+            'professional_registers.expedient',
+            'professional_registers.claim_request',
+            'professional_registers.professional_request_update',
+        ]
+
+        if model_name in no_company_models:
+            domain = []
+        else:
+            domain = [('company_id', 'in', user.company_ids.ids)]
 
         if user.has_group("security.group_professional_register_employee"):
             if not user.has_group("security.group_professional_managment") and \
@@ -45,6 +60,38 @@ class Dashboard(models.Model):
                not user.has_group("security.group_professional_superadmin"):
                 domain.append(('user_id', '=', user.id))
 
+        return domain
+
+    def _get_expedient_domain(self, extra_domain=None):
+        """Dominio para expedientes filtrando via profile.company_id.
+        El modelo expedient NO tiene company_id, pero tiene professional_id
+        (-> profile) que SI lo tiene.
+        """
+        user = self.env.user
+        company_ids = user.company_ids.ids
+        # Obtener IDs de perfiles de las empresas del usuario
+        profile_ids = self.env['professional_registers.profile'].search([
+            ('company_id', 'in', company_ids)
+        ]).ids
+        domain = [('professional_id', 'in', profile_ids)]
+        if extra_domain:
+            domain.extend(extra_domain)
+        return domain
+
+    def _get_claim_domain(self, extra_domain=None):
+        """Dominio para reclamaciones filtrando via original_request_id.company_id.
+        El modelo claim_request NO tiene company_id, pero tiene
+        original_request_id (-> professional_request) que SI lo tiene.
+        """
+        user = self.env.user
+        company_ids = user.company_ids.ids
+        # Obtener IDs de solicitudes de las empresas del usuario
+        request_ids = self.env['professional_registers.professional_request'].search([
+            ('company_id', 'in', company_ids)
+        ]).ids
+        domain = [('original_request_id', 'in', request_ids)]
+        if extra_domain:
+            domain.extend(extra_domain)
         return domain
 
     def _get_period_domain(self, period='year'):
@@ -139,23 +186,23 @@ class Dashboard(models.Model):
             approved_domain.append(('states', '=', approved_states[0].id))
         approved_count = request_model.search_count(approved_domain)
 
-        # Inscripciones activas
+        # Inscripciones activas (inscription SI tiene company_id)
         active_inscriptions = self.env['professional_registers.inscription'].search_count([
             ('company_id', 'in', self.env.user.company_ids.ids),
             ('retired', '=', False),
         ])
 
-        # Expedientes abiertos
-        open_expedients = self.env['professional_registers.expedient'].search_count([
-            ('company_id', 'in', self.env.user.company_ids.ids),
+        # Expedientes abiertos (expedient NO tiene company_id, filtrar via profile)
+        expedient_domain = self._get_expedient_domain([
             ('state', 'in', ['open', 'pending']),
         ])
+        open_expedients = self.env['professional_registers.expedient'].search_count(expedient_domain)
 
-        # Reclamaciones activas
-        active_claims = self.env['professional_registers.claim_request'].search_count([
-            ('company_id', 'in', self.env.user.company_ids.ids),
+        # Reclamaciones activas (claim_request NO tiene company_id, filtrar via request)
+        claim_domain = self._get_claim_domain([
             ('claim_status', 'in', ['in_process', 'evaluating']),
         ])
+        active_claims = self.env['professional_registers.claim_request'].search_count(claim_domain)
 
         # Tiempo promedio de procesamiento (dias)
         avg_days = self._get_avg_processing_days(request_domain)
@@ -349,8 +396,9 @@ class Dashboard(models.Model):
 
     @api.model
     def get_reclamaciones_estado(self):
-        """Distribucion de reclamaciones por estado."""
-        base_domain = self._get_base_domain()
+        """Distribucion de reclamaciones por estado.
+        claim_request NO tiene company_id, se filtra via original_request_id.
+        """
         claim_model = self.env['professional_registers.claim_request']
 
         claim_status_labels = {
@@ -372,8 +420,9 @@ class Dashboard(models.Model):
 
         result = []
         for status_key, status_label in claim_status_labels.items():
-            domain = list(base_domain)
-            domain.append(('claim_status', '=', status_key))
+            domain = self._get_claim_domain([
+                ('claim_status', '=', status_key),
+            ])
             count = claim_model.search_count(domain)
             result.append({
                 'key': status_key,
@@ -458,8 +507,9 @@ class Dashboard(models.Model):
 
     @api.model
     def get_expedientes_stats(self):
-        """Estadisticas de expedientes por estado."""
-        base_domain = [('company_id', 'in', self.env.user.company_ids.ids)]
+        """Estadisticas de expedientes por estado.
+        expedient NO tiene company_id, se filtra via professional_id.company_id.
+        """
         expedient_model = self.env['professional_registers.expedient']
 
         state_labels = {
@@ -479,7 +529,9 @@ class Dashboard(models.Model):
 
         result = []
         for state_key, state_label in state_labels.items():
-            domain = list(base_domain) + [('state', '=', state_key)]
+            domain = self._get_expedient_domain([
+                ('state', '=', state_key),
+            ])
             count = expedient_model.search_count(domain)
             result.append({
                 'key': state_key,
