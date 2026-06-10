@@ -15,6 +15,7 @@ class ProfessionalExpedient(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     expedient_number = fields.Char('Número de Expediente', required=True, copy=False, readonly=True, default='New')
+    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)
     professional_id = fields.Many2one('professional_registers.profile', string='Profesional', required=True)
     profile_full_name = fields.Char(
         string='Nombre Completo',
@@ -389,6 +390,8 @@ class ProfessionalExpedient(models.Model):
     def create(self, vals):
         if vals.get('expedient_number', 'Nuevo') == 'Nuevo':
             vals['expedient_number'] = self.env['ir.sequence'].next_by_code('professional_registers.expedient') or 'New'
+        if not vals.get('company_id'):
+            vals['company_id'] = self.env.company.id
 
         expedient = super(ProfessionalExpedient, self).create(vals)
         # Crear estructura de carpetas DMS

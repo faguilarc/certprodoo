@@ -275,6 +275,7 @@
                 <field name="profile_id" invisible="1"/>
                 <field name="full_name"/>
                 <field name="identity"/>
+                <field name="company_id" groups="base.group_multi_company"/>
                 <!--                <field name="update_type"/>-->
                 <field name="user_id"/>
                 <field name="states"/>
@@ -295,6 +296,7 @@
                 <field name="identity"/>
                 <field name="states"/>
                 <field name="user_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
                 <separator/>
                 <filter name="my_requests" string="Mis solicitudes" domain="[('user_id', '=', uid)]"/>
                 <filter name="pending" string="Pendientes" domain="[('states', 'in', [1,2,3])]"/>

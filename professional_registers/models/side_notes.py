@@ -12,6 +12,7 @@ class SideNotes(models.Model):
     _description = 'Notas al margen'
 
     inscription = fields.Many2one('professional_registers.inscription', string="Inscripción")
+    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)
 
     date = fields.Date('Fecha')
     side_notes = fields.Text('Notas al margen')

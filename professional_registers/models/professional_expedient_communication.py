@@ -14,6 +14,8 @@ class ExpedientCommunication(models.Model):
         ondelete='cascade'
     )
 
+    company_id = fields.Many2one('res.company', string="Compañía", related='expedient_id.company_id', store=True, readonly=True)
+
     # Campos básicos
     date = fields.Datetime('Fecha', default=fields.Datetime.now, required=True)
     subject = fields.Char('Asunto', required=True)

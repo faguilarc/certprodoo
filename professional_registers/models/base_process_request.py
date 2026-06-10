@@ -15,6 +15,7 @@ class BaseProcessRequest(models.AbstractModel):
     states = fields.Many2one('security.state_configuration', string='Estados')
     priority = fields.Integer('Prioridad', default=1)
     user_on_charge = fields.Many2one('res.users', string="Responsable")
+    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)
 
 
 

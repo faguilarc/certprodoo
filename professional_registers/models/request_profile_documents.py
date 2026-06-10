@@ -24,3 +24,4 @@ class RequestProfileDocumentRequired(models.Model):
         string="Solicitud de Actualización"
     )
     is_document_required = fields.Boolean("Requerido", related='documents.is_document_required',)
+    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)

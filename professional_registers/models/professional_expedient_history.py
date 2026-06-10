@@ -8,6 +8,7 @@ class ExpedientHistory(models.Model):
 
     expedient_id = fields.Many2one('professional_registers.expedient', string='Expediente', required=True,
                                    ondelete='cascade')
+    company_id = fields.Many2one('res.company', string="Compañía", related='expedient_id.company_id', store=True, readonly=True)
     date = fields.Datetime('Fecha', default=fields.Datetime.now, required=True)
     user_id = fields.Many2one('res.users', string='Usuario', required=True)
     title = fields.Char('Título', required=True)
