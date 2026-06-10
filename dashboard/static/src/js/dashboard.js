@@ -50,8 +50,6 @@ odoo.define('dashboard.dashboard', function (require) {
 
         _loadData: function () {
             var self = this;
-            this.loading = true;
-            this._updateLoadingState();
 
             return rpc.query({
                 model: 'dashboard',
@@ -59,16 +57,13 @@ odoo.define('dashboard.dashboard', function (require) {
                 args: [{period: this.current_period}],
             }).then(function (result) {
                 self.dashboard_data = result;
-                self.loading = false;
-                self._updateLoadingState();
             }).guardedCatch(function (error) {
-                self.loading = false;
-                self._updateLoadingState();
                 console.error('Error cargando dashboard:', error);
             });
         },
 
         _updateLoadingState: function () {
+            if (!this.$el) return;
             var $spinner = this.$('.loading-spinner');
             var $content = this.$('.dashboard-content');
             if ($spinner.length) {
@@ -88,7 +83,6 @@ odoo.define('dashboard.dashboard', function (require) {
 
         _renderDashboard: function () {
             var self = this;
-            this._updateLoadingState();
 
             if (!this.dashboard_data || !this.dashboard_data.kpi_cards) {
                 return;
