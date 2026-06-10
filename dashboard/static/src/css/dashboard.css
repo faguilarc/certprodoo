@@ -1,693 +1,339 @@
+/* ================================================================
+   Cuadro de Mando - Registro Profesional (certprodoo)
+   Estilos profesionales para el dashboard
+   ================================================================ */
 
-@charset "utf-8";
-.modal > .modal-dialog .modal-content .o_act_window .o_view_controller .o_form_editable .o_form_sheet_bg .o_form_sheet .group_cp,
-.o_web_client > .o_main .o_main_content .o_content .o_view_controller .o_form_editable .o_form_sheet_bg .o_form_sheet .group_cp{
-    position: relative;
-    margin-top:-38px;
-    float: right;
-    clear: both;
-    width: 50%;
-}
-.cliente, .provee, .chdivs, .charea{
-    position: relative;
-    margin-right:83px;
-    float: left;
-}
-.o_sub_menu img{
-    margin-top: 0 !important;
-}
-
-.o_web_client > .o_main .o_main_content .o_content .o_view_controller .o_form_readonly .o_form_sheet_bg .o_form_sheet .group_cp {
-    position: relative;
-    margin-top:-20px;
-    float: right;
-    clear: both;
-    width: 50%;
-}
-.coef_year{
-    width: 200px;
+/* ---- Variables de tema ---- */
+:root {
+    --cp-primary: #3a3f6b;
+    --cp-primary-light: #5e63a0;
+    --cp-success: #1cc88a;
+    --cp-danger: #e74a3b;
+    --cp-warning: #f6c23e;
+    --cp-info: #36b9cc;
+    --cp-gray: #858796;
+    --cp-bg: #f8f9fc;
+    --cp-card-bg: #ffffff;
+    --cp-shadow: 0 0.15rem 1.75rem 0 rgba(58, 63, 107, 0.1);
+    --cp-radius: 0.35rem;
 }
 
-footer .btn-secondary{
-    color: #fff;
-    background-color: #5EC269;
-    border-color: #5EC269;
+/* ---- Contenedor principal ---- */
+.certprodoo-dashboard {
+    background-color: var(--cp-bg);
+    padding: 20px;
+    min-height: 100vh;
 }
 
-.btn{border: 1px solid transparent !important;}
-
-.oe_btn_list_delete,
-#sidebar li:nth-child(3)
-{display: none;}
-
-.o_form_view .oe_button_box .oe_stat_button{border-color: #ccc !important;}
-
-/* DASHBOARD */
-
-.wrapper {
-    display: inline-block;
-    background: #f1f2f7;
-    padding: 15px;
-    width: calc(100% - 2px);
+.certprodoo-client-dashboard {
+    background-color: var(--cp-bg);
+    padding: 20px;
+    min-height: 100vh;
 }
 
-.dwrapper {
-    display: inline-block;
-    padding: 15px;
-    width: calc(100% - 2px);
-}
-
-.panel {
-    border: none;
-    box-shadow: none;
-    background: #fff;
-}
-
-.state-overview .terques {
-    background: #A9D96C;
-}
-
-.state-overview .terques1 {
-    background: #aae65c;
-}
-
-
-.state-overview .red {
-    background: #ff6c60;
-}
-
-.state-overview .red1 {
-    background: #ff8378;
-}
-
-.state-overview .yellow {
-    background: #f8d347;
-}
-
-.state-overview .yellow1 {
-    background: #ffe173;
-}
-
-.state-overview .blue {
-    background: #57c8f2;
-}
-
-.state-overview .blue3 {
-    background: #78dbff;
-}
-
-.state-overview .blue2 {
-    background: #cbe8f6;
-}
-
-.state-overview .green {
-    background: #008f39;
-}
-
-.state-overview .green1 {
-    background: #00b347;
-}
-
-.oh-payslip {
-    margin-left: 1% !important;
-    cursor: pointer;
-    margin-top: 1.5%;
-}
-
-.state-overview .symbol, .state-overview .symbol2, .state-overview .value {
-    display: inline-block;
-    text-align: center;
-}
-
-.state-overview .value, .state-overview .value2{
-    float: right;
-}
-
-.state-overview .value h1, .state-overview .value p  {
-    margin: 0;
-    padding: 0;
-    color:#797979;
-}
-
-.state-overview .value h1 {
-    font-weight:300;
-    font-size:32px;
-}
-
-.state-overview .symbol i {
-    color: #fff;
-    font-size:45px;
-}
-
-.state-overview .symbol2 i {
-    color: #4c4c4c;
-    font-size:13px;
-    font-weight: bold;
-}
-
-.state-overview .symbol {
-    width:35%;
-    padding:15px;
-    -webkit-border-radius: 4px 0px 0px 4px;
-    border-radius: 4px 0px 0px 4px;
-}
-
-.state-overview .symbol2 {
-    width:35%;
-    padding:1px 0;
-}
-
-.state-overview .value {
-    width:65%;
-    padding-top:10px;
-}
-
-.state-overview .value2 {
-    width:65%;
-}
-
-.mcenter{
-    text-align: center;
-    font-weight: bold;
-    padding: 2px 0 3px;
-}
-
-.mizq{margin-right: -15px;}
-.mbtop{margin-top: -3px;}
-
-.border-head h3 {
-    border-bottom: 1px solid #c9cdd7;
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding-bottom: 5px;
-    font-size: 18px;
-    display: inline-block;
-    width: 100%;
-    font-weight: 300;
-}
-
-.custom-bar-chart {
-    height: 250px;
-    margin-top: 20px;
-    margin-left: 10px;
-    position: relative;
-    border-bottom: 1px solid #c9cdd7;
-}
-
-.custom-bar-chart .bar {
-    height: 100%;
-    width: 25px;
-    position: relative;
-    float: left;
-    text-align: center;
-    -webkit-border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-    z-index: 10;
-}
-
-.grafsol .custom-bar-chart .bar {
-    margin: 0 7%;
-}
-
-.grafofe .custom-bar-chart .bar {
-    margin: 0 3%;
-}
-
-.grafcon .custom-bar-chart .bar {
-    margin: 0 3%;
-}
-
-
-html .o_web_client > .o_action_manager{
-    overflow: auto !important;
-
-}
-.custom-bar-chart .bar .title {
-    position: absolute;
-    bottom: -60px;
-    width: 100%;
-    text-align: center;
-    font-size: 13px;
-    margin-left: -10px;
-    transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-}
-
-.custom-bar-chart .bar .value {
-    position: absolute;
-    bottom: 0;
-    background: #ff6c60;
-    color: #ff6c60;
-    width: 100%;
-    -webkit-border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
-
-
-.custom-bar-chart .bar .value:hover {
-    background: #e8403f;
-    color: #fff;
-}
-
-.y-axis {
-    color: #555555;
-    position: absolute;
-    text-align: right;
-    width: 100%;
-    margin-left: -40px;
-}
-
-.y-axis li {
-    border-top: 1px dashed #dbdce0;
-    display: block;
-    height: 50px;
-    width: 100%;
-}
-
-.y-axis li:last-child {
-    border-top: none;
-}
-
-.y-axis li span {
-    display: block;
-    margin: -10px 0 0 -25px;
-    padding: 0 10px;
-    width: 40px;
-}
-
-.y-axis {
-    color: #555555;
-    text-align: right;
-}
-
-.o_filter_condition, .fldate{width: 100%;}
-
-.o_ds_label, .o_dv_label{
-    float: left;
-    width: 60px;
-    margin-top: 3px;
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-.o_dv_label{width: 34px;}
-
-label.o_form_label{height: 32px;}
-
-#filtranno, #filtranno1, #clasific, #filtrdiv, #filtrserv, #filtrcli, #fini, #ffin{
-    width: calc(100% - 70px);
-}
-
-#elem, #moneda{
-    width: calc(100% - 70px);
-}
-
-#fini, #ffin{
-    height: 25px;
-}
-
-#dclient{margin-bottom: -10px;}
-
-.notif_info {
-    position: absolute;
-    z-index: 99999;
-    margin-top: -28px;
-    left: 150px;
-    display: inline-block;
-    min-width: 10px;
-    padding: 3px 7px;
-    font-size: 12px;
+.dashboard-title {
+    color: var(--cp-primary);
     font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.dashboard-title i {
+    margin-right: 8px;
+}
+
+/* ---- Period filter ---- */
+.period-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 5px;
+}
+
+.period-filter label {
+    color: var(--cp-primary);
+    font-size: 0.9rem;
+}
+
+.period-selector {
+    border: 1px solid #d1d3e2;
+    color: var(--cp-primary);
+    font-size: 0.85rem;
+}
+
+/* ---- KPI Cards ---- */
+.kpi-card {
+    display: flex;
+    align-items: center;
+    padding: 15px 18px;
+    background: var(--cp-card-bg);
+    border-radius: var(--cp-radius);
+    box-shadow: var(--cp-shadow);
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    height: 100%;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.3rem 1rem rgba(58, 63, 107, 0.2);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.kpi-icon i {
+    font-size: 22px;
     color: #fff;
-    line-height: 1;
-    vertical-align: baseline;
+}
+
+.kpi-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.kpi-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cp-primary);
+}
+
+.kpi-label {
+    font-size: 0.78rem;
+    color: var(--cp-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     white-space: nowrap;
-    text-align: center;
-    background-color: #ff6c60;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.fperms{
-    border-width: 2px;
-    border-style: groove;
-    border-color: #ffffff;
-    border-image: initial;
-    display: block;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
+/* KPI color variants */
+.kpi-blue { border-left-color: #4e73df; }
+.kpi-blue .kpi-icon { background: #4e73df; }
+
+.kpi-green { border-left-color: #1cc88a; }
+.kpi-green .kpi-icon { background: #1cc88a; }
+
+.kpi-orange { border-left-color: #f6c23e; }
+.kpi-orange .kpi-icon { background: #f6c23e; }
+
+.kpi-teal { border-left-color: #36b9cc; }
+.kpi-teal .kpi-icon { background: #36b9cc; }
+
+.kpi-purple { border-left-color: #6f42c1; }
+.kpi-purple .kpi-icon { background: #6f42c1; }
+
+.kpi-red { border-left-color: #e74a3b; }
+.kpi-red .kpi-icon { background: #e74a3b; }
+
+.kpi-gray { border-left-color: #858796; }
+.kpi-gray .kpi-icon { background: #858796; }
+
+/* ---- Dashboard Card (secciones) ---- */
+.dash-card {
+    background: var(--cp-card-bg);
+    border-radius: var(--cp-radius);
+    box-shadow: var(--cp-shadow);
+    overflow: hidden;
+    height: 100%;
 }
 
-.fperms legend{
-    width: auto;
-    padding:0 3px;
+.dash-card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e3e6f0;
+    background: #f8f9fc;
 }
 
-.div_space{
-    height: 15px;
+.dash-card-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cp-primary);
 }
 
-/****** CHART LINE ******/
-
-canvas{
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-#chartjs-tooltip {
-    opacity: 1;
-    position: absolute;
-    background: rgba(0, 0, 0, .7);
-    color: white;
-    border-radius: 3px;
-    -webkit-transition: all .1s ease;
-    transition: all .1s ease;
-    pointer-events: none;
-    -webkit-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
+.dash-card-header h4 i {
+    margin-right: 8px;
+    color: var(--cp-primary-light);
 }
 
-.chartjs-tooltip-key {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin-right: 10px;
+.dash-card-body {
+    padding: 15px 20px;
 }
 
-.graph-sep{
-    border-bottom: 1px solid #c9cdd7;
-    margin: 120px 0 19px;
-    width: 100%;
-}
-
-.graph-sep1{
-    border-bottom: 1px solid #c9cdd7;
-    margin: 90px 0 10px;
-    width: 100%;
-}
-
-.graph-sep{
-    border-bottom: 1px solid #c9cdd7;
-    margin: 5px 0 10px;
-    width: 100%;
-}
-
-.bg-cn, .bg-tm, .bg-ar, .bg-ia, .bg-ic, .bg-se{
-    background-color: rgb(247, 70, 74);
-    color: #fff;
-    text-align: center;
-    padding: 1px 10px;
-}
-
-.bg-tm{background-color: rgb(56, 93, 133);}
-.bg-ar{background-color: rgb(252, 179, 34);}
-.bg-ia{background-color: rgb(94, 194, 105);}
-.bg-ic{background-color: rgb(54, 162, 235);}
-.bg-se{background-color: rgb(153, 102, 255);}
-
-.disc, .cont{
-    margin: 9px 5px 0 0;
-    width: 20px;
-    height: 1px;
-    float: left;
-}
-
-.disc{
-    border-bottom: 2px #6b6b6b dotted;
-}
-
-.cont{
-    border-bottom: 1.5px #6b6b6b solid;
-    margin-bottom: 20px;
-}
-
-.dfilt{
-    display: flex;
-    width: 100%;
-    padding: 10px 0 6px;
-    margin-bottom: 10px;
-    background-color: #cbe8f6;
-}
-.picker{
-    margin-left: 100px;
-    z-index: 1000;
- }
-
- /* A partir de aqui vamos a poner los css nuevos*/
-
-.dashboards{
-    padding-top :15px;
-    background-color: #f8faff !important;
-    padding: 0px !important;
-}
-
-.oh-card h4 {
-    font-size: 1.1rem;
-}
-.breadcrumbs {
-    margin-top: 0;
-}
-
-/*    Widget One
----------------------------*/
-.stat-content {
-    display: inline-block;
-    width: 66%;
-}
-.stat-icon{
-    display: inline-block;
-}
-
-.stat-widget-one .stat-icon {
-    vertical-align: top;
-    margin: auto;
-    width: 100%;
-    color: #01c490;
-}
-
-.stat-widget-one .stat-icon i {
-  font-size: 30px;
-  font-weight: 900;
-  display: inline-block;
-  color: #01c490;}
-
-.stat-widget-one .stat-text {
-    font-size: 14px;
-    color: #18396c;/*#868e96;*/
-    font-weight: bold;
-
-}
-
-.stat-widget-one .stat-digit {
-  font-size: 24px;
-  color: #18396c;
-  /*color: #6c757d;*/
-}
-
-
-
-
-/*=====================New Dashboard===========================*/
-.oh-card {
-    padding-top: 0px;
-    padding: 0px;
-    margin-bottom: 1.5rem;
-    border-radius: 0px;
-    box-shadow: none;
-    background: none;
+/* ---- Status Cards (por estado) ---- */
+.status-card {
+    background: var(--cp-card-bg);
+    border-radius: var(--cp-radius);
+    box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 0.08);
+    cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform, box-shadow;
-}
-.oh-card:hover {
-    transform: translateY(-2px) translateZ(0) !important;
-    box-shadow: 0 10px 10px 0 rgba(62, 57, 107, 0.12), 0 0 0 transparent !important;
+    height: 100%;
 }
 
-.oh-payslip .oh-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform, box-shadow;
-    box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06);
+.status-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.15);
 }
-.stat-widget-one .stat-text {
-    font-size: 14px;
-    /*color: #4CAF50;*/
-    color: #18396c;
-    margin-top: 1.3rem;
-    text-align: center;
-}
-.stat-widget-one .stat-digit {
-    font-size: 17px;
-    color: #6c757d;
+
+.status-card-body {
+    padding: 15px;
     text-align: center;
 }
 
-.stat-widget-one .stat-icon i {
-    font-size: 25px;
-    font-weight: 900;
-    display: inline-block;
-    color: #fff;
+.status-count {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cp-primary);
+    line-height: 1.2;
 }
-.stat-widget-one {
-    background-color: rgba(62, 57, 107, 0.12);
-    text-align: inherit !important;
+
+.status-name {
+    font-size: 0.8rem;
+    color: var(--cp-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
 }
-.stat-widget-one {
+
+/* ---- Chart container ---- */
+.chart-container {
+    position: relative;
     width: 100%;
 }
-.oh-payslip .stat-icon {
-    width: 30%;
-    height: 85px;
-    text-align: center;
-    padding-top: 12%;
-    /*background: #4CAF50; */
-    background: #18396c;
-    color: #fff;
-}
-.oh-user-disable .stat-icon{
-    background: #ff8762 !important;
-}
-.oh-user-online .stat-icon{
-    background: #2196F3 !important;
-}
-.oh-user-offline .stat-icon{
-    background: #ff9800 !important;
-}
-.oh-user-disable .stat-widget-one .stat-text {
-    color: #ff8762;
-}
-.oh-user-online .stat-widget-one .stat-text {
-    color: #2196F3;
-}
-.oh-user-offline .stat-widget-one .stat-text {
-    color: #ff9800;
-}
-.oh-card-body {
+
+/* ---- Tasa badges ---- */
+.tasa-summary {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
-/* Estilos para tarjetas de estado clickeables */
-.status-card {
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 20px;
+.tasa-summary .badge {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    font-weight: 600;
 }
 
-.status-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* ---- Button group (card/chart toggle) ---- */
+.btn-group .btn-outline-secondary {
+    color: var(--cp-primary);
+    border-color: #d1d3e2;
+    font-size: 0.85rem;
 }
 
-/* Diseño responsivo para sub-tarjetas */
-.sub-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 15px;
+.btn-group .btn-outline-secondary.active {
+    background-color: var(--cp-primary);
+    color: #fff;
+    border-color: var(--cp-primary);
 }
 
-.sub-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.btn-group .btn-outline-secondary:hover:not(.active) {
+    background-color: #eaecf4;
 }
 
-.sub-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+/* ---- Terms container (client dashboard) ---- */
+.terms-section {
+    background: var(--cp-card-bg);
+    border-radius: var(--cp-radius);
+    box-shadow: var(--cp-shadow);
+    padding: 20px 25px;
 }
 
-/* Efectos hover y transiciones para elementos interactivos */
-.status-card .symbol {
-    transition: background-color 0.3s ease;
+.terms-section h5 {
+    color: var(--cp-primary);
+    font-weight: 700;
+    border-bottom: 2px solid #e3e6f0;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
 }
 
-.status-card:hover .symbol {
-    opacity: 0.9;
+/* ---- Loading ---- */
+.loading-spinner {
+    padding: 60px 0;
 }
 
-.status-card .value {
-    transition: color 0.3s ease;
+.loading-spinner i {
+    color: var(--cp-primary);
 }
 
-.status-card:hover .value h1 {
-    color: #4a4a4a;
+.loading-spinner span {
+    color: var(--cp-gray);
+    font-size: 1rem;
 }
 
-/* Ajustes responsivos */
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
-    .sub-cards-container {
-        grid-template-columns: 1fr;
+    .certprodoo-dashboard {
+        padding: 10px;
     }
 
-    .state-overview .symbol {
-        width: 30%;
+    .kpi-card {
+        padding: 10px 12px;
     }
 
-    .state-overview .value {
-        width: 70%;
+    .kpi-icon {
+        width: 38px;
+        height: 38px;
+        margin-right: 10px;
+    }
+
+    .kpi-icon i {
+        font-size: 18px;
+    }
+
+    .kpi-value {
+        font-size: 1.3rem;
+    }
+
+    .kpi-label {
+        font-size: 0.7rem;
+    }
+
+    .dash-card-header h4 {
+        font-size: 0.9rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.2rem;
+    }
+
+    .period-filter {
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+
+    .status-count {
+        font-size: 1.4rem;
     }
 }
 
-#reportsContainer .row {
-    transition: all 0.3s ease;
-}
+@media (max-width: 576px) {
+    .kpi-icon {
+        width: 34px;
+        height: 34px;
+        margin-right: 8px;
+    }
 
-.report-toggles {
-    padding: 15px;
-}
+    .kpi-icon i {
+        font-size: 16px;
+    }
 
-.report-toggles .form-check {
-    margin-right: 20px;
-}
+    .kpi-value {
+        font-size: 1.1rem;
+    }
 
-.form-check-input:checked + .form-check-label {
-    color: #007bff;
-    font-weight: 500;
+    .kpi-label {
+        font-size: 0.65rem;
+    }
 }
-
-#btnCardView i, #btnChartView i {
-    margin-right: 6px;
-}
-.status-card {
-    transition: all 0.3s ease;
-    border: 1px solid #e0e0e0;
-    background-color: #ffffff;
-}
-
-.status-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.status-card:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.status-card .oh-card-body {
-    padding: 15px;
-}
-
-.status-card .stat-icon {
-    margin-bottom: 10px;
-}
-
-.status-card .stat-text {
-    margin-bottom: 5px;
-}
-

@@ -1,93 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates id="template" xml:space="preserve">
+<templates id="dashboard_templates" xml:space="preserve">
     <t t-name="DashboardDetails">
-        <div class="container-fluid o_dashboard">
+        <div class="container-fluid certprodoo-dashboard">
 
-            <div class="loading-spinner d-none">
-                <i class="fa fa-spinner fa-spin"></i>
-                <span>Cargando datos...</span>
+            <!-- Loading Spinner -->
+            <div class="loading-spinner d-none text-center py-5">
+                <i class="fa fa-spinner fa-spin fa-2x text-primary"/>
+                <span class="ml-2">Cargando datos...</span>
             </div>
 
-            <div class="error-message alert alert-danger d-none">
-            </div>
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
 
-            <!-- Selector de Reportes -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="oh-card">
-                        <div class="oh-card-header">
-                            <h2 class="h4 h-md-2">Configuración de Reportes</h2>
+                <!-- Header con selector de periodo -->
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <h3 class="dashboard-title">
+                            <i class="fa fa-tachometer"/> Cuadro de Mando
+                        </h3>
+                    </div>
+                    <div class="col-12 col-md-6 text-md-right">
+                        <div class="period-filter">
+                            <label class="mr-2 font-weight-bold">Periodo:</label>
+                            <select class="period-selector form-control form-control-sm d-inline-block" style="width: auto;">
+                                <option value="month">Este Mes</option>
+                                <option value="quarter">Este Trimestre</option>
+                                <option value="year" selected="selected">Este Ano</option>
+                                <option value="all">Todo</option>
+                            </select>
                         </div>
-                        <div class="oh-card-body">
-                            <div class="report-toggles">
-                                <div class="form-check form-check-inline mb-2 mb-md-0">
-                                    <input class="form-check-input" type="checkbox" id="showSolicitudesEstado"
-                                           checked="checked"/>
-                                    <label class="form-check-label"
-                                           for="showSolicitudesEstado">Solicitudes por Estado</label>
-                                </div>
-<!--                                <div class="form-check form-check-inline mb-2 mb-md-0">-->
-<!--                                    <input class="form-check-input" type="checkbox" id="showDistribucionProfesiones"-->
-<!--                                           checked="checked"/>-->
-<!--                                    <label class="form-check-label" for="showDistribucionProfesiones">Distribución por Profesión</label>-->
-<!--                                </div>-->
-                                <div class="form-check form-check-inline mb-2 mb-md-0">
-                                    <input class="form-check-input" type="checkbox" id="showTiempoProcesamiento"
-                                           checked="checked"/>
-                                    <label class="form-check-label" for="showTiempoProcesamiento">Tiempo de Procesamiento</label>
-                                </div>
-<!--                                <div class="form-check form-check-inline">-->
-<!--                                    <input class="form-check-input" type="checkbox" id="showTasasAprobacion"-->
-<!--                                           checked="checked"/>-->
-<!--                                    <label class="form-check-label"-->
-<!--                                           for="showTasasAprobacion">Tasas de Aprobación</label>-->
-<!--                                </div>-->
+                    </div>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- KPI CARDS -->
+                <!-- ============================================================ -->
+                <div class="row mb-4">
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-blue" id="kpiTotalRequests" data-target="total_requests">
+                            <div class="kpi-icon"><i class="fa fa-file-text-o"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Solicitudes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-green" id="kpiApprovedRequests" data-target="approved_requests">
+                            <div class="kpi-icon"><i class="fa fa-check-circle"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Aprobadas</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-orange" id="kpiPendingRequests" data-target="pending_requests">
+                            <div class="kpi-icon"><i class="fa fa-hourglass-half"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Pendientes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-teal" id="kpiInscriptions" data-target="inscriptions">
+                            <div class="kpi-icon"><i class="fa fa-id-card-o"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Inscripciones</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-purple" id="kpiExpedients" data-target="expedients">
+                            <div class="kpi-icon"><i class="fa fa-folder-open-o"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Expedientes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-red" id="kpiClaims" data-target="claims">
+                            <div class="kpi-icon"><i class="fa fa-exclamation-triangle"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Reclamaciones</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg mb-3">
+                        <div class="kpi-card kpi-gray" id="kpiAvgTime">
+                            <div class="kpi-icon"><i class="fa fa-clock-o"/></div>
+                            <div class="kpi-info">
+                                <div class="kpi-value">0</div>
+                                <div class="kpi-label">Dias Promedio</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Contenedor de Reportes -->
-            <div id="reportsContainer">
-                <!-- Reportes de Solicitudes por Estado -->
-                <div class="row mb-4" id="reportSolicitudesEstado">
+                <!-- ============================================================ -->
+                <!-- SOLICITUDES POR ESTADO - Cards + Chart Toggle -->
+                <!-- ============================================================ -->
+                <div class="row mb-4">
                     <div class="col-12">
-                        <div class="oh-card">
-                            <div class="oh-card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
-                                <h2 class="h4 mb-2 mb-md-0">Solicitudes por Estado</h2>
-                                <div class="btn-group " role="group">
-                                    <button type="button" class="btn btn-outline-primary btn-sm active" id="btnCardView">
-                                        <i class="fa fa-th-large" aria-hidden="true"></i>
-                                        <span class="d-none d-sm-inline">Tarjetas</span>
+                        <div class="dash-card">
+                            <div class="dash-card-header d-flex justify-content-between align-items-center">
+                                <h4><i class="fa fa-bar-chart"/> Solicitudes por Estado</h4>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-secondary active" id="btnCardView">
+                                        <i class="fa fa-th-large"/> Tarjetas
                                     </button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnChartView">
-                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                                        <span class="d-none d-sm-inline">Gráfico</span>
+                                    <button type="button" class="btn btn-outline-secondary" id="btnChartView">
+                                        <i class="fa fa-pie-chart"/> Grafico
                                     </button>
                                 </div>
                             </div>
-                            <div class="oh-card-body">
+                            <div class="dash-card-body">
                                 <!-- Card View -->
                                 <div id="cardView">
-                                    <div class="row g-2">
-                                        <t t-foreach="widget.dashboard_data.conteo_por_estado" t-as="estado">
-                                            <div class="col-6 col-sm-6 col-md-3 col-lg-3 mb-2 oh-payslip">
-                                                <div class="oh-card status-card h-100" t-att-data-estado="estado.state_id"
-                                                     t-attf-style="border-left: 4px solid ">
-                                                    <div class="oh-card-body p-2 p-sm-3">
-                                                        <div class="stat-widget-one text-center">
-                                                            <div class="stat-icon mb-1">
-                                                                <i class="fa fa-archive fa-lg"/>
-                                                            </div>
-                                                            <div class="stat-content">
-                                                                <div class="stat-text small">
-                                                                    <strong><t t-esc="estado.state_name"/></strong>
-                                                                </div>
-                                                                <div class="stat-digit">
-                                                                    <h5 class="mb-0"><t t-esc="estado.cantidad"/></h5>
-                                                                </div>
-                                                            </div>
+                                    <div class="row">
+                                        <t t-foreach="widget.dashboard_data.solicitudes_estado or []" t-as="estado">
+                                            <div class="col-6 col-sm-4 col-md-3 col-lg mb-3">
+                                                <div class="status-card" t-att-data-estado="estado.state_id"
+                                                     t-attf-style="border-left: 4px solid #{estado.color};">
+                                                    <div class="status-card-body">
+                                                        <div class="status-count">
+                                                            <t t-esc="estado.cantidad"/>
+                                                        </div>
+                                                        <div class="status-name">
+                                                            <t t-esc="estado.state_name"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -95,66 +139,104 @@
                                         </t>
                                     </div>
                                 </div>
-
                                 <!-- Chart View -->
                                 <div id="chartView" style="display: none;">
-                                    <canvas id="chartSolicitudesEstado" class="w-100" style="height: 300px;"></canvas>
+                                    <div class="chart-container" style="height: 350px;">
+                                        <canvas id="chartSolicitudesEstado"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-<!--                &lt;!&ndash; Gráfico de Distribución por Profesión &ndash;&gt;-->
-<!--                <div class="row mb-4" id="reportDistribucionProfesiones">-->
-<!--                    <div class="col-12">-->
-<!--                        <div class="oh-card">-->
-<!--                            <div class="oh-card-header">-->
-<!--                                <h4 class="h5 mb-0">Distribución por Profesión</h4>-->
-<!--                            </div>-->
-<!--                            <div class="oh-card-body">-->
-<!--                                <canvas id="chartProfesiones" class="w-100" style="height: 350px;"></canvas>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <!-- Tiempo Promedio de Procesamiento -->
-                <div class="row mb-4" id="reportTiempoProcesamiento">
-                    <div class="col-12">
-                        <div class="oh-card">
-                            <div class="oh-card-header">
-                                <h4 class="h5 mb-0">Tiempo Promedio de Procesamiento</h4>
+                <!-- ============================================================ -->
+                <!-- TENDENCIA MENSUAL + TOP PROFESIONES -->
+                <!-- ============================================================ -->
+                <div class="row mb-4">
+                    <div class="col-12 col-lg-7 mb-3">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4><i class="fa fa-line-chart"/> Tendencia Mensual</h4>
                             </div>
-                            <div class="oh-card-body text-center py-4">
-                                <h2 class="display-6 mb-2">
-                                    <t t-esc="widget.dashboard_data.tiempo_promedio.promedio_horas.toFixed(1)"/>
-                                    <small class="text-muted h6">horas</small>
-                                </h2>
-                                <p class="mb-0">Total solicitudes:
-                                    <span class="fw-bold">
-                                        <t t-esc="widget.dashboard_data.tiempo_promedio.total_solicitudes"/>
-                                    </span>
-                                </p>
+                            <div class="dash-card-body">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="chartTendenciaMensual"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5 mb-3">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4><i class="fa fa-trophy"/> Top 10 Profesiones</h4>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="chartTopProfesiones"/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-<!--                &lt;!&ndash; Tasas de Aprobación/Rechazo &ndash;&gt;-->
-<!--                <div class="row mb-4" id="reportTasasAprobacion">-->
-<!--                    <div class="col-12">-->
-<!--                        <div class="oh-card">-->
-<!--                            <div class="oh-card-header">-->
-<!--                                <h4 class="h5 mb-0">Tasa de Aprobación/Rechazo</h4>-->
-<!--                            </div>-->
-<!--                            <div class="oh-card-body">-->
-<!--                                <canvas id="chartTasas" class="w-100" style="height: 300px;"></canvas>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
-        </div>
+                <!-- ============================================================ -->
+                <!-- TIPO DE TRAMITE + RECLAMACIONES -->
+                <!-- ============================================================ -->
+                <div class="row mb-4">
+                    <div class="col-12 col-lg-6 mb-3">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4><i class="fa fa-list-alt"/> Por Tipo de Tramite</h4>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="chartTipoTramite"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-3">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4><i class="fa fa-gavel"/> Reclamaciones por Estado</h4>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="chartReclamaciones"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- TASAS DE APROBACION / RECHAZO -->
+                <!-- ============================================================ -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="dash-card">
+                            <div class="dash-card-header d-flex justify-content-between align-items-center">
+                                <h4><i class="fa fa-check-square"/> Tasa de Aprobacion / Rechazo por Tipo de Tramite</h4>
+                                <div class="tasa-summary" t-if="widget.dashboard_data.tasas">
+                                    <span class="badge badge-success mr-2">
+                                        Aprobacion: <t t-esc="widget.dashboard_data.tasas.tasa_aprobacion_global"/>%
+                                    </span>
+                                    <span class="badge badge-danger">
+                                        Rechazo: <t t-esc="widget.dashboard_data.tasas.tasa_rechazo_global"/>%
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="chartTasas"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /dashboard-content -->
+        </div><!-- /certprodoo-dashboard -->
     </t>
 </templates>

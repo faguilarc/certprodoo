@@ -1,11 +1,10 @@
 <odoo>
     <data>
-        <template id="assets_backend" name="custom page assets" inherit_id="web.assets_backend">
+        <template id="assets_backend" name="dashboard assets" inherit_id="web.assets_backend">
             <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/dashboard/static/src/js/chart.min.js"/>
                 <script type="text/javascript" src="/dashboard/static/src/js/dashboard.js"/>
                 <script type="text/javascript" src="/dashboard/static/src/js/dashboard_client.js"/>
-                <script type="text/javascript" src="/dashboard/static/src/js/chart.min.js"/>
-                <script type="text/javascript" src="/dashboard/static/src/js/ui_datepicker_es.js"/>
                 <link rel="stylesheet" type="text/css" href="/dashboard/static/src/css/dashboard.css"/>
             </xpath>
         </template>

@@ -1,130 +1,55 @@
 odoo.define('dashboard.dashboard_client', function (require) {
-"use strict";
+    "use strict";
 
-var AbstractAction = require('web.AbstractAction');
-var core = require('web.core');
-var rpc = require('web.rpc');
-var _t = core._t;
-var QWeb = core.qweb;
-var web_client = require('web.web_client');
+    var AbstractAction = require('web.AbstractAction');
+    var core = require('web.core');
+    var rpc = require('web.rpc');
+    var QWeb = core.qweb;
 
-var DashboardClient = AbstractAction.extend({
-    template: 'DashboardDetailsClient',
-    cssLibs: [
-        '/dashboard/static/src/css/Chart.min.css'
-    ],
-    jsLibs: [
-        '/dashboard/static/src/js/chart.min.js',
-        '/dashboard/static/src/js/ui_datepicker_es.js',
-    ],
-    events: {
-//        'click .request':'request_function',
-    },
+    var DashboardClient = AbstractAction.extend({
+        template: 'DashboardDetailsClient',
 
-    init: function(parent, context) {
+        init: function (parent, context) {
+            this._super(parent, context);
+            this.terms_data = [];
+        },
 
-        this._super(parent, context);
-        this.date_range = 'week';  // possible values : 'week', 'month', year'
-        this.date_from = moment().subtract(1, 'week');
-        this.date_to = moment();
-        this.dashboards_templates = ['DashboardDetailsClient'];
-        this.users_info=[];
-        // var self = this;
-        // console.log("INIT FUNCTION 1")
-        // if (context.tag == 'dashboard.dashboard'){
-        //         self.render_dashboards();
-        // }
-    },
-
-    willStart: function(){
-        var self = this;
-        this.login_employee = {};
-        return this._super()
-        .then(function() {
-            var def1 =  rpc.query({
-            model: 'dashboard.client',
-            method: 'get_full_data',
-            args: [{ }],
-            }, []).then(function(result){
-            console.log(result);
-            self.users_info=result
+        willStart: function () {
+            var self = this;
+            return this._super.apply(this, arguments).then(function () {
+                return rpc.query({
+                    model: 'dashboard.client',
+                    method: 'get_full_data',
+                    args: [{}],
+                }).then(function (result) {
+                    self.terms_data = result || [];
+                });
             });
-        return $.when( def1);
-        });
-    },
+        },
 
-    start: function() {
-        console.log("START FUNCTION")
-        var self = this;
-        this.set("title", 'Dashboard');
-        return this._super().then(function() {
-            self.render_dashboards();
-        });
-    },
-
-    render_dashboards: function() {
-        var self = this;
-        _.each(this.dashboards_templates, function(template) {
-            console.log('dad')
-            self.$('.o_dashboard').append(QWeb.render(template, {widget: self,}));
-        });
-    },
-
-    fetch_data: function() {
-        var self = this;
-        var def1 =  rpc.query({
-            model: 'dashboard.client',
-            method: 'get_full_data',
-            args: [{ }],
-            }, []).then(function(result){
-            console.log(result);
-            self.users_info=result
+        start: function () {
+            var self = this;
+            this.set("title", 'Terminos y Condiciones');
+            return this._super.apply(this, arguments).then(function () {
+                self._renderContent();
             });
-        return $.when( def1);
-    },
+        },
 
-    on_reverse_breadcrumb: function() {console.log("ON_REVERSE_BREADCRUMB")
-        var self = this;
-        web_client.do_push_state({});
-        this.update_cp();
-        // self.render_dashboards();
-        this.fetch_data().then(function() {
-            self.$('.o_radius_dashboard').empty();
-            self.render_dashboards();
-        });
-    },
+        _renderContent: function () {
+            var $container = this.$('.terms-container');
+            if (!$container.length) return;
 
-    update_cp: function() {
-        var self = this;
-        console.log("UPDATE_CP")
-    },
+            $container.empty();
+            this.terms_data.forEach(function (term) {
+                var $section = $('<div class="terms-section mb-4"/>');
+                $section.append($('<h5/>').text(term.name));
+                $section.append($('<div/>').html(term.content));
+                $container.append($section);
+            });
+        },
+    });
 
-    get_emp_image_url: function(employee){
-        return window.location.origin + '/web/image?model=hr.employee&field=image&id='+employee;
-    },
+    core.action_registry.add('dashboard.dashboard_client', DashboardClient);
 
-//    request_function: function(ev){
-//        var self = this;
-//        ev.stopPropagation();
-//        ev.preventDefault();
-//        this.do_action({
-//            name: _t(" Solicitudes"),
-//            type: 'ir.actions.act_window',
-//            res_model: 'professional_registers.professional_request',
-//            view_mode: 'tree',
-//            views: [[false, 'list'],[false, 'form']],
-//            domain: [],
-//            target: 'current' //self on some of them
-//        }, {
-//                on_reverse_breadcrumb: this.on_reverse_breadcrumb
-//        });
-//    },
-
-});
-
-
-core.action_registry.add('dashboard.dashboard_client', DashboardClient);
-
-return Dashboard;
-
+    return DashboardClient;
 });

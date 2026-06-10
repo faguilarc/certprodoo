@@ -4,93 +4,504 @@ odoo.define('dashboard.dashboard', function (require) {
     var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
     var rpc = require('web.rpc');
-// var session = require('web.session');
-    var _t = core._t;
     var QWeb = core.qweb;
-    var web_client = require('web.web_client');
 
     var Dashboard = AbstractAction.extend({
         template: 'DashboardDetails',
         cssLibs: [
-            '/dashboard/static/src/css/Chart.min.css'
+            '/dashboard/static/src/css/Chart.min.css',
         ],
         jsLibs: [
             '/dashboard/static/src/js/chart.min.js',
-            '/dashboard/static/src/js/ui_datepicker_es.js',
         ],
         events: {
-            'click .request': 'request_function',
-            'click .inscriptions': 'inscription_function',
             'click .status-card': 'openFilteredView',
-            'change .report-toggles input[type="checkbox"]': 'toggleReport',
-            'click .btn-group button': 'handlePeriodChange',
+            'click .kpi-card': 'onKpiClick',
+            'change .period-selector': 'onPeriodChange',
             'click #btnCardView': 'showCardView',
-            'click #btnChartView': 'showChartView'
+            'click #btnChartView': 'showChartView',
         },
 
         init: function (parent, context) {
             this._super(parent, context);
-            this.date_range = 'month';
-            this.loading_state = false;
-            this.error_state = false;
-            this.dashboards_templates = ['DashboardDetails'];
-            this.visible_reports = {
-                solicitudes_estado: true,
-                distribucion_profesiones: false,
-                tiempo_promedio: false,
-                tasas: false
-            };
+            this.dashboard_data = {};
+            this.charts = {};
+            this.current_period = 'year';
+            this.loading = false;
+        },
+
+        willStart: function () {
+            var self = this;
+            return this._super.apply(this, arguments).then(function () {
+                return self._loadData();
+            });
+        },
+
+        start: function () {
+            var self = this;
+            return this._super.apply(this, arguments).then(function () {
+                self._renderDashboard();
+            });
+        },
+
+        // ================================================================
+        // DATA LOADING
+        // ================================================================
+
+        _loadData: function () {
+            var self = this;
+            this.loading = true;
+            this._updateLoadingState();
+
+            return rpc.query({
+                model: 'dashboard',
+                method: 'get_full_data',
+                args: [{period: this.current_period}],
+            }).then(function (result) {
+                self.dashboard_data = result;
+                self.loading = false;
+                self._updateLoadingState();
+            }).guardedCatch(function (error) {
+                self.loading = false;
+                self._updateLoadingState();
+                console.error('Error cargando dashboard:', error);
+            });
+        },
+
+        _updateLoadingState: function () {
+            var $spinner = this.$('.loading-spinner');
+            var $content = this.$('.dashboard-content');
+            if ($spinner.length) {
+                if (this.loading) {
+                    $spinner.removeClass('d-none');
+                    $content && $content.addClass('d-none');
+                } else {
+                    $spinner.addClass('d-none');
+                    $content && $content.removeClass('d-none');
+                }
+            }
+        },
+
+        // ================================================================
+        // RENDERING
+        // ================================================================
+
+        _renderDashboard: function () {
+            var self = this;
+            this._updateLoadingState();
+
+            if (!this.dashboard_data || !this.dashboard_data.kpi_cards) {
+                return;
+            }
+
+            // Render KPI cards
+            this._renderKpiCards();
+
+            // Render all charts
+            _.defer(function () {
+                self._renderAllCharts();
+            });
+        },
+
+        _renderKpiCards: function () {
+            var kpi = this.dashboard_data.kpi_cards;
+            if (!kpi) return;
+
+            this.$('#kpiTotalRequests .kpi-value').text(kpi.total_requests || 0);
+            this.$('#kpiApprovedRequests .kpi-value').text(kpi.approved_requests || 0);
+            this.$('#kpiPendingRequests .kpi-value').text(kpi.pending_requests || 0);
+            this.$('#kpiInscriptions .kpi-value').text(kpi.active_inscriptions || 0);
+            this.$('#kpiExpedients .kpi-value').text(kpi.open_expedients || 0);
+            this.$('#kpiClaims .kpi-value').text(kpi.active_claims || 0);
+            this.$('#kpiAvgTime .kpi-value').text(kpi.avg_processing_days || 0);
+        },
+
+        _renderAllCharts: function () {
+            // Destruir graficos existentes
+            Object.keys(this.charts).forEach(function (key) {
+                if (this.charts[key]) {
+                    this.charts[key].destroy();
+                }
+            }.bind(this));
+            this.charts = {};
+
+            this._renderSolicitudesEstado();
+            this._renderTendenciaMensual();
+            this._renderTopProfesiones();
+            this._renderTipoTramite();
+            this._renderReclamaciones();
+            this._renderTasasAprobacion();
+        },
+
+        _renderSolicitudesEstado: function () {
+            var data = this.dashboard_data.solicitudes_estado;
+            if (!data || !data.length) return;
+
+            var ctx = document.getElementById('chartSolicitudesEstado');
+            if (!ctx) return;
+
+            var labels = [];
+            var values = [];
+            var colors = [];
+
+            data.forEach(function (item) {
+                labels.push(item.state_name);
+                values.push(item.cantidad);
+                colors.push(item.color || '#6c757d');
+            });
+
+            this.charts.solicitudesEstado = new Chart(ctx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    var total = context.dataset.data.reduce(function (a, b) { return a + b; }, 0);
+                                    var pct = total > 0 ? ((context.parsed / total) * 100).toFixed(1) : 0;
+                                    return context.label + ': ' + context.parsed + ' (' + pct + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        },
+
+        _renderTendenciaMensual: function () {
+            var data = this.dashboard_data.tendencia_mensual;
+            if (!data || !data.labels || !data.labels.length) return;
+
+            var ctx = document.getElementById('chartTendenciaMensual');
+            if (!ctx) return;
+
+            this.charts.tendenciaMensual = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'Creadas',
+                            data: data.created,
+                            borderColor: '#4e73df',
+                            backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                        },
+                        {
+                            label: 'Aprobadas',
+                            data: data.approved,
+                            borderColor: '#1cc88a',
+                            backgroundColor: 'rgba(28, 200, 138, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                        },
+                        x: {
+                            grid: { display: false },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+        },
+
+        _renderTopProfesiones: function () {
+            var data = this.dashboard_data.top_profesiones;
+            if (!data || !data.profesiones || !data.profesiones.length) return;
+
+            var ctx = document.getElementById('chartTopProfesiones');
+            if (!ctx) return;
+
+            var colors = [
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e',
+                '#e74a3b', '#858796', '#5a5c69', '#2e8b57',
+                '#ff6384', '#9966ff'
+            ];
+
+            this.charts.topProfesiones = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data.profesiones,
+                    datasets: [{
+                        label: 'Solicitudes',
+                        data: data.cantidades,
+                        backgroundColor: colors.slice(0, data.profesiones.length),
+                        borderWidth: 0,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                        },
+                        y: {
+                            grid: { display: false },
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                    }
+                }
+            });
+        },
+
+        _renderTipoTramite: function () {
+            var data = this.dashboard_data.por_tipo_tramite;
+            if (!data || !data.length) return;
+
+            var ctx = document.getElementById('chartTipoTramite');
+            if (!ctx) return;
+
+            var labels = [];
+            var values = [];
+            var colors = [];
+
+            data.forEach(function (item) {
+                labels.push(item.name);
+                values.push(item.count);
+                colors.push(item.color);
+            });
+
+            this.charts.tipoTramite = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Solicitudes',
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 0,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                        },
+                        x: {
+                            grid: { display: false },
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                    }
+                }
+            });
+        },
+
+        _renderReclamaciones: function () {
+            var data = this.dashboard_data.reclamaciones_estado;
+            if (!data || !data.length) return;
+
+            var ctx = document.getElementById('chartReclamaciones');
+            if (!ctx) return;
+
+            var labels = [];
+            var values = [];
+            var colors = [];
+
+            data.forEach(function (item) {
+                labels.push(item.name);
+                values.push(item.cantidad);
+                colors.push(item.color);
+            });
+
+            this.charts.reclamaciones = new Chart(ctx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                            }
+                        },
+                    }
+                }
+            });
+        },
+
+        _renderTasasAprobacion: function () {
+            var data = this.dashboard_data.tasas;
+            if (!data || !data.labels || !data.labels.length) return;
+
+            var ctx = document.getElementById('chartTasas');
+            if (!ctx) return;
+
+            this.charts.tasas = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [
+                        {
+                            label: 'Aprobadas',
+                            data: data.aprobadas,
+                            backgroundColor: '#1cc88a',
+                        },
+                        {
+                            label: 'Rechazadas',
+                            data: data.rechazadas,
+                            backgroundColor: '#e74a3b',
+                        },
+                        {
+                            label: 'Otras',
+                            data: data.otras,
+                            backgroundColor: '#858796',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { display: false },
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+        },
+
+        // ================================================================
+        // EVENT HANDLERS
+        // ================================================================
+
+        onPeriodChange: function (ev) {
+            this.current_period = $(ev.currentTarget).val();
+            var self = this;
+            this._loadData().then(function () {
+                self._renderDashboard();
+            });
         },
 
         openFilteredView: function (ev) {
             ev.stopPropagation();
             ev.preventDefault();
-            var estado = $(ev.currentTarget).data('estado');
-            console.log($(ev.currentTarget).data)
-            console.log(estado)
+            var stateId = $(ev.currentTarget).data('estado');
+            if (!stateId) return;
+
             this.do_action({
-                name: _t("Solicitudes"),
+                name: 'Solicitudes',
                 type: 'ir.actions.act_window',
                 res_model: 'professional_registers.professional_request',
                 view_mode: 'tree',
                 views: [[false, 'list'], [false, 'form']],
-                domain: [['states', '=', estado]],
-                target: 'current'
+                domain: [['states', '=', stateId]],
+                target: 'current',
             }, {
-                on_reverse_breadcrumb: this.on_reverse_breadcrumb
+                on_reverse_breadcrumb: this.on_reverse_breadcrumb.bind(this),
             });
         },
 
-        toggleReport: function (ev) {
-            var $checkbox = $(ev.currentTarget);
-            var reportId = $checkbox.attr('id').replace('show', '');
-            var $report = this.$('#report' + reportId);
+        onKpiClick: function (ev) {
+            var target = $(ev.currentTarget).data('target');
+            if (!target) return;
 
-            if ($checkbox.is(':checked')) {
-                $report.slideDown();
-                // Refresh chart if exists
-                var chartId = 'chart' + reportId.replace('report', '');
-                var chart = this.charts && this.charts[chartId];
-                if (chart) {
-                    chart.update();
-                }
-            } else {
-                $report.slideUp();
+            var domain = [];
+            var model = 'professional_registers.professional_request';
+
+            switch (target) {
+                case 'total_requests':
+                    break;
+                case 'approved_requests':
+                    domain = [['states.priority', '=', 6]];
+                    break;
+                case 'pending_requests':
+                    domain = [['states.priority', 'in', [2, 3]]];
+                    break;
+                case 'inscriptions':
+                    model = 'professional_registers.inscription';
+                    domain = [['retired', '=', false]];
+                    break;
+                case 'expedients':
+                    model = 'professional_registers.expedient';
+                    domain = [['state', 'in', ['open', 'pending']]];
+                    break;
+                case 'claims':
+                    model = 'professional_registers.claim_request';
+                    domain = [['claim_status', 'in', ['in_process', 'evaluating']]];
+                    break;
             }
-        },
 
-        // Add this to store chart instances
-        charts: {},
-
-        updateReportsVisibility: function () {
-            var self = this;
-            Object.keys(this.visible_reports).forEach(function (reportType) {
-                var $report = self.$('#report' + reportType.charAt(0).toUpperCase() + reportType.slice(1));
-                if (self.visible_reports[reportType]) {
-                    $report.show();
-                } else {
-                    $report.hide();
-                }
+            this.do_action({
+                name: target === 'inscriptions' ? 'Inscripciones' :
+                       target === 'expedients' ? 'Expedientes' :
+                       target === 'claims' ? 'Reclamaciones' : 'Solicitudes',
+                type: 'ir.actions.act_window',
+                res_model: model,
+                view_mode: 'tree',
+                views: [[false, 'list'], [false, 'form']],
+                domain: domain,
+                target: 'current',
+            }, {
+                on_reverse_breadcrumb: this.on_reverse_breadcrumb.bind(this),
             });
         },
 
@@ -106,337 +517,27 @@ odoo.define('dashboard.dashboard', function (require) {
             this.$('#chartView').show();
             this.$('#btnChartView').addClass('active');
             this.$('#btnCardView').removeClass('active');
-            if (!this.chartSolicitudesEstado) {
-                this._renderSolicitudesEstado();
-            }
-        },
-
-        handlePeriodChange: function (ev) {
-            ev.preventDefault();
-            var self = this;
-            var period = $(ev.currentTarget).data('period');
-
-            // Update UI state
-            this.$('.btn-group button').removeClass('active');
-            $(ev.currentTarget).addClass('active');
-
-            this._loadDashboardData(period);
-        },
-
-        _loadDashboardData: function (period) {
-            var self = this;
-            this.loading_state = true;
-            this._updateLoadingState();
-
-            return rpc.query({
-                model: 'dashboard',
-                method: 'get_full_data',
-                args: [{
-                    period: period
-                }],
-            }).then(function (result) {
-                self.dashboard_data = result;
-                self.loading_state = false;
-                self.error_state = false;
-                self._updateLoadingState();
-                self._refreshDashboard();
-            }).guardedCatch(function (error) {
-                self.loading_state = false;
-                self.error_state = true;
-                self._updateLoadingState();
-                self._handleError(error);
-            });
-        },
-
-        _updateLoadingState: function () {
-            if (this.loading_state) {
-                this.$('.dashboard-content').addClass('loading');
-                this.$('.loading-spinner').removeClass('d-none');
-            } else {
-                this.$('.dashboard-content').removeClass('loading');
-                this.$('.loading-spinner').addClass('d-none');
-            }
-
-            if (this.error_state) {
-                this.$('.error-message').removeClass('d-none');
-            } else {
-                this.$('.error-message').addClass('d-none');
-            }
-        },
-
-        _refreshDashboard: function () {
-            this.$('.o_dashboard').empty();
-            this.render_dashboards();
-        },
-
-        _handleError: function (error) {
-            this.$('.error-message')
-                .text(error.message || 'Ha ocurrido un error al cargar los datos')
-                .removeClass('d-none');
-        },
-
-        willStart: function () {
-            var self = this;
-            this.login_employee = {};
-            return this._super()
-                .then(function () {
-                    var def1 = rpc.query({
-                        model: 'dashboard',
-                        method: 'get_full_data',
-                        args: [{}],
-                    }, []).then(function (result) {
-                        console.log(result);
-                        self.users_info = result
-                        // Inicializar dashboard_data con los datos necesarios
-                        self.dashboard_data = {
-                            solicitudes_estado: result.solicitudes_estado || {},
-                            distribucion_profesiones: result.distribucion_profesiones || {},
-                            tasas: result.tasas || {},
-                            tiempo_promedio: result.tiempo_promedio || {
-                                promedio_horas: 0,
-                                total_solicitudes: 0
-                            },
-                            conteo_por_estado: result.conteo_por_estado || []
-                        };
-                    });
-                    return $.when(def1);
-                });
-        },
-
-
-        start: function () {
-            console.log("START FUNCTION")
-            var self = this;
-            this.set("title", 'Dashboard');
-            return this._super().then(function () {
-                self.render_dashboards();
-                self.updateReportsVisibility();
-            });
-        },
-
-        render_dashboards: function () {
-            var self = this;
-            _.each(this.dashboards_templates, function (template) {
-                console.log('dad')
-                self.$('.o_dashboard').append(QWeb.render(template, {widget: self,}));
-            });
-            _.defer(function () {
-                self._renderCharts();  // Espera a que el DOM esté listo
-            });
-        },
-
-        _renderCharts: function () {
-            // // this.charts.chartSolicitudesEstado = this._renderSolicitudesEstado();
-            // this.charts.chartProfesiones = this._renderDistribucionProfesiones();
-            // this.charts.chartTasas = this._renderTasas();
-        },
-
-        _renderSolicitudesEstado: function () {
-            var estados = this.dashboard_data.conteo_por_estado;
-            var ctx = document.getElementById('chartSolicitudesEstado').getContext('2d');
-
-            var labels = [];
-            var data = [];
-            var backgroundColors = [];
-
-            estados.forEach(function (estado) {
-                labels.push(estado.state_name);
-                data.push(estado.cantidad);
-                backgroundColors.push(estado.color || '#777');
-            });
-
-            if (this.chartSolicitudesEstado) {
-                this.chartSolicitudesEstado.destroy();
-            }
-
-            this.chartSolicitudesEstado = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Solicitudes por Estado',
-                        data: data,
-                        backgroundColor: backgroundColors
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,  // Allow custom height
-                    layout: {
-                        padding: {
-                            top: 20,
-                            bottom: 20,
-                            left: 10,
-                            right: 10
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0,
-                                stepSize: 1  // Force step size to 1 for better granularity
-                            },
-                            max: Math.max(...data) + 2  // Add some padding on top
-                        },
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 30,
-                                autoSkip: false
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    return context.parsed.y + ' solicitudes';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Optionally, set canvas height explicitly for better visibility
-            document.getElementById('chartSolicitudesEstado').style.height = '400px';
-        },
-
-        _renderDistribucionProfesiones: function () {
-            var data = this.dashboard_data.distribucion_profesiones;
-            var ctx = document.getElementById('chartProfesiones').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: data.profesiones,
-                    datasets: [{
-                        data: data.cantidades,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        }
-                    }
-                }
-            });
-        },
-
-        _renderTasas: function () {
-            var data = this.dashboard_data.tasas;
-            var ctx = document.getElementById('chartTasas').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Aprobadas', 'Rechazadas', 'En Proceso'],
-                    datasets: [{
-                        data: [
-                            data.tasa_aprobacion,
-                            data.tasa_rechazo,
-                            100 - data.tasa_aprobacion - data.tasa_rechazo
-                        ],
-                        backgroundColor: ['#4BC0C0', '#FF6384', '#FFCE56']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-        },
-
-        fetch_data: function () {
-            var self = this;
-            var def1 = rpc.query({
-                model: 'dashboard',
-                method: 'get_full_data',
-                args: [{}],
-            }, []).then(function (result) {
-                console.log(result);
-                self.users_info = result
-            });
-            return $.when(def1);
         },
 
         on_reverse_breadcrumb: function () {
-            console.log("ON_REVERSE_BREADCRUMB")
             var self = this;
-            web_client.do_push_state({});
-            this.update_cp();
-            // self.render_dashboards();
-            this.fetch_data().then(function () {
-                self.$('.o_radius_dashboard').empty();
-                self.render_dashboards();
+            this._loadData().then(function () {
+                self._renderDashboard();
             });
         },
 
-        update_cp: function () {
-            var self = this;
-            console.log("UPDATE_CP")
+        destroy: function () {
+            Object.keys(this.charts).forEach(function (key) {
+                if (this.charts[key]) {
+                    this.charts[key].destroy();
+                }
+            }.bind(this));
+            this.charts = {};
+            this._super.apply(this, arguments);
         },
-
-        get_emp_image_url: function (employee) {
-            return window.location.origin + '/web/image?model=hr.employee&field=image&id=' + employee;
-        },
-
-        request_function: function (ev) {
-            var self = this;
-            ev.stopPropagation();
-            ev.preventDefault();
-            this.do_action({
-                name: _t(" Solicitudes"),
-                type: 'ir.actions.act_window',
-                res_model: 'professional_registers.professional_request',
-                view_mode: 'tree',
-                views: [[false, 'list'], [false, 'form']],
-                domain: [],
-                target: 'current' //self on some of them
-            }, {
-                on_reverse_breadcrumb: this.on_reverse_breadcrumb
-            });
-        },
-        inscription_function: function (ev) {
-            var self = this;
-            ev.stopPropagation();
-            ev.preventDefault();
-            this.do_action({
-                name: _t(" Inscripciones"),
-                type: 'ir.actions.act_window',
-                res_model: 'professional_registers.inscription',
-                view_mode: 'tree',
-                views: [[false, 'list'], [false, 'form']],
-                domain: [],
-                target: 'current' //self on some of them
-            }, {
-                on_reverse_breadcrumb: this.on_reverse_breadcrumb
-            });
-        },
-
-
     });
-
 
     core.action_registry.add('dashboard.dashboard', Dashboard);
 
     return Dashboard;
-
 });
-
-
-
-
-
-
-
-
