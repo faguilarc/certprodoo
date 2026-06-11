@@ -3,6 +3,12 @@
    Estilos profesionales para el dashboard
    ================================================================ */
 
+/* ---- Odoo container scroll fix ---- */
+/* Only applied when dashboard is active (via JS .addClass) */
+.o_content.dashboard-scrollable {
+    overflow-y: auto !important;
+}
+
 /* ---- Variables de tema ---- */
 :root {
     --cp-primary: #3a3f6b;
@@ -23,12 +29,16 @@
     background-color: var(--cp-bg);
     padding: 20px;
     min-height: 100vh;
+    overflow-y: auto;
+    height: 100%;
 }
 
 .certprodoo-client-dashboard {
     background-color: var(--cp-bg);
     padding: 20px;
     min-height: 100vh;
+    overflow-y: auto;
+    height: 100%;
 }
 
 .dashboard-title {

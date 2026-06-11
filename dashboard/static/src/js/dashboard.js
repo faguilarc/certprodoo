@@ -40,6 +40,8 @@ odoo.define('dashboard.dashboard', function (require) {
         start: function () {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
+                // Enable scrolling on the Odoo content container
+                self.$el.parents('.o_content').addClass('dashboard-scrollable');
                 self._renderDashboard();
             });
         },
@@ -521,6 +523,8 @@ odoo.define('dashboard.dashboard', function (require) {
         },
 
         destroy: function () {
+            // Remove scrolling class when leaving dashboard
+            this.$el.parents('.o_content').removeClass('dashboard-scrollable');
             Object.keys(this.charts).forEach(function (key) {
                 if (this.charts[key]) {
                     this.charts[key].destroy();
