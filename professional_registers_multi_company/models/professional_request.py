@@ -18,6 +18,7 @@ class ProfessionalRequestCompany(models.Model):
             vals['company_id'] = self.env.company.id
         return super(ProfessionalRequestCompany, self).create(vals)
 
+    @api.model
     def _action_populate_company_id(self):
         """Asignar compañía a registros existentes que no tengan company_id."""
         records = self.search([('company_id', '=', False)])
