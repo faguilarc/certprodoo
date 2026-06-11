@@ -8,7 +8,6 @@
                 <field name="expedient_number"/>
                 <field name="professional_id"/>
                 <field name="profile_identity"/>
-                <field name="company_id" groups="base.group_multi_company"/>
                 <field name="state"/>
                 <field name="date_open"/>
                 <field name="date_close"/>
@@ -30,7 +29,6 @@
                 <field name="professional_id"/>
                 <field name="profile_identity"/>
                 <field name="state"/>
-                <field name="company_id" groups="base.group_multi_company"/>
                 <separator/>
                 <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
                 <filter name="open" string="Abiertos" domain="[('state','=','open')]"/>
@@ -152,7 +150,6 @@
                             <field name="professional_id"
                                    attrs="{'readonly': [('state', '!=', 'draft')]}"
                             />
-                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                             <field name="date_open" readonly="1"/>
                             <field name="user_open" readonly="1"/>
                         </group>

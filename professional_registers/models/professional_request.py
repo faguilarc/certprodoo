@@ -155,7 +155,6 @@ class ProfessionalRequest(models.Model):
         if not self.retired:
             self.date = False
 
-    company_id = fields.Many2one('res.company', string="Compañía")
     user_id = fields.Many2one('res.users', string="Usuario Registrador")
     id_user_register = fields.Many2one('res.users', string="Usuario asociado")
 
@@ -382,7 +381,7 @@ class ProfessionalRequest(models.Model):
         mfields = ['create_uid', 'create_date', 'write_uid', 'write_date', 'password', 'image', 'attachment_ids',
                    'priority', 'is_view_datails', 'history_work', 'certificate_attachment', 'is_inscription_fuc',
                    'documents_required', 'documents_required_registers', 'id_user_register', 'procedure_states',
-                   'company_id', 'force_erase']
+                   'force_erase']
 
         for f in mfields:
             if f in res:
@@ -1524,7 +1523,7 @@ class ProfessionalRequest(models.Model):
                 'name', 'first_last_name', 'second_last_name', 'full_name',
                 'nationality_id', 'identity', 'sex', 'address', 'country',
                 'country_states', 'city', 'phone', 'email','user', 'password', 'image', 'date', 'retired',
-                'company_id', 'year', 'user_id'
+                'year', 'user_id'
             ]
 
             # 2. Construir un diccionario con los valores que se van a guardar en el perfil
@@ -1532,7 +1531,7 @@ class ProfessionalRequest(models.Model):
             for field in profile_fields:
                 if field in vals:
                     # Convertir a entero cuando sea necesario (campos Many2one)
-                    if field in ['nationality_id', 'country', 'city', 'company_id']:
+                    if field in ['nationality_id', 'country', 'city']:
                         val = vals[field]
                         if val:
                             profile_vals[field] = int(val)
@@ -1553,7 +1552,7 @@ class ProfessionalRequest(models.Model):
                     if hasattr(self, field):
                         current_val = getattr(self, field)
                         # Si es un Many2one, tomar el id
-                        if field in ['nationality_id', 'country', 'city', 'company_id',
+                        if field in ['nationality_id', 'country', 'city',
                                      'country_states']:
                             if current_val:
                                 profile_vals[field] = current_val.id
@@ -2304,7 +2303,6 @@ class ProfessionalRequest(models.Model):
                 'professional_language': vals.get('professional_language'),
                 'user_id': self.env.uid,
                 'id_user_register': user_id,
-                'company_id': vals.get('company_id', self.env.company.id),
             }
 
             profile = self.env['professional_registers.profile'].create(profile_vals)
@@ -2352,7 +2350,6 @@ class ProfessionalRequest(models.Model):
 
         for vals in vals_list:
             # 1. Preparar valores básicos
-            vals['company_id'] = vals.get('company_id', self.env.company.id)
             vals['date_request'] = vals.get('date_request', fields.Date.today())
             vals['year'] = fields.Date.today().year
             vals['procedure_type'] = self.get_procedure_default()

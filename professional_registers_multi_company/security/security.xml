@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── Record Rules para filtrado multi-compañía ── -->
+
+        <record id="professional_request_company_rule" model="ir.rule">
+            <field name="name">Professional Request: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_professional_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_profile_company_rule" model="ir.rule">
+            <field name="name">Profile: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_profile"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_inscription_company_rule" model="ir.rule">
+            <field name="name">Inscription: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_inscription"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_expedient_company_rule" model="ir.rule">
+            <field name="name">Expedient: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_expedient"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_request_update_company_rule" model="ir.rule">
+            <field name="name">Request Update: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_professional_request_update"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_claim_request_company_rule" model="ir.rule">
+            <field name="name">Claim Request: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_claim_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_expedient_document_company_rule" model="ir.rule">
+            <field name="name">Expedient Document: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_expedient_document"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_expedient_history_company_rule" model="ir.rule">
+            <field name="name">Expedient History: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_expedient_history"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_expedient_communication_company_rule" model="ir.rule">
+            <field name="name">Expedient Communication: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_expedient_communication"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="professional_process_history_company_rule" model="ir.rule">
+            <field name="name">Process History: Multi-Company</field>
+            <field name="model_id" ref="professional_registers.model_professional_registers_process_history"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

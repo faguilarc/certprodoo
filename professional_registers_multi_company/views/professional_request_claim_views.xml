@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Claim Request: Tree View ── -->
+    <record id="claim_request_tree_view_inherit_multi_company" model="ir.ui.view">
+        <field name="name">claim.request.tree.view.inherit.multi.company</field>
+        <field name="model">professional_registers.claim_request</field>
+        <field name="inherit_id" ref="professional_registers.claim_request_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="claim_status" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ── Claim Request: Search View ── -->
+    <record id="claim_request_search_view_inherit_multi_company" model="ir.ui.view">
+        <field name="name">claim.request.search.view.inherit.multi.company</field>
+        <field name="model">professional_registers.claim_request</field>
+        <field name="inherit_id" ref="professional_registers.claim_request_search_view"/>
+        <field name="arch" type="xml">
+            <field name="claim_status" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

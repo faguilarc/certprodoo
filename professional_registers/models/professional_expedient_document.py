@@ -9,7 +9,6 @@ class ExpedientDocument(models.Model):
 
     expedient_id = fields.Many2one('professional_registers.expedient', string='Expediente', required=True,
                                    ondelete='cascade')
-    company_id = fields.Many2one('res.company', string="Compañía", related='expedient_id.company_id', store=True, readonly=True)
     name = fields.Char('Descripción', required=True)
     attachment_id = fields.Many2one('ir.attachment', string='Archivo', required=True)
     file_name = fields.Char('Nombre de Archivo', compute='_compute_file_name', store=True)

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_professional_register_dashboard_expedient,professional.register.dashboard.expedient,model_professional_register_dashboard_expedient,base.group_user,1,0,0,0
+access_professional_register_dashboard_updates,professional.register.dashboard.updates,model_professional_register_dashboard_updates,base.group_user,1,0,0,0
+access_professional_register_dashboard_claims,professional.register.dashboard.claims,model_professional_register_dashboard_claims,base.group_user,1,0,0,0

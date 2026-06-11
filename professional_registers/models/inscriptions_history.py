@@ -30,7 +30,6 @@ class ProfessionalInscriptionHistory(models.Model):
 
 
     inscription_id = fields.Many2one('professional_registers.inscriptions', string='Solicitud', required=True, ondelete='cascade')
-    company_id = fields.Many2one('res.company', string="Compañía", related='inscription_id.company_id', store=True, readonly=True)
     inscription_help_id = fields.Many2one('professional_registers.inscriptions_help', string='Detalles' )
     state_id = fields.Many2one('security.state_configuration', string='Estado', required=True)
     date = fields.Datetime(string='Fecha del Cambio', default=fields.Datetime.now, required=True)

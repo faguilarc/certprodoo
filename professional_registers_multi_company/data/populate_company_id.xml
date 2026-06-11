@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Función de migración para poblar company_id en registros existentes.
+            Se ejecuta una sola vez al instalar el módulo.
+            Usa una función Python para actualizar todos los registros que tengan company_id vacío.
+        -->
+
+        <function model="professional_registers.expedient" name="_action_populate_company_id"/>
+        <function model="professional_registers.professional_request" name="_action_populate_company_id"/>
+        <function model="professional_registers.professional_request_update" name="_action_populate_company_id"/>
+        <function model="professional_registers.inscription" name="_action_populate_company_id"/>
+        <function model="professional_registers.profile" name="_action_populate_company_id"/>
+        <function model="professional_registers.pr_document" name="_action_populate_company_id"/>
+        <function model="professional_registers.work_history" name="_action_populate_company_id"/>
+        <function model="professional_registers.side_notes" name="_action_populate_company_id"/>
+
+    </data>
+</odoo>

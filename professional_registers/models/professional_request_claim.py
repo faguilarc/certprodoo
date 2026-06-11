@@ -693,10 +693,6 @@ class ClaimRequest(models.Model):
         if 'request_number' not in vals or not vals['request_number']:
             vals['request_number'] = self.env['ir.sequence'].next_by_code('professional.claim.request') or 'REC00000'
 
-        # Asignar compañía por defecto
-        if not vals.get('company_id'):
-            vals['company_id'] = self.env.company.id
-
         vals['history_ids'] = []
         # === CREAR LA SOLICITUD ===
         request = super(ClaimRequest, self).create(vals)

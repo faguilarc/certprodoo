@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ── Request Update: Tree View ── -->
+    <record id="view_professional_request_update_tree_inherit_multi_company" model="ir.ui.view">
+        <field name="name">professional.request.update.tree.inherit.multi.company</field>
+        <field name="model">professional_registers.professional_request_update</field>
+        <field name="inherit_id" ref="professional_registers.view_professional_request_update_tree"/>
+        <field name="arch" type="xml">
+            <field name="identity" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ── Request Update: Search View ── -->
+    <record id="view_professional_request_update_search_inherit_multi_company" model="ir.ui.view">
+        <field name="name">professional.request.update.search.inherit.multi.company</field>
+        <field name="model">professional_registers.professional_request_update</field>
+        <field name="inherit_id" ref="professional_registers.view_professional_request_update_search"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

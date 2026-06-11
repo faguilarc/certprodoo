@@ -96,7 +96,6 @@ class Profile(models.Model):
         if not self.retired:
             self.date = False
 
-    company_id = fields.Many2one('res.company', string="Compañía")
     user_id = fields.Many2one(model_users, string="Registrador")
     id_user_register = fields.Many2one('res.users', string="Usuario asociado")
     year = fields.Char('Año')
@@ -243,7 +242,7 @@ class Profile(models.Model):
     def fields_get(self, fields=None, attributes=None):
         res = super(Profile, self).fields_get(fields, attributes=attributes)
         mfields = ['create_uid', 'create_date', 'write_uid', 'write_date', 'password', 'image', 'attachment_ids',
-                   'history_work', 'documents_required', 'company_id', 'user_id', 'user']
+                   'history_work', 'documents_required', 'user_id', 'user']
         for f in mfields:
             res[f]['searchable'] = False
             res[f]['sortable'] = False
@@ -581,7 +580,6 @@ class Profile(models.Model):
             'address': address,
             'country': country.id if country else False,
             'country_states': state.id if state else False,
-            'company_id': user.company_id.id,
             'city': city.id if city else False,
             'user_id': user.id,
             'id_user_register': user_id ,

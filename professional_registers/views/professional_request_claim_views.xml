@@ -11,7 +11,6 @@
                     <field name="original_request_id"/>
                     <field name="claim_type"/>
                     <field name="claim_status"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="user_id"/>
                     <field name="user_on_charge"/>
 
@@ -30,7 +29,6 @@
                     <field name="user_on_charge"/>
                     <field name="claim_type"/>
                     <field name="claim_status"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
                     <separator/>
                     <filter name="draft" string="Borrador" domain="[('claim_status','=','draft')]"/>
                     <filter name="in_process" string="En Proceso" domain="[('claim_status','=','in_process')]"/>

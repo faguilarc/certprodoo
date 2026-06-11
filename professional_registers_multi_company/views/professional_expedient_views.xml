@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Expedient: Tree View ── -->
+    <record id="view_professional_expedient_tree_inherit_multi_company" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.tree.inherit.multi.company</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="inherit_id" ref="professional_registers.view_professional_expedient_tree"/>
+        <field name="arch" type="xml">
+            <field name="profile_identity" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ── Expedient: Search View ── -->
+    <record id="view_professional_expedient_search_inherit_multi_company" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.search.inherit.multi.company</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="inherit_id" ref="professional_registers.view_professional_expedient_search"/>
+        <field name="arch" type="xml">
+            <field name="profile_identity" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ── Expedient: Form View ── -->
+    <record id="view_professional_expedient_form_inherit_multi_company" model="ir.ui.view">
+        <field name="name">professional.registers.expedient.form.inherit.multi.company</field>
+        <field name="model">professional_registers.expedient</field>
+        <field name="inherit_id" ref="professional_registers.view_professional_expedient_form"/>
+        <field name="arch" type="xml">
+            <field name="professional_id" position="after">
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

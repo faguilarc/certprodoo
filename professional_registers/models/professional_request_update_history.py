@@ -14,7 +14,6 @@ class ProfessionalRequestUpdateHistory(models.Model):
         required=True,
         ondelete='cascade'
     )
-    company_id = fields.Many2one('res.company', string="Compañía", related='update_id.company_id', store=True, readonly=True)
     state_id = fields.Many2one('security.state_configuration', string='Estado Anterior', required=True)
     state_id_new = fields.Many2one('security.state_configuration', string='Estado Actual', required=True)
     user_id = fields.Many2one('res.users', string='Usuario', required=True)

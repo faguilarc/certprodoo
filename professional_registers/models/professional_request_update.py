@@ -164,7 +164,6 @@ class ProfessionalRequestUpdate(models.Model):
 
     user_on_charge = fields.Many2one('res.users', string="Responsable")
     expedient_id = fields.Many2one('professional_registers.expedient', string='Expediente')
-    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)
 
     def get_procedure_default(self):
         procedure = self.env['nomenclators.procedure_types'].search([('comodel_name', '=', 'update')])
@@ -192,10 +191,6 @@ class ProfessionalRequestUpdate(models.Model):
         # Generar número de solicitud
         if 'request_number' not in vals or not vals['request_number']:
             vals['request_number'] = self.env['ir.sequence'].next_by_code('professional.request.update') or 'UPD00000'
-
-        # Asignar compañía por defecto
-        if not vals.get('company_id'):
-            vals['company_id'] = self.env.company.id
 
         # Obtener la solicitud original y el perfil
         original_request = self.env['professional_registers.professional_request'].browse(

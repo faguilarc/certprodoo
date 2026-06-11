@@ -24,7 +24,6 @@ class Workhistory(models.Model):
     # Añadir el campo relacionado con la solicitud de actualización
     update_request = fields.Many2one('professional_registers.professional_request_update',
                                      string="Solicitud de Actualización")
-    company_id = fields.Many2one('res.company', string="Compañía", default=lambda self: self.env.company)
 
     work_center = fields.Char('Centro de trabajo')
     organism = fields.Many2one('res.organism', string="Organismo")

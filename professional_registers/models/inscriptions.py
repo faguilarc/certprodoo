@@ -50,7 +50,6 @@ class ProfessionalRegisters(models.Model):
     country_state = fields.Many2one('res.country.state', related='request_id.country_states', store=True)
 
     year = fields.Char('Año')
-    company_id = fields.Many2one('res.company', string="Compañía")
     user_id = fields.Many2one('res.users', string="Usuario registrador")
 
     inscription_type = fields.Selection([('manual', 'Manual'),
@@ -109,7 +108,7 @@ class ProfessionalRegisters(models.Model):
     def fields_get(self, fields=None, attributes=None):
         res = super(ProfessionalRegisters, self).fields_get(fields, attributes=attributes)
         mfields = ['create_uid', 'create_date', 'write_uid', 'write_date', 'image', 'was_payment',
-                   'priority', 'is_view_datails', 'certificate_attachment', 'force_erase', 'company_id']
+                   'priority', 'is_view_datails', 'certificate_attachment', 'force_erase']
         for f in mfields:
             res[f]['searchable'] = False
             res[f]['sortable'] = False
@@ -133,7 +132,6 @@ class ProfessionalRegisters(models.Model):
                 'profession': inscription.profession.id,
                 'request_id': inscription.request_id.id,
                 'inscription_type': inscription.inscription_type,
-                'company_id': inscription.company_id.id,
                 'user_id': inscription.user_id.id,
                 'year': inscription.year,
                 'states': inscription.states.id,
@@ -362,7 +360,6 @@ class ProfessionalRegisters(models.Model):
         vals_list["user_id"] = self.env.uid
         user_id = self.env['res.users'].search([('id', '=', int(self.env.uid))])
 
-        vals_list['company_id'] = user_id.company_id.id
         vals_list['year'] = datetime.now().year
 
         # Add traces

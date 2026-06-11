@@ -30,7 +30,6 @@ class ProfessionalRequestHistory(models.Model):
 
 
     request_id = fields.Many2one('professional_registers.professional_request', string='Solicitud', required=True, ondelete='cascade')
-    company_id = fields.Many2one('res.company', string="Compañía", related='request_id.company_id', store=True, readonly=True)
     request_help_id = fields.Many2one('professional_registers.request_help', string='Detalles' )
     state_id = fields.Many2one('security.state_configuration', string='Estado Anterior', required=True)
     state_id_new = fields.Many2one('security.state_configuration', string='Estado Actual', required=True)
